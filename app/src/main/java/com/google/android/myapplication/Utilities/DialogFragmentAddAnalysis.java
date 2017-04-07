@@ -13,10 +13,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
+import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMethods;
+import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Category;
+import com.google.android.myapplication.DataBase.Model.Ingredient;
+import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
 import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.R;
@@ -39,9 +44,9 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
     CategoryMethods categoryMethods=null;
     ProductMethods productMethods=null;
     ProductAnalysisMethods productAnalysisMethods=null;
+    IngredientAnalysisMethods ingredientAnalysisMethods=null;
     int idCategory=0;
-    List<String> ingredients;
-
+    IngredientAnalysis ingredientAnalysis=null;
     public DialogFragmentAddAnalysis() {
     }
     @Nullable
@@ -51,7 +56,9 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
         getDialog().setTitle("Add analysis!");
         categoryMethods=new CategoryMethods();
         productMethods=new ProductMethods();
+        ingredientAnalysisMethods=new IngredientAnalysisMethods();
         productAnalysisMethods=new ProductAnalysisMethods();
+        ingredientAnalysis=new IngredientAnalysis();
         etBrand = (EditText) rootView.findViewById(R.id.etBrand);
         etDescription = (EditText) rootView.findViewById(R.id.etDescription);
         spinnerCategoriy = (Spinner) rootView.findViewById(R.id.spinnerCategory);
@@ -76,6 +83,13 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
                 int idUser= (int) getActivity().getIntent().getExtras().get("userId");
                 productAnalysis=new ProductAnalysis(idProdus,idUser,date);
                 productAnalysisMethods.insert(productAnalysis);
+
+              for(Ingredient i: ListIngredientsActivity.ingredientsBD)
+              {
+                  ingredientAnalysis.setIdIngredient(i.getIdIngredient());
+                  ingredientAnalysis.setIdProduct(idProdus);
+                  ingredientAnalysisMethods.insert(ingredientAnalysis);
+              }
                 Toast.makeText(getActivity().getApplicationContext(), "Analiza inserata cu succes!", Toast.LENGTH_SHORT).show();
                 dismiss();
             }

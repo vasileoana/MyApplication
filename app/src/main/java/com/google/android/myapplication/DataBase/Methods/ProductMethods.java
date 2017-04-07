@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.android.myapplication.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Product;
+import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,33 @@ public class ProductMethods {
         DatabaseManager.getInstance().closeDatabase();
 
         return id;
+    }
+
+
+    public List<Product> selectProductsByUser(int idUser) {
+        List<Product> products = new ArrayList<>();
+        Product product;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+" WHERE "+ProductAnalysis.label_idUser+"="+idUser+";";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                product = new Product();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
+                product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                products.add(product);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return products;
     }
 
 }

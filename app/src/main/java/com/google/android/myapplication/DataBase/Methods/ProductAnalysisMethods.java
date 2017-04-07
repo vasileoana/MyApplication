@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.android.myapplication.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Category;
+import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 
@@ -25,7 +26,7 @@ public class ProductAnalysisMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ProductAnalysis.label_idProduct+ " INTEGER "+ProductAnalysis.label_idUser+ " INTEGER "+ ProductAnalysis.label_date+ " TEXT);";
+        return "CREATE TABLE "+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ProductAnalysis.label_idProduct+ " INTEGER, "+ProductAnalysis.label_idUser+ " INTEGER, "+ ProductAnalysis.label_date+ " TEXT);";
 
     }
 
@@ -39,7 +40,7 @@ public class ProductAnalysisMethods {
             ContentValues values = new ContentValues();
             values.put(ProductAnalysis.label_date, productAnalysis.getDate());
             values.put(ProductAnalysis.label_idProduct, productAnalysis.getIdProduct());
-            values.put(ProductAnalysis.label_idUser, productAnalysis.getIdUser());
+           values.put(ProductAnalysis.label_idUser, productAnalysis.getIdUser());
             // Inserting Row
             code = (int) db.insert(ProductAnalysis.TABLE, null, values);
             DatabaseManager.getInstance().closeDatabase();
@@ -52,52 +53,29 @@ public class ProductAnalysisMethods {
         return code;
     }
 
-
-    /*public List<Category> select() {
-        List<Category> categories = new ArrayList<>();
-        Category category;
+    public List<ProductAnalysis> select() {
+        List<ProductAnalysis> products = new ArrayList<>();
+        ProductAnalysis product;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Category.TABLE;
+        String selectQuery = " SELECT * FROM " + ProductAnalysis.TABLE+";";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                category = new Category();
-                category.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Category.label_idCategory))));
-                category.setCategoryName(cursor.getString(cursor.getColumnIndex(Category.label_categoryName)));
-                category.setIdParent(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Category.label_idParent))));
-                categories.add(category);
+                product = new ProductAnalysis();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ProductAnalysis.label_idProduct))));
+                product.setDate(cursor.getString(cursor.getColumnIndex(ProductAnalysis.label_date)));
+                product.setIdProductAnalysis(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ProductAnalysis.label_idProductAnalysis))));
+                product.setIdUser(Integer.parseInt(cursor.getString(cursor.getColumnIndex(ProductAnalysis.label_idUser))));
+                products.add(product);
             } while (cursor.moveToNext());
         }
-
 
         cursor.close();
         DatabaseManager.getInstance().closeDatabase();
 
-        return categories;
+        return products;
     }
-
-
-    public int getIdCategory(String category) {
-        int idCategory=0;
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Category.TABLE+ " WHERE "+Category.label_categoryName+ "="+category;
-
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                idCategory=Integer.parseInt(cursor.getString(cursor.getColumnIndex(Category.label_idCategory)));
-            } while (cursor.moveToNext());
-        }
-
-
-        cursor.close();
-        DatabaseManager.getInstance().closeDatabase();
-
-        return idCategory;
-    }
-*/
 
 }

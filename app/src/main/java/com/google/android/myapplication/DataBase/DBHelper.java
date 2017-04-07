@@ -7,10 +7,14 @@ import android.util.Log;
 import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
+import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
+import com.google.android.myapplication.DataBase.Model.Category;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
+import com.google.android.myapplication.DataBase.Model.Product;
+import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.DataBase.Model.Rating;
 import com.google.android.myapplication.DataBase.Model.User;
 import com.google.android.myapplication.Utilities.App;
@@ -41,6 +45,7 @@ public class DBHelper  extends SQLiteOpenHelper{
         db.execSQL(RatingMethods.create());
         db.execSQL(IngredientAnalysisMethods.create());
         db.execSQL(CategoryMethods.create());
+        db.execSQL(ProductAnalysisMethods.create());
         db.execSQL(ProductMethods.create());
 }
 
@@ -51,6 +56,9 @@ public class DBHelper  extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + User.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Ingredient.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Rating.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Category.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ProductAnalysis.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + Product.TABLE);
         onCreate(db);
 
     }

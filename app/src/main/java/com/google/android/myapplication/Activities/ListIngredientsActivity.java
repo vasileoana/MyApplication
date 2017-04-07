@@ -20,7 +20,7 @@ import java.util.List;
 public class ListIngredientsActivity extends AppCompatActivity {
 
     ArrayList<String> ingredients;
-    List<Ingredient> ingredientsBD;
+   public static List<Ingredient> ingredientsBD;
     IngredientMethods ingredientMethods;
     ListView lv;
     List<String> bdIng;

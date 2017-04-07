@@ -19,6 +19,9 @@ public class ProductAnalysis {
     private int idUser;
     private String date;
 
+    public ProductAnalysis() {
+    }
+
     public ProductAnalysis(int idProduct, int idUser, String date) {
         this.idProduct = idProduct;
         this.idUser = idUser;
@@ -55,5 +58,15 @@ public class ProductAnalysis {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductAnalysis{" +
+                "idProductAnalysis=" + idProductAnalysis +
+                ", idProduct=" + idProduct +
+                ", idUser=" + idUser +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

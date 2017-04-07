@@ -30,7 +30,7 @@ public class NavigationActivity extends AppCompatActivity
 
     public IngredientMethods ingredientMethods;
     public RatingMethods ratingMethods;
-
+    public int idUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,7 @@ public class NavigationActivity extends AppCompatActivity
         ingredientMethods=new IngredientMethods();
         ratingMethods=new RatingMethods();
         Button btnSearchProduct, btnSearchIngredient, btnTryOcr;
-        final int idUser= getIntent().getExtras().getInt("userId");
+        idUser= getIntent().getExtras().getInt("userId");
 
         btnSearchProduct= (Button) findViewById(R.id.btnSearchProduct);
         btnSearchIngredient= (Button) findViewById(R.id.btnSearchIngredient);
@@ -114,6 +114,7 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.menu_analyses) {
             intent=new Intent(getApplicationContext(),AnalysesActivity.class);
+           intent.putExtra("userId",idUser);
             startActivity(intent);
         } else if (id == R.id.menu_logout) {
             finish();

@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         tvApp= (TextView) findViewById(R.id.tvApp);
         tvApp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-               Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
+            public void onClick(View v) {Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
                 startActivity(intent);
               //  List<User> users=userMethods.select();
                // for(User user:users){
