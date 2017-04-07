@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.android.myapplication.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
+import com.google.android.myapplication.DataBase.Model.Rating;
 
 
 import java.util.ArrayList;
@@ -102,5 +103,6 @@ public class IngredientMethods {
 
         return ingredients;
     }
+
 
 }

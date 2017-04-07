@@ -39,7 +39,7 @@ public class NavigationActivity extends AppCompatActivity
         ingredientMethods=new IngredientMethods();
         ratingMethods=new RatingMethods();
         Button btnSearchProduct, btnSearchIngredient, btnTryOcr;
-
+        final int idUser= getIntent().getExtras().getInt("userId");
 
         btnSearchProduct= (Button) findViewById(R.id.btnSearchProduct);
         btnSearchIngredient= (Button) findViewById(R.id.btnSearchIngredient);
@@ -68,6 +68,7 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(),OcrActivity.class);
+                intent.putExtra("userId",idUser);
                 startActivity(intent);
             }
         });

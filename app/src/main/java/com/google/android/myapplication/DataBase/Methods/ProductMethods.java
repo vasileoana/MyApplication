@@ -18,7 +18,7 @@ public class ProductMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, "+ Product.label_function+ " TEXT, +" +
+        return "CREATE TABLE "+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
                Product.label_description+ " TEXT, "+ Product.label_brand + " TEXT);";
 
     }
@@ -32,7 +32,6 @@ public class ProductMethods {
             ContentValues values = new ContentValues();
             values.put(Product.label_idCategory,product.getIdCategory());
             values.put(Product.label_description,product.getDescription());
-            values.put(Product.label_function,product.getFunction());
             values.put(Product.label_brand,product.getBrand());
 
             // Inserting Row
@@ -60,7 +59,6 @@ public class ProductMethods {
                 product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
                 product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
                 product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
-                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
                 product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
                 products.add(product);
             } while (cursor.moveToNext());
@@ -73,5 +71,26 @@ public class ProductMethods {
         return products;
     }
 
+
+    public int getIdProduct(Product product) {
+        int id=0;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT "+ Product.label_idProduct+" FROM " + Product.TABLE+ " WHERE "+Product.label_idCategory+"="+product.getIdCategory()+" AND "+Product.label_brand+"='"+product.getBrand()+ "' AND "+Product.label_description+"='"+product.getDescription()+"';";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                id=Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct)));
+
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return id;
+    }
 
 }

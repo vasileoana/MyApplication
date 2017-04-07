@@ -49,8 +49,8 @@ public class OcrActivity extends Activity {
     private TextView scanResults;
     private TextRecognizer detector;
     private static final String LOG_TAG = "Text API";
-    ArrayList<String> ingredients;
-
+    private ArrayList<String> ingredients;
+    private int idUser=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class OcrActivity extends Activity {
         scanResults = (EditText) findViewById(R.id.results);
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         ingredients=new ArrayList<>();
-
+          idUser= getIntent().getExtras().getInt("userId");
 
 
     }
@@ -249,6 +249,7 @@ public class OcrActivity extends Activity {
         }
         Intent i=new Intent(getApplicationContext(),ListIngredientsActivity.class );
         i.putStringArrayListExtra("list",ingredients);
+        i.putExtra("userId",idUser);
         startActivity(i);
     }
 }

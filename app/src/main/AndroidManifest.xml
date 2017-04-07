@@ -35,14 +35,15 @@
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.ProfileActivity" />
         <activity android:name=".Activities.SearchProductActivity" />
-        <activity android:name=".Activities.SearchIngredientActivity" />
+        <activity android:name=".Activities.SearchIngredientActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".Activities.ListIngredientsActivity" />
         <activity
             android:name=".Activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".Activities.AnalysesActivity" />
+        <activity android:name=".Activities.AnalysesActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".Activities.MainActivity">
         <intent-filter>

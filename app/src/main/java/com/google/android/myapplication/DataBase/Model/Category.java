@@ -10,7 +10,7 @@ public class Category {
 
     public static final String label_categoryName="CategoryName";
     public static final String label_idCategory="IdCategory";
-    public static final String label_idParent="IdParent";
+    public static final String label_idParent="idSuccessor";
 
     private int idCategory;
     private int idParent;

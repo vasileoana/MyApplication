@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.android.myapplication.DataBase.DatabaseManager;
+import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.Rating;
 
 import java.util.ArrayList;
@@ -69,6 +70,20 @@ public class RatingMethods {
     }
 
 
+    public String getRating(int idIngredientRating) {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT "+ Rating.label_rating +" FROM " + Rating.TABLE+" WHERE "+Rating.label_idRating + "="+idIngredientRating;
+        String rating=null;
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
+        if (cursor.moveToFirst()) {
+            rating= cursor.getString(cursor.getColumnIndex(Rating.label_rating));
+        }
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return rating;
+    }
 
 }

@@ -19,6 +19,12 @@ public class ProductAnalysis {
     private int idUser;
     private String date;
 
+    public ProductAnalysis(int idProduct, int idUser, String date) {
+        this.idProduct = idProduct;
+        this.idUser = idUser;
+        this.date = date;
+    }
+
     public int getIdProductAnalysis() {
         return idProductAnalysis;
     }

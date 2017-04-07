@@ -24,13 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvRegister;
     private TextView tvLogin,tvApp;
 
+    UserMethods userMethods;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+    userMethods=new UserMethods();
 
         tvRegister= (TextView) findViewById(R.id.tvRegister);
         tvRegister.setOnClickListener(new View.OnClickListener() {
@@ -55,8 +57,12 @@ public class MainActivity extends AppCompatActivity {
         tvApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
+               Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
                 startActivity(intent);
+              //  List<User> users=userMethods.select();
+               // for(User user:users){
+               //     Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_SHORT).show();
+               // }
             }
         });
 

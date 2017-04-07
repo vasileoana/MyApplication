@@ -39,4 +39,19 @@
         completions."
     </string>
     <string name="title_activity_login2">Sign in</string>
+    <string name="search_via">Search via</string>
+    <string name="name">name</string>
+    <string name="number">rating</string>
+    <string name="rating">rating</string>
+    <string name="firstLetter">first letter</string>
+    <string name="filter_by">Filter by</string>
+    <string name="contains">contains</string>
+    <string name="starts_with">starts with</string>
+    <string name="enter_text_to_search">Enter text to search</string>
+    <string name="Save_analysis">Save analysis</string>
+    <string name="productFunction">Function</string>
+    <string name="productDescription">Description</string>
+    <string name="productBrand">Brand</string>
+    <string name="Category">Category</string>
+    <string name="OK">ok</string>
 </resources>

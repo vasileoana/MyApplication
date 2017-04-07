@@ -20,7 +20,7 @@ public class CategoryMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ Category.TABLE+ " ( "+ Category.label_idCategory+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Category.label_categoryName+ " TEXT UNIQUE "+Category.label_idParent+ " INTEGER);";
+        return "CREATE TABLE "+ Category.TABLE+ " ( "+ Category.label_idCategory+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Category.label_categoryName+ " TEXT UNIQUE, "+Category.label_idParent+ " INTEGER);";
 
     }
 
@@ -72,6 +72,50 @@ public class CategoryMethods {
         return categories;
     }
 
+
+    public List<String> selectCategories() {
+        List<String> categories = new ArrayList<>();
+        String category;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Category.TABLE;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                category=cursor.getString(cursor.getColumnIndex(Category.label_categoryName));
+                categories.add(category);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return categories;
+    }
+
+
+    public int getIdCategory(String category) {
+        int idCategory=0;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Category.TABLE+ " WHERE "+Category.label_categoryName+ "='"+category+"'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+               idCategory=Integer.parseInt(cursor.getString(cursor.getColumnIndex(Category.label_idCategory)));
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return idCategory;
+    }
 
 
 }

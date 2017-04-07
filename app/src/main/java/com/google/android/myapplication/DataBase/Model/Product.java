@@ -10,23 +10,21 @@ public class Product {
 
     public static final String label_idProduct="IdProduct";
     public static final String label_idCategory="IdCategory";
-    public static final String label_function="Function";
     public static final String label_description="Description";
     public static final String label_brand="Brand";
 
     private int idProduct;
     private int idCategory;
-    private String function;
     private String description;
     private String brand;
 
     public Product() {
     }
 
-    public Product(String function, String description,String brand) {
-        this.function = function;
+    public Product(String description,String brand,int idCategory) {
         this.description = description;
         this.brand=brand;
+        this.idCategory=idCategory;
     }
 
     public int getIdProduct() {
@@ -45,13 +43,6 @@ public class Product {
         this.idCategory = idCategory;
     }
 
-    public String getFunction() {
-        return function;
-    }
-
-    public void setFunction(String function) {
-        this.function = function;
-    }
 
     public String getDescription() {
         return description;
@@ -75,7 +66,6 @@ public class Product {
         return "Product{" +
                 "idProduct=" + idProduct +
                 ", idCategory=" + idCategory +
-                ", function='" + function + '\'' +
                 ", description='" + description + '\'' +
                 ", brand='" + brand + '\'' +
                 '}';
