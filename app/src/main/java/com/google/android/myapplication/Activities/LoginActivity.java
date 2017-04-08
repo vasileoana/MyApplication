@@ -15,12 +15,11 @@ import com.google.android.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-    private UserMethods userMethods;
-    private String username, password;
-    private User user;
-    private EditText etUsernameLogin, etPasswordLogin;
-    private TextInputLayout tilUsernameLogin, tilPasswordLogin;
+     UserMethods userMethods;
+     String username, password;
+     User user;
+     EditText etUsernameLogin, etPasswordLogin;
+     TextInputLayout tilUsernameLogin, tilPasswordLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

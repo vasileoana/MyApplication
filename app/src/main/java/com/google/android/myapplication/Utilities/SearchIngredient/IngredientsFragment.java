@@ -1,6 +1,5 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.SearchIngredient;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,32 +17,27 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.editable;
 
 /**
  * Created by Oana on 06-Apr-17.
  */
 
-public class ListViewFragmentIngredients extends Fragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class IngredientsFragment extends android.support.v4.app.Fragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
     private Context context;
-    private GridListAdapter adapter;
+    private ListViewAdapter adapter;
     private List<Ingredient> arrayList;
     private RadioGroup searchViaRadioGroup, filterByRadioGroup;
     private EditText searchEditText;
     private TextView searchViaLabel, filterByLabel;
     private IngredientMethods ingredientMethods=new IngredientMethods();
-
     /*  Filter Type to identify the type of Filter  */
-    private FilterType filterType;
-
+    private FilterIngredients filterIngredients;
     /*  boolean variable for Filtering */
     private boolean isSearchWithPrefix = false;
 
-    public ListViewFragmentIngredients() {
+    public IngredientsFragment() {
     }
 
     @Override
@@ -68,7 +62,7 @@ public class ListViewFragmentIngredients extends Fragment implements RadioGroup.
 
     //Bind all Views
     private void findViews(View view) {
-        filterType = FilterType.NAME;
+        filterIngredients = FilterIngredients.NAME;
         searchViaRadioGroup = (RadioGroup) view.findViewById(R.id.search_via_radio_group);
         filterByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_type_radio_group);
         searchEditText = (EditText) view.findViewById(R.id.search_text);
@@ -81,7 +75,7 @@ public class ListViewFragmentIngredients extends Fragment implements RadioGroup.
     private void loadListView(View view) {
         ListView listView = (ListView) view.findViewById(R.id.list_view);
         arrayList = ingredientMethods.select();
-        adapter = new GridListAdapter(context, arrayList);
+        adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
     }
 
@@ -101,7 +95,7 @@ public class ListViewFragmentIngredients extends Fragment implements RadioGroup.
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 //On text changed in Edit text start filtering the list
-                adapter.filter(filterType, charSequence.toString(), isSearchWithPrefix);
+                adapter.filter(filterIngredients, charSequence.toString(), isSearchWithPrefix);
             }
 
             @Override
@@ -119,10 +113,10 @@ public class ListViewFragmentIngredients extends Fragment implements RadioGroup.
             case R.id.search_via_radio_group:
                 switch (pos) {
                     case 0:
-                        filterType = FilterType.NAME;//Change filter type to Name if pos = 0
+                        filterIngredients = FilterIngredients.NAME;//Change filter type to Name if pos = 0
                         break;
                     case 1:
-                        filterType = FilterType.RATING;//Change filter type to Number if pos = 1
+                        filterIngredients = FilterIngredients.RATING;//Change filter type to Number if pos = 1
                         break;
 
                 }

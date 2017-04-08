@@ -1,4 +1,4 @@
-package com.google.android.myapplication.DataBase;
+package com.google.android.myapplication.Utilities.DataBase;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,9 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseManager {
 
 
-
     private Integer mOpenCounter = 0;
-
     private static DatabaseManager instance;
     private static SQLiteOpenHelper mDatabaseHelper;
     private SQLiteDatabase mDatabase;
@@ -34,8 +32,8 @@ public class DatabaseManager {
     }
 
     public synchronized SQLiteDatabase openDatabase() {
-        mOpenCounter+=1;
-        if(mOpenCounter == 1) {
+        mOpenCounter += 1;
+        if (mOpenCounter == 1) {
             // Opening new database
             mDatabase = mDatabaseHelper.getWritableDatabase();
         }
@@ -43,8 +41,8 @@ public class DatabaseManager {
     }
 
     public synchronized void closeDatabase() {
-        mOpenCounter-=1;
-        if(mOpenCounter == 0) {
+        mOpenCounter -= 1;
+        if (mOpenCounter == 0) {
             // Closing database
             mDatabase.close();
 

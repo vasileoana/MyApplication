@@ -2,6 +2,7 @@ package com.google.android.myapplication.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -28,30 +29,26 @@ import java.util.List;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public IngredientMethods ingredientMethods;
-    public RatingMethods ratingMethods;
-    public int idUser;
+    int idUser;
+    Button btnSearchProduct, btnSearchIngredient, btnTryOcr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        ingredientMethods=new IngredientMethods();
-        ratingMethods=new RatingMethods();
-        Button btnSearchProduct, btnSearchIngredient, btnTryOcr;
         idUser= getIntent().getExtras().getInt("userId");
 
-        btnSearchProduct= (Button) findViewById(R.id.btnSearchProduct);
-        btnSearchIngredient= (Button) findViewById(R.id.btnSearchIngredient);
-        btnTryOcr= (Button) findViewById(R.id.btnTryOcr);
 
-
+        btnSearchProduct = (Button) findViewById(R.id.btnSearchProduct);
+        btnSearchIngredient = (Button) findViewById(R.id.btnSearchIngredient);
+        btnTryOcr = (Button) findViewById(R.id.btnTryOcr);
 
 
         btnSearchProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),SearchProductActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SearchProductActivity.class);
                 startActivity(intent);
             }
         });
@@ -59,7 +56,7 @@ public class NavigationActivity extends AppCompatActivity
         btnSearchIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),SearchIngredientActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SearchIngredientActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,18 +64,15 @@ public class NavigationActivity extends AppCompatActivity
         btnTryOcr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),OcrActivity.class);
-                intent.putExtra("userId",idUser);
+                Intent intent = new Intent(getApplicationContext(), OcrActivity.class);
+                intent.putExtra("userId", idUser);
                 startActivity(intent);
             }
         });
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -101,25 +95,22 @@ public class NavigationActivity extends AppCompatActivity
     }
 
 
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Intent intent=null;
+        Intent intent;
         if (id == R.id.menu_profile) {
-          intent=new Intent(getApplicationContext(),ProfileActivity.class);
+            intent = new Intent(getApplicationContext(), ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.menu_analyses) {
-            intent=new Intent(getApplicationContext(),AnalysesActivity.class);
-           intent.putExtra("userId",idUser);
+            intent = new Intent(getApplicationContext(), AnalysesActivity.class);
+            intent.putExtra("userId", idUser);
             startActivity(intent);
         } else if (id == R.id.menu_logout) {
             finish();
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

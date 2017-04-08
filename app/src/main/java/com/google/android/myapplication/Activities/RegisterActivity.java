@@ -27,14 +27,14 @@ import java.io.InputStreamReader;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputLayout tilUsername, tilPass, tilPass2, tilEmail;
-    private EditText etUsername, etPass, etPass2, etEmail;
-    private String username, pass, email;
-    private User user;
-    private UserMethods userMethods;
-    private IngredientMethods ingredientMethod;
-    private RatingMethods ratingMethods;
-    private CategoryMethods categoryMethods;
+     TextInputLayout tilUsername, tilPass, tilPass2, tilEmail;
+     EditText etUsername, etPass, etPass2, etEmail;
+     String username, pass, email;
+     User user;
+     UserMethods userMethods;
+     IngredientMethods ingredientMethod;
+     RatingMethods ratingMethods;
+     CategoryMethods categoryMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                 }
-
-
-
-
-
             }
         });
 

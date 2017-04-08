@@ -4,8 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.google.android.myapplication.DataBase.DatabaseManager;
-import com.google.android.myapplication.DataBase.Model.Ingredient;
+import com.google.android.myapplication.Utilities.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Rating;
 
 import java.util.ArrayList;

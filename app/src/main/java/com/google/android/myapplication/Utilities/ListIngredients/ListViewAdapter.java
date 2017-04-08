@@ -1,4 +1,4 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.ListIngredients;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,40 +25,39 @@ import java.util.List;
  * Created by Oana on 06-Apr-17.
  */
 
-public class ListViewIngredientsAdapter extends ArrayAdapter<Ingredient> {
+public class ListViewAdapter extends ArrayAdapter<Ingredient> {
 
-    private List<Ingredient> ingredients=new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private RatingMethods ratingMethods;
     private Context context;
     private int layoutResourceId;
 
-    public ListViewIngredientsAdapter(Context context, int layoutResourceId,List<Ingredient> ingredients) {
-        super(context, layoutResourceId,ingredients);
-        ratingMethods=new RatingMethods();
-        this.ingredients=ingredients;
+    public ListViewAdapter(Context context, int layoutResourceId, List<Ingredient> ingredients) {
+        super(context, layoutResourceId, ingredients);
+        ratingMethods = new RatingMethods();
+        this.ingredients = ingredients;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-
     }
 
 
     @Override
-    public View getView(int position, View convertView,  ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(layoutResourceId, null);
-            ImageView ingRating = (ImageView) view.findViewById(R.id.ivRatingIngredient);
-            TextView ingName = (TextView)view.findViewById(R.id.twIngredient);
-       String rating=ratingMethods.getRating(ingredients.get(position).getIdRating());
-        ingRating.setImageResource( returnRatingImage(rating));
+        ImageView ingRating = (ImageView) view.findViewById(R.id.ivRatingIngredient);
+        TextView ingName = (TextView) view.findViewById(R.id.twIngredient);
+        String rating = ratingMethods.getRating(ingredients.get(position).getIdRating());
+        ingRating.setImageResource(returnRatingImage(rating));
         ingName.setText(ingredients.get(position).getName());
 
         return view;
     }
 
 
-    private int returnRatingImage(String rating){
+    private int returnRatingImage(String rating) {
         switch (rating) {
             case "POOR":
                 return R.drawable.poor;

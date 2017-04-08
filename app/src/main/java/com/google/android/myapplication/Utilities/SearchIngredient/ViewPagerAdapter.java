@@ -1,4 +1,4 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.SearchIngredient;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

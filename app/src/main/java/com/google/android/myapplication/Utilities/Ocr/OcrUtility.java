@@ -1,4 +1,4 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.Ocr;
 
         import android.Manifest;
         import android.annotation.TargetApi;
@@ -14,7 +14,7 @@ package com.google.android.myapplication.Utilities;
 /**
  * Created by Shreya Kotak on 12/05/16.
  */
-public class Utility {
+public class OcrUtility {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

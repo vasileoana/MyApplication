@@ -1,4 +1,4 @@
-package com.google.android.myapplication.DataBase;
+package com.google.android.myapplication.Utilities.DataBase;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,7 +17,6 @@ import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.DataBase.Model.Rating;
 import com.google.android.myapplication.DataBase.Model.User;
-import com.google.android.myapplication.Utilities.App;
 
 /**
  * Created by Oana on 27-Feb-17.
@@ -33,7 +32,7 @@ public class DBHelper  extends SQLiteOpenHelper{
 
 
     public DBHelper() {
-        super(App.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+        super(InitializeDB.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
 

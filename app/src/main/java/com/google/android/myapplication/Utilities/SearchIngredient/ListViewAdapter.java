@@ -1,4 +1,4 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.SearchIngredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,7 +20,7 @@ import java.util.Locale;
  * Created by Oana on 06-Apr-17.
  */
 
-public class GridListAdapter  extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter {
 
     private Context context;
     private List<Ingredient> arrayList;
@@ -29,7 +29,7 @@ public class GridListAdapter  extends BaseAdapter {
     private RatingMethods ratingMethods;//duplicate list for filtering
 
     //to do particulzarizar sa caute alfabetic
-    public GridListAdapter(Context context, List<Ingredient> arrayList) {
+    public ListViewAdapter(Context context, List<Ingredient> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
          ratingMethods=new RatingMethods();
@@ -87,10 +87,10 @@ public class GridListAdapter  extends BaseAdapter {
     }
 
     // Filter Class to filter data
-    public void filter(FilterType filterType, String charText, boolean isSearchWithPrefix) {
+    public void filter(FilterIngredients filterIngredients, String charText, boolean isSearchWithPrefix) {
 
         //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
-        if (filterType == FilterType.NAME || filterType == FilterType.RATING)
+        if (filterIngredients == FilterIngredients.NAME || filterIngredients == FilterIngredients.RATING)
             charText = charText.toLowerCase(Locale.getDefault());
 
         arrayList.clear();//Clear the main ArrayList
@@ -104,7 +104,7 @@ public class GridListAdapter  extends BaseAdapter {
             for (Ingredient model : filterArrayList) {
 
                 //Now check the type of search filter
-                switch (filterType) {
+                switch (filterIngredients) {
                     case NAME:
                         if (isSearchWithPrefix) {
                             //if STARTS WITH radio button is selected then it will match the exact NAME which match with search query

@@ -1,19 +1,16 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.DataBase;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.google.android.myapplication.DataBase.DBHelper;
-import com.google.android.myapplication.DataBase.DatabaseManager;
 
 /**
  * Created by Oana on 26-Mar-17.
  */
 
-public class App extends Application {
+public class InitializeDB extends Application {
 
-    private static Context context;
-    private static DBHelper dbHelper;
+    static  Context context;
+    static DBHelper dbHelper;
 
     @Override
     public void onCreate()

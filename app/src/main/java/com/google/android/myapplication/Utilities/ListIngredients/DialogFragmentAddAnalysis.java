@@ -1,4 +1,4 @@
-package com.google.android.myapplication.Utilities;
+package com.google.android.myapplication.Utilities.ListIngredients;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -35,20 +35,22 @@ import java.util.List;
  */
 
 public class DialogFragmentAddAnalysis extends DialogFragment{
-    Button btnOk = null;
-    EditText etBrand = null;
-    EditText etDescription = null;
-    Spinner spinnerCategoriy = null;
-    Product product=null;
-    ProductAnalysis productAnalysis=null;
-    CategoryMethods categoryMethods=null;
-    ProductMethods productMethods=null;
-    ProductAnalysisMethods productAnalysisMethods=null;
-    IngredientAnalysisMethods ingredientAnalysisMethods=null;
-    int idCategory=0;
-    IngredientAnalysis ingredientAnalysis=null;
+
+    Button btnOk;
+    EditText etBrand, etDescription;
+    Spinner spinnerCategory;
+    Product product;
+    ProductMethods productMethods;
+    ProductAnalysis productAnalysis;
+    ProductAnalysisMethods productAnalysisMethods;
+    IngredientAnalysis ingredientAnalysis;
+    IngredientAnalysisMethods ingredientAnalysisMethods;
+    CategoryMethods categoryMethods;
+    int idCategory;
+
     public DialogFragmentAddAnalysis() {
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -61,10 +63,10 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
         ingredientAnalysis=new IngredientAnalysis();
         etBrand = (EditText) rootView.findViewById(R.id.etBrand);
         etDescription = (EditText) rootView.findViewById(R.id.etDescription);
-        spinnerCategoriy = (Spinner) rootView.findViewById(R.id.spinnerCategory);
+        spinnerCategory = (Spinner) rootView.findViewById(R.id.spinnerCategory);
         List<String> categories= categoryMethods.selectCategories();
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,categories);
-        spinnerCategoriy.setAdapter(adapter);
+        spinnerCategory.setAdapter(adapter);
 
         btnOk = (Button) rootView.findViewById(R.id.btnAddAnalysis);
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +76,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
 
                 String brand=etBrand.getText().toString();
                 String description=etDescription.getText().toString();
-                String category=spinnerCategoriy.getSelectedItem().toString();
+                String category=spinnerCategory.getSelectedItem().toString();
                 idCategory=categoryMethods.getIdCategory(category);
                 product=new Product(description,brand,idCategory);
                 productMethods.insert(product);
