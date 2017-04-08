@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Rating;
 
@@ -85,4 +86,17 @@ public class RatingMethods {
         return rating;
     }
 
+     public static int returnRatingImage(String rating) {
+        switch (rating) {
+            case "POOR":
+                return R.drawable.poor;
+            case "GOOD":
+                return R.drawable.good;
+            case "BEST":
+                return R.drawable.best;
+            case "AVERAGE":
+                return R.drawable.average;
+        }
+        return R.drawable.good;
+    }
 }

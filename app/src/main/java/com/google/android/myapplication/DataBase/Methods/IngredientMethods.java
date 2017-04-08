@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
 import com.google.android.myapplication.Utilities.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 
@@ -104,4 +105,29 @@ public class IngredientMethods {
     }
 
 
+    public List<Ingredient> selectIngredients(int idProdus) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        Ingredient ingredient;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT I.* FROM " + Ingredient.TABLE +" I INNER JOIN "+ IngredientAnalysis.TABLE+" IA ON I."+Ingredient.label_idIngredient+"=IA."+IngredientAnalysis.label_idIngredient+" WHERE IA."+IngredientAnalysis.label_idProduct+"="+idProdus+";";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ingredient = new Ingredient();
+                ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
+                ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
+                ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
+                ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
+                ingredients.add(ingredient);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return ingredients;
+    }
 }

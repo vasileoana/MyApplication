@@ -117,5 +117,23 @@ public class CategoryMethods {
         return idCategory;
     }
 
+    public String getCategoryName(int category) {
+        String name=null;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Category.TABLE+ " WHERE "+Category.label_idCategory+ "='"+category+"'";
 
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                name=cursor.getString(cursor.getColumnIndex(Category.label_categoryName));
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return name;
+    }
 }

@@ -50,24 +50,11 @@ public class ListViewAdapter extends ArrayAdapter<Ingredient> {
         ImageView ingRating = (ImageView) view.findViewById(R.id.ivRatingIngredient);
         TextView ingName = (TextView) view.findViewById(R.id.twIngredient);
         String rating = ratingMethods.getRating(ingredients.get(position).getIdRating());
-        ingRating.setImageResource(returnRatingImage(rating));
+        ingRating.setImageResource(RatingMethods.returnRatingImage(rating));
         ingName.setText(ingredients.get(position).getName());
 
         return view;
     }
 
 
-    private int returnRatingImage(String rating) {
-        switch (rating) {
-            case "POOR":
-                return R.drawable.poor;
-            case "GOOD":
-                return R.drawable.good;
-            case "BEST":
-                return R.drawable.best;
-            case "AVERAGE":
-                return R.drawable.average;
-        }
-        return R.drawable.good;
-    }
 }

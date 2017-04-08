@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -23,15 +24,17 @@ import java.util.List;
  * Created by Oana on 06-Apr-17.
  */
 
-public class IngredientsFragment extends android.support.v4.app.Fragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class IngredientsFragment extends android.support.v4.app.Fragment implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, ListView.OnItemClickListener {
 
     private Context context;
     private ListViewAdapter adapter;
-    private List<Ingredient> arrayList;
-    private RadioGroup searchViaRadioGroup, filterByRadioGroup;
+    List<Ingredient> arrayList;
+    private RadioGroup searchViaRadioGroup, filterNameByRadioGroup, filterRatingByRadioGroup;
     private EditText searchEditText;
     private TextView searchViaLabel, filterByLabel;
-    private IngredientMethods ingredientMethods=new IngredientMethods();
+    private IngredientMethods ingredientMethods = new IngredientMethods();
+    private int rating;
+    ListView listView;
     /*  Filter Type to identify the type of Filter  */
     private FilterIngredients filterIngredients;
     /*  boolean variable for Filtering */
@@ -49,7 +52,7 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_view_fragment, container, false);
+        return inflater.inflate(R.layout.search_ingredients_list_view_fragment, container, false);
     }
 
     @Override
@@ -60,11 +63,13 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
         implementEvents();
     }
 
+
     //Bind all Views
     private void findViews(View view) {
         filterIngredients = FilterIngredients.NAME;
         searchViaRadioGroup = (RadioGroup) view.findViewById(R.id.search_via_radio_group);
-        filterByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_type_radio_group);
+        filterNameByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_name_radio_group);
+        filterRatingByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_rating_radio_group);
         searchEditText = (EditText) view.findViewById(R.id.search_text);
 
         searchViaLabel = (TextView) view.findViewById(R.id.search_via_label);
@@ -73,29 +78,30 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
 
 
     private void loadListView(View view) {
-        ListView listView = (ListView) view.findViewById(R.id.list_view);
+        listView = (ListView) view.findViewById(R.id.lv_search_ingredient);
         arrayList = ingredientMethods.select();
         adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
     }
 
     private void implementEvents() {
-        filterByRadioGroup.setOnCheckedChangeListener(this);
+        filterNameByRadioGroup.setOnCheckedChangeListener(this);
+        filterRatingByRadioGroup.setOnCheckedChangeListener(this);
         searchViaRadioGroup.setOnCheckedChangeListener(this);
         searchViaLabel.setOnClickListener(this);
         filterByLabel.setOnClickListener(this);
+        listView.setOnItemClickListener(this);
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 //On text changed in Edit text start filtering the list
-                adapter.filter(filterIngredients, charSequence.toString(), isSearchWithPrefix);
+                adapter.filter(filterIngredients, charSequence.toString(), isSearchWithPrefix, rating);
             }
 
             @Override
@@ -105,6 +111,7 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
         });
     }
 
+    boolean cautareNume = true; //to do
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -114,14 +121,20 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                 switch (pos) {
                     case 0:
                         filterIngredients = FilterIngredients.NAME;//Change filter type to Name if pos = 0
-                        break;
-                    case 1:
-                        filterIngredients = FilterIngredients.RATING;//Change filter type to Number if pos = 1
+                        cautareNume = true;
+                        filterNameByRadioGroup.setVisibility(View.GONE);
+                        filterRatingByRadioGroup.setVisibility(View.GONE);
                         break;
 
+                    case 1:
+                        filterIngredients = FilterIngredients.RATING;//Change filter type to Number if pos = 1
+                        cautareNume = false;
+                        filterNameByRadioGroup.setVisibility(View.GONE);
+                        filterRatingByRadioGroup.setVisibility(View.GONE);
+                        break;
                 }
                 break;
-            case R.id.filter_type_radio_group:
+            case R.id.filter_name_radio_group:
                 switch (pos) {
                     case 0:
                         isSearchWithPrefix = false;//Set boolean value to false
@@ -129,11 +142,26 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                     case 1:
                         isSearchWithPrefix = true;//Set boolean value to true
                         break;
-
+                }
+            case R.id.filter_rating_radio_group:
+                switch (pos) {
+                    case 0:
+                        adapter.filterRatings(filterIngredients, 0);
+                        break;
+                    case 1:
+                        adapter.filterRatings(filterIngredients, 1);
+                        break;
+                    case 2:
+                        adapter.filterRatings(filterIngredients, 2);
+                        break;
+                    case 3:
+                        adapter.filterRatings(filterIngredients, 3);
+                        break;
                 }
                 break;
         }
     }
+
 
     @Override
     public void onClick(View view) {
@@ -149,18 +177,35 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                 }
                 break;
             case R.id.filter_by_label:
-                //show hide the radio group
-                if (filterByRadioGroup.isShown()) {
+
+                if (filterNameByRadioGroup.isShown() || filterRatingByRadioGroup.isShown()) {
                     filterByLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up_dropdown, 0);
-                    filterByRadioGroup.setVisibility(View.GONE);
+                    filterNameByRadioGroup.setVisibility(View.GONE);
+                    filterRatingByRadioGroup.setVisibility(View.GONE);
                 } else {
                     filterByLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down_dropdown, 0);
-                    filterByRadioGroup.setVisibility(View.VISIBLE);
+                    if (cautareNume)
+                        filterNameByRadioGroup.setVisibility(View.VISIBLE);
+                    else
+                        filterRatingByRadioGroup.setVisibility(View.VISIBLE);
                 }
                 break;
         }
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        {
+                    android.app.FragmentManager fragmentManager = getActivity().getFragmentManager();
+                    DialogFragmentViewIngredient dialogFragment = new DialogFragmentViewIngredient();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("poz", position);
+                    bundle.putString("from",this.getClass().getSimpleName());
+                    dialogFragment.setArguments(bundle);
+                    dialogFragment.show(fragmentManager, "Ingredient Details");
 
+        }
+
+    }
 }

@@ -13,6 +13,7 @@ import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,15 +27,18 @@ public class ListViewAdapter extends BaseAdapter {
     private List<Ingredient> arrayList;
     private LayoutInflater inflater;
     private List<Ingredient> filterArrayList;
+    private List<Ingredient> filterByName;
+    private List<Ingredient> filterByRating;
     private RatingMethods ratingMethods;//duplicate list for filtering
 
     //to do particulzarizar sa caute alfabetic
     public ListViewAdapter(Context context, List<Ingredient> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-         ratingMethods=new RatingMethods();
+        ratingMethods = new RatingMethods();
         inflater = LayoutInflater.from(context);
-
+        filterByName=new ArrayList<>();
+        filterByRating=new ArrayList<>();
         this.filterArrayList = new ArrayList<>();//initiate filter list
         this.filterArrayList.addAll(arrayList);//add all items of array list to filter list
     }
@@ -56,7 +60,7 @@ public class ListViewAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView( final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
@@ -73,7 +77,7 @@ public class ListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
 
         Ingredient model = arrayList.get(i);
-        String rating=ratingMethods.getRating(arrayList.get(i).getIdRating());
+        String rating = ratingMethods.getRating(arrayList.get(i).getIdRating());
         viewHolder.name.setText(model.getName());
         viewHolder.ingRating.setImageResource(returnRatingImage(rating));
 
@@ -87,7 +91,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // Filter Class to filter data
-    public void filter(FilterIngredients filterIngredients, String charText, boolean isSearchWithPrefix) {
+    public void filter(FilterIngredients filterIngredients, String charText, boolean isSearchWithPrefix, int rating) {
 
         //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
         if (filterIngredients == FilterIngredients.NAME || filterIngredients == FilterIngredients.RATING)
@@ -117,27 +121,53 @@ public class ListViewAdapter extends BaseAdapter {
                         }
 
                         break;
-                    case RATING:
-                        if (isSearchWithPrefix) {
-                            //if STARTS WITH radio button is selected then it will match the exact EMAIL which match with search query
-                            if ((model.getName()).toLowerCase(Locale.getDefault()).startsWith(charText))
-                                arrayList.add(model);
-                        } else {
-                            //if CONTAINS radio button is selected then it will match the EMAIL wherever it contains search query
-                            if ((model.getName()).toLowerCase(Locale.getDefault()).contains(charText))
-                                arrayList.add(model);
-                        }
-
-                        break;
 
                 }
 
             }
         }
         notifyDataSetChanged();
+        filterByRating.clear();
+        filterByRating.addAll(arrayList);
+
+
+    }
+    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
+    public void filterRatings(FilterIngredients filterIngredients, int rating) {
+
+        arrayList.clear();
+      //Clear the main ArrayList
+            for (int i = 0; i < filterByRating.size(); i++) {
+                Ingredient ingredient = filterByRating.get(i);
+                    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
+                        switch (rating) {
+                            case 0: {
+                                if (ingredient.getIdRating() == 1)
+                                    arrayList.add(ingredient);
+                                break;
+                            }
+                            case 1: {
+                                if (ingredient.getIdRating() == 2)
+                                    arrayList.add(ingredient);
+                                break;
+                            }
+                            case 2: {
+                                if (ingredient.getIdRating() == 3)
+                                    arrayList.add(ingredient);
+                                break;
+                            }
+                            case 3: {
+                                if (ingredient.getIdRating() == 4)
+                                    arrayList.add(ingredient);
+                                break;
+                            }
+                        }
+                }
+        notifyDataSetChanged();
     }
 
-    private int returnRatingImage(String rating){
+
+    private int returnRatingImage(String rating) {
         switch (rating) {
             case "POOR":
                 return R.drawable.poor;

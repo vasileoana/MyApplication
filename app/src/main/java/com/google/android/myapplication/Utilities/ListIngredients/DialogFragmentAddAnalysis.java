@@ -1,7 +1,6 @@
 package com.google.android.myapplication.Utilities.ListIngredients;
 
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,10 +15,8 @@ import android.widget.Toast;
 import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMethods;
-import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
-import com.google.android.myapplication.DataBase.Model.Category;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
 import com.google.android.myapplication.DataBase.Model.Product;
@@ -37,7 +34,7 @@ import java.util.List;
 public class DialogFragmentAddAnalysis extends DialogFragment{
 
     Button btnOk;
-    EditText etBrand, etDescription;
+    EditText etBrand, etDescription,etFunction;
     Spinner spinnerCategory;
     Product product;
     ProductMethods productMethods;
@@ -54,7 +51,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.dialog_fragment_add_analysis, container, false);
+        final View rootView = inflater.inflate(R.layout.list_ingredients_dialog_fragment_add_analysis, container, false);
         getDialog().setTitle("Add analysis!");
         categoryMethods=new CategoryMethods();
         productMethods=new ProductMethods();
@@ -63,6 +60,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
         ingredientAnalysis=new IngredientAnalysis();
         etBrand = (EditText) rootView.findViewById(R.id.etBrand);
         etDescription = (EditText) rootView.findViewById(R.id.etDescription);
+        etFunction= (EditText) rootView.findViewById(R.id.etFunction);
         spinnerCategory = (Spinner) rootView.findViewById(R.id.spinnerCategory);
         List<String> categories= categoryMethods.selectCategories();
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity().getApplicationContext(),android.R.layout.simple_list_item_1,categories);
@@ -77,8 +75,9 @@ public class DialogFragmentAddAnalysis extends DialogFragment{
                 String brand=etBrand.getText().toString();
                 String description=etDescription.getText().toString();
                 String category=spinnerCategory.getSelectedItem().toString();
+                String function=etFunction.getText().toString();
                 idCategory=categoryMethods.getIdCategory(category);
-                product=new Product(description,brand,idCategory);
+                product=new Product(description,brand,idCategory,function);
                 productMethods.insert(product);
                 int idProdus=productMethods.getIdProduct(product);
                 String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());

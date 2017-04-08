@@ -54,4 +54,9 @@
     <string name="productBrand">Brand</string>
     <string name="Category">Category</string>
     <string name="OK">ok</string>
+    <string name="average">average</string>
+    <string name="best">best</string>
+    <string name="good">good</string>
+    <string name="poor">poor</string>
+    <string name="Function">Function</string>
 </resources>

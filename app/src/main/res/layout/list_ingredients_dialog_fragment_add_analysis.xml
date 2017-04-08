@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
-   <TextView
-       android:layout_marginTop="20sp"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="@string/Category"/>
+
+
+
     <Spinner
+        android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinnerCategory"/>
+        android:spinnerMode="dialog"
+        android:background="@color/colorPrimary"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilFunction"
@@ -52,9 +53,24 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilFunction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <EditText
+            android:id="@+id/etFunction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/productFunction"
+            />
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnAddAnalysis"
+        android:background="#ffffff"
         android:text="@string/OK"/>
 </LinearLayout>

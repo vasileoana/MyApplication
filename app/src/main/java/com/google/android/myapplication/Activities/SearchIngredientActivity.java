@@ -30,8 +30,7 @@ public class SearchIngredientActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         android.support.v4.app.Fragment fragment = new IngredientsFragment();
-        adapter.addFrag(fragment, "ListView");
-
+        adapter.addFrag(fragment);
         viewPager.setAdapter(adapter);
     }
 }

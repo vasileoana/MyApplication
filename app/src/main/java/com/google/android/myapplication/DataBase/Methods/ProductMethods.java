@@ -20,7 +20,7 @@ public class ProductMethods {
     public static String create()
     {
         return "CREATE TABLE "+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
-               Product.label_description+ " TEXT, "+ Product.label_brand + " TEXT);";
+               Product.label_description+ " TEXT, "+Product.label_function+ " TEXT, "+ Product.label_brand + " TEXT);";
 
     }
 
@@ -34,6 +34,7 @@ public class ProductMethods {
             values.put(Product.label_idCategory,product.getIdCategory());
             values.put(Product.label_description,product.getDescription());
             values.put(Product.label_brand,product.getBrand());
+            values.put(Product.label_function,product.getFunction());
 
             // Inserting Row
             code = (int) db.insert(Product.TABLE, null, values);
@@ -61,6 +62,7 @@ public class ProductMethods {
                 product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
                 product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
                 product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
                 products.add(product);
             } while (cursor.moveToNext());
         }
@@ -76,7 +78,7 @@ public class ProductMethods {
     public int getIdProduct(Product product) {
         int id=0;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT "+ Product.label_idProduct+" FROM " + Product.TABLE+ " WHERE "+Product.label_idCategory+"="+product.getIdCategory()+" AND "+Product.label_brand+"='"+product.getBrand()+ "' AND "+Product.label_description+"='"+product.getDescription()+"';";
+        String selectQuery = " SELECT "+ Product.label_idProduct+" FROM " + Product.TABLE+ " WHERE "+Product.label_idCategory+"="+product.getIdCategory()+" AND "+Product.label_brand+"='"+product.getBrand()+ "' AND "+Product.label_description+"='"+product.getDescription()+"' AND "+Product.label_function+"='"+product.getFunction()+"';";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -110,6 +112,7 @@ public class ProductMethods {
                 product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
                 product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
                 product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
                 products.add(product);
             } while (cursor.moveToNext());
         }

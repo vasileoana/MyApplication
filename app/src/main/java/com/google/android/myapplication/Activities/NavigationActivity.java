@@ -29,14 +29,14 @@ import java.util.List;
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    int idUser;
+    int idUser=-1;
     Button btnSearchProduct, btnSearchIngredient, btnTryOcr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-
+            if(getIntent().getExtras().get("tipUtilizator").equals("logat"))
         idUser= getIntent().getExtras().getInt("userId");
 
 

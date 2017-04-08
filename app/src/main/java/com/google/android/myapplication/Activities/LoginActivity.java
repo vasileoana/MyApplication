@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
                        intent.putExtra("userId",user.getIdUser());
+                        intent.putExtra("tipUtilizator","logat");
                         startActivity(intent);
                     }
                 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -12,6 +13,7 @@ import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddAnalysis;
 import com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter;
+import com.google.android.myapplication.Utilities.SearchIngredient.DialogFragmentViewIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,24 @@ public class ListIngredientsActivity extends AppCompatActivity {
         }
         ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.search_ingredients_adapter, ingredientsBD);
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                DialogFragmentViewIngredient dialogFragment = new DialogFragmentViewIngredient();
+                Bundle bundle = new Bundle();
+                bundle.putInt("poz",position);
+                bundle.putString("from",ListIngredientsActivity.class.getSimpleName());
+                dialogFragment.setArguments(bundle);
+                dialogFragment.show(fragmentManager, "Ingredient Details");
+
+            }
+        });
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+
+
         int idUser = 0;
         if (bundle != null) {
             idUser = bundle.getInt("userId");
