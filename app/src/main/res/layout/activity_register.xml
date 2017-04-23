@@ -86,7 +86,7 @@
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
-<Button
+    <Button
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
@@ -102,6 +102,14 @@
     android:layout_marginTop="30dp"
     android:text="@string/confidential"/>
 
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_gravity="center_horizontal"
+        />
 
 
 </LinearLayout>

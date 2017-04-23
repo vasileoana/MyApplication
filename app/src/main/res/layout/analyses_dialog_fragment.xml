@@ -1,41 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp"
+    android:background="#f7f7dd"
+    android:layout_marginTop="10dp">
 
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+
+           >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Categorie"/>
 
         <TextView
             android:id="@+id/tvAnalysysCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textSize="15sp" />
+            />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Functie"/>
         <TextView
             android:id="@+id/tvAnalysysProductFunction"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+
             android:layout_below="@+id/tvAnalysysCategoryName"/>
 
-        <TextView
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Descriere"/>
+                <TextView
             android:id="@+id/tvAnalysysProductDescription"
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:layout_below="@+id/tvAnalysysProductFunction"/>
 
-        <TextView
+
+            android:layout_below="@+id/tvAnalysysProductFunction"/>
+</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Brand"/>
+                <TextView
             android:id="@+id/tvAnalysysBrandName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="15sp"
             android:layout_below="@+id/tvAnalysysProductDescription"/>
-
-
+</LinearLayout>
 
         <ListView
             android:id="@+id/lv_analyses_ingredients"
@@ -43,7 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
             android:padding="20sp"
-            android:layout_below="@+id/tvAnalysysBrandName" />
+            android:layout_below="@+id/tvAnalysysBrandName"
+            android:background="#fff"/>
 
         <Button
             android:id="@+id/btnOK"
@@ -51,8 +90,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-70dp"
             android:text="@string/OK"
+            android:textColor="#ffff"
+            android:background="@color/colorPrimary"
             android:layout_below="@+id/lv_analyses_ingredients"
            />
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -29,7 +29,6 @@ public class AnalysesActivity extends AppCompatActivity {
     ProductAnalysisMethods productAnalysisMethods;
     ListViewAdapter adapter;
     int id;
-    Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class AnalysesActivity extends AppCompatActivity {
         productMethods=new ProductMethods();
         id=getIntent().getExtras().getInt("userId");
         productAnalysisMethods=new ProductAnalysisMethods();
-        btnRefresh= (Button) findViewById(R.id.btnRefresh);
         productList=productMethods.selectProductsByUser(id);
         adapter=new ListViewAdapter(getApplicationContext(),R.layout.analyses_adapter,productList);
         lvMyAnalyses.setAdapter(adapter);
@@ -57,14 +55,6 @@ public class AnalysesActivity extends AppCompatActivity {
 
         registerForContextMenu(lvMyAnalyses);
 
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productList=productMethods.selectProductsByUser(id);
-                adapter=new ListViewAdapter(getApplicationContext(),R.layout.analyses_adapter,productList);
-                lvMyAnalyses.setAdapter(adapter);
-            }
-        });
     }
 
     @Override

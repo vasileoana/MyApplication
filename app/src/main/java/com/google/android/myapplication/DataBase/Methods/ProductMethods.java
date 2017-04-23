@@ -19,14 +19,14 @@ public class ProductMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
+        return "CREATE TABLE IF NOT EXISTS"+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
                Product.label_description+ " TEXT, "+Product.label_function+ " TEXT, "+ Product.label_brand + " TEXT);";
 
     }
 
 
-    public int insert(Product product)
-    { int code=0;
+    public long insert(Product product)
+    { long code=0;
         try {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -37,7 +37,7 @@ public class ProductMethods {
             values.put(Product.label_function,product.getFunction());
 
             // Inserting Row
-            code = (int) db.insert(Product.TABLE, null, values);
+            code= db.insertWithOnConflict(Product.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
         }
         catch(Exception e){

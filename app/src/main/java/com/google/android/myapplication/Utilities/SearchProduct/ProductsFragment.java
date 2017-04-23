@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -17,11 +18,13 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.Analyses.DialogFragmentViewAnalysis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,9 +42,9 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
     private FilterProducts filterProducts;
     private EditText searchEditText;
     private TextView searchViaLabel, filterByLabel;
-    private RadioGroup searchViaRadioGroup;
-    private Spinner spinnerBrand, spinnerCategorie;
-    private SeekBar seekBar;
+    private RadioGroup searchViaRadioGroup, sorting;
+    private Spinner spinnerCategorie;
+    private CategoryMethods categoryMethods=new CategoryMethods();
 
     public ProductsFragment() {
 
@@ -75,25 +78,30 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
         arrayList = productMethods.selectAllProducts();
         adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
+
     }
 
 
     private void findViews(View view) {
         filterProducts = FilterProducts.TEXT;
         searchViaRadioGroup = (RadioGroup) view.findViewById(R.id.search_via_radio_group);
-        spinnerBrand = (Spinner) view.findViewById(R.id.spinnerBrand);
         spinnerCategorie = (Spinner) view.findViewById(R.id.spinnerCategory);
-        seekBar = (SeekBar) view.findViewById(R.id.seekBarRating);
         searchEditText = (EditText) view.findViewById(R.id.search_text);
         searchViaLabel = (TextView) view.findViewById(R.id.search_via_label);
         filterByLabel = (TextView) view.findViewById(R.id.filter_by_label);
+        sorting=(RadioGroup)view.findViewById(R.id.rb_sort);
+        List<String> spinnerList=new ArrayList<>();
+        spinnerList.add("All");
+        spinnerList.addAll(categoryMethods.selectCategories());
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, spinnerList);
+        spinnerCategorie.setAdapter(adapter);
+        spinnerCategorie.setSelection(0);
     }
 
 
     private void implementEvents() {
-        spinnerBrand.setOnItemSelectedListener(this);
         spinnerCategorie.setOnItemSelectedListener(this);
-        //seekBar.setOnSeekBarChangeListener(this);
+        sorting.setOnCheckedChangeListener(this);
         searchViaRadioGroup.setOnCheckedChangeListener(this);
         searchViaLabel.setOnClickListener(this);
         filterByLabel.setOnClickListener(this);
@@ -126,33 +134,27 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
                 switch (pos) {
                     case 0:
                         filterProducts = FilterProducts.TEXT;//Change filter type to Name if pos = 0
-                        spinnerBrand.setVisibility(View.GONE);
                         spinnerCategorie.setVisibility(View.GONE);
-                        seekBar.setVisibility(View.GONE);
-                        searchEditText.setVisibility(View.GONE);
+                        searchEditText.setVisibility(View.VISIBLE);
+                        sorting.setVisibility(View.GONE);
+                        adapter.filter(filterProducts,"");
                         break;
 
                     case 1:
-                        filterProducts = FilterProducts.RATING;//Change filter type to Number if pos = 1
-                        spinnerBrand.setVisibility(View.GONE);
-                        spinnerCategorie.setVisibility(View.GONE);
-                        seekBar.setVisibility(View.GONE);
+                        filterProducts = FilterProducts.CATEGORIE;//Change filter type to Number if pos = 1
+                        spinnerCategorie.setVisibility(View.VISIBLE);
                         searchEditText.setVisibility(View.GONE);
+                        sorting.setVisibility(View.GONE);
+
                         break;
                     case 2:
-                        filterProducts = FilterProducts.BRAND;//Change filter type to Number if pos = 1
-                        spinnerBrand.setVisibility(View.GONE);
+                        filterProducts = FilterProducts.SORTARE;//Change filter type to Number if pos = 1
                         spinnerCategorie.setVisibility(View.GONE);
-                        seekBar.setVisibility(View.GONE);
                         searchEditText.setVisibility(View.GONE);
+                        sorting.setVisibility(View.VISIBLE);
+
                         break;
-                    case 3:
-                        filterProducts = FilterProducts.CATEGORIE;//Change filter type to Number if pos = 1
-                        spinnerBrand.setVisibility(View.GONE);
-                        spinnerCategorie.setVisibility(View.GONE);
-                        seekBar.setVisibility(View.GONE);
-                        searchEditText.setVisibility(View.GONE);
-                        break;
+
                 }
                 break;
         }
@@ -175,27 +177,24 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
                 break;
             case R.id.filter_by_label:
 
-                if (spinnerBrand.isShown() || spinnerCategorie.isShown() || searchEditText.isShown() || seekBar.isShown()) {
+                if ( spinnerCategorie.isShown() || searchEditText.isShown() || sorting.isShown()) {
                     filterByLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up_dropdown, 0);
-                    spinnerBrand.setVisibility(View.GONE);
                     spinnerCategorie.setVisibility(View.GONE);
                     searchEditText.setVisibility(View.GONE);
-                    seekBar.setVisibility(View.GONE);
-                } else {
+                    sorting.setVisibility(View.GONE);
+                        } else {
                     filterByLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down_dropdown, 0);
                     switch (filterProducts) {
                         case TEXT: {
                             searchEditText.setVisibility(View.VISIBLE);
                             break;
                         }
-                        case RATING: {
-                            seekBar.setVisibility(View.VISIBLE);
-                            break;
+                        case SORTARE: {
+                            sorting.setVisibility(View.VISIBLE);
+                            //todo ceva sortari alfabetice dupa data , categorie idk
+                                break;
                         }
-                        case BRAND: {
-                            spinnerBrand.setVisibility(View.VISIBLE);
-                            break;
-                        }
+
                         case CATEGORIE: {
                             spinnerCategorie.setVisibility(View.VISIBLE);
                             break;
@@ -216,8 +215,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
             android.app.FragmentManager fragmentManager = getActivity().getFragmentManager();
             DialogFragmentViewAnalysis dialogFragment = new DialogFragmentViewAnalysis();
             Bundle bundle = new Bundle();
-            bundle.putInt("poz", position);
-            bundle.putString("from", this.getClass().getSimpleName());
+            bundle.putInt("position", position);
             dialogFragment.setArguments(bundle);
             dialogFragment.show(fragmentManager, "Analyses Details");
 
@@ -228,10 +226,10 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        adapter.filterCategories(spinnerCategorie.getSelectedItem().toString());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

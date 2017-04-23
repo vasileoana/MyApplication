@@ -19,13 +19,13 @@ public class RatingMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ Rating.TABLE+ " ( "+ Rating.label_idRating+ " INTEGER PRIMARY KEY, "+Rating.label_rating+ " TEXT UNIQUE);";
+        return "CREATE TABLE IF NOT EXISTS"+ Rating.TABLE+ " ( "+ Rating.label_idRating+ " INTEGER PRIMARY KEY, "+Rating.label_rating+ " TEXT UNIQUE);";
 
     }
 
 
-    public int insert(Rating rating)
-    { int code=0;
+    public long insert(Rating rating)
+    { long code=0;
        try {
 
            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -35,8 +35,7 @@ public class RatingMethods {
 
 
            // Inserting Row
-           code = (int) db.insert(Rating.TABLE, null, values);
-           DatabaseManager.getInstance().closeDatabase();
+           code= db.insertWithOnConflict(Rating.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);           DatabaseManager.getInstance().closeDatabase();
        }
        catch(Exception e){
            System.out.println(e.toString());

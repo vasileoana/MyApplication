@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tvAnalysysCategoryName"
-        android:textSize="15sp"/>
+        android:background="@drawable/cosmetic"
+        android:layout_marginEnd="15dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvAnalysysProductFunction"
-        android:textSize="15sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvAnalysysCategoryName"
+                android:textColor="#86867e"
+                android:textSize="14sp"
+                />
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvAnalysysBrandName"
+                android:textColor="#C17788"
+                android:textSize="16sp"
+                />
 
-    <TextView
-       android:layout_alignParentEnd="true"
-        android:paddingEnd="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvAnalysysBrandName"
-        android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvAnalysysProductFunction"
+                android:textColor="#47a386"
+                android:textSize="13sp"/>
 
-</LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+

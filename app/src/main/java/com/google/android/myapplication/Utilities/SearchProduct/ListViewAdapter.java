@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.google.android.myapplication.Utilities.SearchProduct.FilterProducts.RATING;
 
 /**
  * Created by Oana on 20-Apr-17.
@@ -28,8 +27,9 @@ public class ListViewAdapter extends BaseAdapter {
     private List<Product> arrayList;
     private LayoutInflater inflater;
     private List<Product> filterArrayList;
-    private CategoryMethods categoryMethods;
-
+    private List<Product> ratingArrayList;
+    private List<Product> categoriesArrayList;
+    private CategoryMethods categoryMethods=new CategoryMethods();
 
     public ListViewAdapter(Context context, List<Product> arrayList) {
         this.context = context;
@@ -38,6 +38,10 @@ public class ListViewAdapter extends BaseAdapter {
         categoryMethods = new CategoryMethods();
         this.filterArrayList = new ArrayList<>();//initiate filter list
         this.filterArrayList.addAll(arrayList);//add all items of array list to filter list
+        this.ratingArrayList=new ArrayList<>();
+        this.ratingArrayList.addAll(arrayList);
+        this.categoriesArrayList=new ArrayList<>();
+        this.categoriesArrayList.addAll(arrayList);
     }
 
 
@@ -90,7 +94,7 @@ public class ListViewAdapter extends BaseAdapter {
     public void filter(FilterProducts filterProducts, String charText) {
 
         //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
-        if (filterProducts == FilterProducts.TEXT || filterProducts == RATING || filterProducts == FilterProducts.CATEGORIE || filterProducts == FilterProducts.BRAND)
+        if (filterProducts == FilterProducts.TEXT || filterProducts == FilterProducts.SORTARE || filterProducts == FilterProducts.CATEGORIE)
             charText = charText.toLowerCase(Locale.getDefault());
 
         arrayList.clear();//Clear the main ArrayList
@@ -106,6 +110,16 @@ public class ListViewAdapter extends BaseAdapter {
                 switch (filterProducts) {
                     case TEXT: {
 
+                        if (model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
+                            arrayList.add(model);
+                        break;
+                    }
+                    case SORTARE: {
+                        if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) || model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
+                            arrayList.add(model);
+                        break;
+                    }
+                    case CATEGORIE: {
                         if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) || model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
                             arrayList.add(model);
                         break;
@@ -115,10 +129,25 @@ public class ListViewAdapter extends BaseAdapter {
             }
         }
         notifyDataSetChanged();
-
+        categoriesArrayList.clear();
+        ratingArrayList.clear();
+        categoriesArrayList.addAll(arrayList);
+        ratingArrayList.addAll(arrayList);
 
 
     }
 
+    public void filterCategories(String categorie){
+        if(!categorie.equals("All")) {
+            arrayList.clear();
+            for (Product p : categoriesArrayList) {
+                if (categoryMethods.getCategoryName(p.getIdCategory()).equals(categorie)) {
+                    arrayList.add(p);
+                }
+            }
+        }
+        notifyDataSetChanged();
+
+    }
 
 }

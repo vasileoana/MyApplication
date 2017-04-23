@@ -122,7 +122,7 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                     case 0:
                         filterIngredients = FilterIngredients.NAME;//Change filter type to Name if pos = 0
                         cautareNume = true;
-                        filterNameByRadioGroup.setVisibility(View.GONE);
+                        filterNameByRadioGroup.setVisibility(View.VISIBLE);
                         filterRatingByRadioGroup.setVisibility(View.GONE);
                         break;
 
@@ -130,7 +130,7 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                         filterIngredients = FilterIngredients.RATING;//Change filter type to Number if pos = 1
                         cautareNume = false;
                         filterNameByRadioGroup.setVisibility(View.GONE);
-                        filterRatingByRadioGroup.setVisibility(View.GONE);
+                        filterRatingByRadioGroup.setVisibility(View.VISIBLE);
                         break;
                 }
                 break;
@@ -171,6 +171,8 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
                 if (searchViaRadioGroup.isShown()) {
                     searchViaLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up_dropdown, 0);
                     searchViaRadioGroup.setVisibility(View.GONE);
+                    filterNameByRadioGroup.setVisibility(View.GONE);
+                    filterRatingByRadioGroup.setVisibility(View.GONE);
                 } else {
                     searchViaLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down_dropdown, 0);
                     searchViaRadioGroup.setVisibility(View.VISIBLE);

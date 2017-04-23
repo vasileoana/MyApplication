@@ -3,47 +3,66 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:padding="10dp" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+    android:background="#f7f7dd"
+    android:padding="10dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp" >
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
-        <Button
+        <ImageButton
+            android:layout_marginStart="40dp"
             android:id="@+id/btnSelectPhoto"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Photo" />
-    </LinearLayout>
+            android:background="@drawable/camera" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/analiza"
+            android:onClick="Ocr"
+            android:id="@+id/btnOcr"/>
+        <ImageButton
+            android:id="@+id/btnShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/doc"
+            android:onClick="Show" />
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tvIndicatii"
+        android:text="@string/tvIndicatii"
+        android:layout_marginBottom="30dp"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:layout_gravity="center_horizontal">
 
         <ImageView
             android:id="@+id/ivImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"/>
+    </ScrollView>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Get ingredients!"
-    android:onClick="Ocr"/>
+
     <EditText
         android:id="@+id/results"
         android:layout_width="wrap_content"
@@ -51,14 +70,10 @@
         android:layout_marginTop="8dp"
         android:textSize="12sp"
         android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"/>
+        tools:layout_constraintRight_creator="1" />
+</LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show analysys!"
-            android:id="@+id/btnShow"
-            android:onClick="Show"/>
-    </LinearLayout>
-</ScrollView>
+

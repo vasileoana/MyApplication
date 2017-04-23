@@ -19,7 +19,7 @@ public class ProductAnalysisMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ProductAnalysis.label_idProduct+ " INTEGER, "+ProductAnalysis.label_idUser+ " INTEGER, "+ ProductAnalysis.label_date+ " TEXT);";
+        return "CREATE TABLE IF NOT EXISTS"+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ProductAnalysis.label_idProduct+ " INTEGER, "+ProductAnalysis.label_idUser+ " INTEGER, "+ ProductAnalysis.label_date+ " TEXT);";
 
     }
 
@@ -29,9 +29,9 @@ public class ProductAnalysisMethods {
         DatabaseManager.getInstance().closeDatabase();
     }
 
-    public int insert(ProductAnalysis productAnalysis)
+    public long insert(ProductAnalysis productAnalysis)
     {
-        int code=0;
+        long code=0;
         try {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -40,7 +40,7 @@ public class ProductAnalysisMethods {
             values.put(ProductAnalysis.label_idProduct, productAnalysis.getIdProduct());
            values.put(ProductAnalysis.label_idUser, productAnalysis.getIdUser());
             // Inserting Row
-            code = (int) db.insert(ProductAnalysis.TABLE, null, values);
+            code= db.insertWithOnConflict(ProductAnalysis.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
 
 

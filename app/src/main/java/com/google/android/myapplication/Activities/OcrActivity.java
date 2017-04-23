@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,12 +40,12 @@ import com.google.android.myapplication.Utilities.Ocr.OcrUtility;
 public class OcrActivity extends Activity {
 
     int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    Button btnSelect, btnShow;
+    ImageButton btnSelect, btnShow, btnOcr;
     ImageView ivImage;
     static Bitmap bm = null;
     String userChosenTask;
     static Bitmap thumbnail;
-    TextView scanResults;
+    TextView scanResults, tvIndicatii;
     TextRecognizer detector;
     static final String LOG_TAG = "Text API";
     ArrayList<String> ingredients;
@@ -54,13 +55,17 @@ public class OcrActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
-        btnSelect = (Button) findViewById(R.id.btnSelectPhoto);
-        btnShow = (Button) findViewById(R.id.btnShow);
+        btnSelect = (ImageButton) findViewById(R.id.btnSelectPhoto);
+        btnShow = (ImageButton) findViewById(R.id.btnShow);
+        btnOcr = (ImageButton) findViewById(R.id.btnOcr);
+        btnShow.setVisibility(View.GONE);
+        btnOcr.setVisibility(View.GONE);
         btnSelect.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 selectImage();
+
             }
         });
         ivImage = (ImageView) findViewById(R.id.ivImage);
@@ -68,7 +73,7 @@ public class OcrActivity extends Activity {
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         ingredients = new ArrayList<>();
         idUser = getIntent().getExtras().getInt("userId");
-
+        tvIndicatii= (TextView) findViewById(R.id.tvIndicatii);
     }
 
     @Override
@@ -114,6 +119,7 @@ public class OcrActivity extends Activity {
             }
         });
         builder.show();
+
     }
 
     private void galleryIntent() {
@@ -121,11 +127,15 @@ public class OcrActivity extends Activity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        btnOcr.setVisibility(View.VISIBLE);
+        tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
+        btnOcr.setVisibility(View.VISIBLE);
+        tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     @Override
@@ -178,6 +188,8 @@ public class OcrActivity extends Activity {
     }
 
     public void Ocr(View view) {
+
+
         Bitmap bitmap;
         bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
         try {
@@ -200,6 +212,8 @@ public class OcrActivity extends Activity {
                         // }
                     }
                     scanResults.setVisibility(View.VISIBLE);
+                    btnShow.setVisibility(View.VISIBLE);
+                    tvIndicatii.setText("Aflati nota fiecarui ingredient!");
                 }
                 if (textBlocks.size() == 0) {
                     scanResults.setText("Scan Failed: Found nothing to scan");
@@ -236,5 +250,6 @@ public class OcrActivity extends Activity {
         i.putStringArrayListExtra("list", ingredients);
         i.putExtra("userId", idUser);
         startActivity(i);
+
     }
 }

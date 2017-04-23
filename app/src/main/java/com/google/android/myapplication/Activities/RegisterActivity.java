@@ -2,12 +2,14 @@ package com.google.android.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
@@ -35,6 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
      IngredientMethods ingredientMethod;
      RatingMethods ratingMethods;
      CategoryMethods categoryMethods;
+     ProgressBar simpleProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button btnSend = (Button) findViewById(R.id.btnSend);
 
+        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,12 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
                     etEmail.requestFocus();
                     tilEmail.setError("Type a valid email!");
                 } else {
-
+                    simpleProgressBar.setVisibility(View.VISIBLE);
                     tilEmail.setError(null);
                     username=etUsername.getText().toString().trim();
                     pass=etPass.getText().toString().trim();
                     email=etEmail.getText().toString().trim();
                     user = new User(username,pass,email);
+
 
 
                     userMethods.insert(user);

@@ -21,15 +21,15 @@ public class IngredientMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Ingredient.label_name+ " TEXT UNIQUE, "
+        return "CREATE TABLE IF NOT EXISTS"+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Ingredient.label_name+ " TEXT UNIQUE, "
                 +Ingredient.label_description+" TEXT, "+Ingredient.label_idRating+ " INTEGER);";
 
     }
 
 
-    public int insert(Ingredient ingredient)
+    public long insert(Ingredient ingredient)
     {
-        int code=0;
+        long code=0;
        try {
 
            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -39,7 +39,7 @@ public class IngredientMethods {
            values.put(Ingredient.label_idRating, ingredient.getIdRating());
 
            // Inserting Row
-           code = (int) db.insert(Ingredient.TABLE, null, values);
+           code= db.insertWithOnConflict(Ingredient.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
            DatabaseManager.getInstance().closeDatabase();
 
 

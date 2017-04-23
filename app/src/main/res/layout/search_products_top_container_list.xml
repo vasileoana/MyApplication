@@ -28,7 +28,7 @@
             android:checked="true"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="@string/name"
+            android:text="@string/text"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="@string/rating"
+            android:text="@string/category"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
@@ -50,20 +50,10 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="@string/rating"
+            android:text="@string/sort"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
-        <RadioButton
-            android:id="@+id/categorie_radio_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/rating"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
     </RadioGroup>
 
     <View
@@ -93,15 +83,17 @@
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
-        android:hint="@string/enter_text_to_search"
+        android:hint="@string/enter_text"
         android:maxLines="1"
         android:padding="8dp"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="12sp"
-        android:visibility="gone"/>
+       />
 
     <!--  Spinner for categorie -->
+
+
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
@@ -117,45 +109,45 @@
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="12sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:backgroundTint="@color/colorPrimary"
+
+        />
 
 
 
-    <!--  Spinner for brand -->
+    <!--  rb for sorting -->
 
-    <Spinner
-        android:id="@+id/spinnerBrand"
+    <RadioGroup
+        android:id="@+id/rb_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/search_bg"
-        android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_search"
-        android:gravity="center_vertical"
-        android:hint="@string/enter_text_to_search"
-        android:maxLines="1"
-        android:padding="8dp"
-        android:spinnerMode="dialog"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textSize="12sp"
-        android:visibility="gone" />
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
-    <!--  SeekBar for rating -->
-    <SeekBar
-        android:id="@+id/seekBarRating"
+    <RadioButton
+        android:id="@+id/rb_sort_asc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/search_bg"
-        android:drawablePadding="5dp"
-        android:drawableStart="@drawable/ic_search"
+        android:layout_weight="1"
+        android:checked="true"
         android:gravity="center_vertical"
-        android:hint="@string/enter_text_to_search"
-        android:maxLines="1"
-        android:padding="8dp"
+        android:padding="5dp"
+        android:text="@string/asc"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:textSize="12sp"
-        android:visibility="gone" />
+        android:textSize="12sp" />
+
+    <RadioButton
+        android:id="@+id/rb_sort_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="@string/desc"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
+</RadioGroup>
+
 </LinearLayout>

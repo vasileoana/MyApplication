@@ -5,5 +5,5 @@ package com.google.android.myapplication.Utilities.SearchProduct;
  */
 
 public enum FilterProducts {
-  BRAND, CATEGORIE, RATING, TEXT ;
+  SORTARE, CATEGORIE, TEXT ;
 }

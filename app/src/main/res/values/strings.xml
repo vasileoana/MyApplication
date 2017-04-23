@@ -67,4 +67,26 @@
     <string name="menu_delete">stergere</string>
     <string name="refresh">refresh</string>
     <string name="choose">Choose</string>
+    <string name="text">text</string>
+    <string name="category">category</string>
+    <string name="sort">sort</string>
+    <string name="enter_text">Cauta produs dupa functie, descriere, marca</string>
+    <string name="asc">asc</string>
+    <string name="desc">desc</string>
+    <string name="Categorie">Categorie: </string>
+    <string name="Functie">Functie: </string>
+    <string name="Descriere">Descriere:</string>
+    <string name="Brand">Marca:</string>
+    <string name="description">Pentru a accesa toate functionalitatile aplicatiei este necesara autentificarea.</string>
+    <string name="ocr">Realizeaza o analiza asupra produselor de ingrijire personala utilizand tehnologia de recunoastere optica a caracterelor! Trebuie sa fotografie o eticheta de produs iar aplicatia iti va oferi un rating pentru fiecare ingredient!</string>
+    <string name="Incearca">Incearca OCR</string>
+    <string name="Inregistrare">Creeaza un cont pentu a accesa toate serviciile oferite!</string>
+    <string name="welcome">Bine ai venit!</string>
+    <string name="myanalyses_text">    Acestea sunt analizele realizate si salvate de tine. Ai posibilitatea sa le vizualizezi, modifici sau stergi.</string>
+    <string name="tvIndicatii">Captureaza o fotografie sau incarca una din galerie!</string>
+    <string name="cautaPod">Cauta o analiza realizata de alti utilizatori!</string>
+    <string name="cautaIng">Cauta manual ingredientele</string>
+    <string name="incearcaOcr">Analizeaza un produs utilizand tehnologia de recunoastere optica a caracterelor</string>
+    <string name="despre">Afla mai multe informatii despre aplicatie!</string>
+    <string name="Profil">Profil</string>
 </resources>

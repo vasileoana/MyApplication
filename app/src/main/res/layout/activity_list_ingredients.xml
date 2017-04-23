@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f7f7dd"
+
     tools:context="com.google.android.myapplication.Activities.ListIngredientsActivity">
 
 
@@ -12,11 +14,16 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/btnSaveAnalysis"
+       android:textColor="#fff"
+
+       android:background="@color/colorPrimary"
        />
 
 <ListView
+    android:padding="17sp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/lvIng"
+    android:background="#f7f7dd"
     />
 </LinearLayout>

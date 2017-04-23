@@ -19,15 +19,15 @@ public class IngredientAnalysisMethods {
 
     public static String create()
     {
-        return "CREATE TABLE "+ IngredientAnalysis.TABLE+ " ( "+ IngredientAnalysis.label_idAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ IngredientAnalysis.label_idIngredient+ " INTEGER, "
+        return "CREATE TABLE IF NOT EXISTS"+ IngredientAnalysis.TABLE+ " ( "+ IngredientAnalysis.label_idAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ IngredientAnalysis.label_idIngredient+ " INTEGER, "
                 + IngredientAnalysis.label_idProduct+" INTEGER);";
 
     }
 
 
-    public int insert(IngredientAnalysis ingredientAnalysis)
+    public long insert(IngredientAnalysis ingredientAnalysis)
     {
-        int code=0;
+        long code=0;
         try {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -36,7 +36,7 @@ public class IngredientAnalysisMethods {
             values.put(IngredientAnalysis.label_idProduct, ingredientAnalysis.getIdProduct());
 
             // Inserting Row
-            code = (int) db.insert(IngredientAnalysis.TABLE, null, values);
+            code= db.insertWithOnConflict(IngredientAnalysis.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
 
 

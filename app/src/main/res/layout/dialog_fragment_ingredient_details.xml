@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f7f7dd">
 
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_centerInParent="true">
+    android:layout_centerInParent="true"
+    android:background="#f7f7dd"
+    android:layout_margin="20dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnIngredientDetails"
-        android:text="@string/OK"/>
+        android:text="@string/OK"
+        android:textColor="#ffff"
+        android:background="@color/colorPrimary"/>
 </LinearLayout>
 </RelativeLayout>

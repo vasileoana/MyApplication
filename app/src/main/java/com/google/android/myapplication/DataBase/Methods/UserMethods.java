@@ -17,23 +17,18 @@ import java.util.List;
 public class UserMethods {
 
 
-   /* private User user;
-
-    public UserMethods() {
-        user=new User();
-    }*/
 
     public static String create()
     {
-        return "CREATE TABLE "+User.TABLE+ " ( "+ User.label_idUser+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+User.label_username+ " TEXT UNIQUE, "
+        return "CREATE TABLE IF NOT EXISTS"+User.TABLE+ " ( "+ User.label_idUser+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+User.label_username+ " TEXT UNIQUE, "
                +User.label_password+" TEXT, "+User.label_email+ " TEXT UNIQUE);";
 
     }
 
 
-    public int insert(User user)
+    public long insert(User user)
     {
-        int code;
+        long code;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
         values.put(User.label_username,user.getUsername());
@@ -41,7 +36,7 @@ public class UserMethods {
         values.put(User.label_password,user.getPassword());
 
         // Inserting Row
-        code=(int)db.insert(User.TABLE, null, values);
+       code= db.insertWithOnConflict(User.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
         DatabaseManager.getInstance().closeDatabase();
 
         return code;
@@ -99,6 +94,26 @@ public class UserMethods {
 
     }
 
+
+    public User selectUserById(int id) {
+        User user=null;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + User.TABLE + " WHERE "+User.label_idUser+ " LIKE '"+id+"';";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            user=new User();
+            user.setIdUser(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.label_idUser))));
+            user.setUsername(cursor.getString(cursor.getColumnIndex(User.label_username)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(User.label_password)));
+            user.setEmail(cursor.getString(cursor.getColumnIndex(User.label_email)));
+
+        }
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+        return user;
+
+    }
 
 }
 
