@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/search_via_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/up_dropdown"
+        android:padding="5dp"
+        android:text="@string/search_via"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
+
+    <RadioGroup
+        android:id="@+id/search_via_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <RadioButton
+            android:id="@+id/text_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/name"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rating_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/rating"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/brand_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/rating"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/categorie_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/rating"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/filter_by_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/up_dropdown"
+        android:padding="5dp"
+        android:text="@string/choose"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
+
+
+    <!--  EditText for User Input -->
+    <EditText
+        android:id="@+id/search_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bg"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_text_to_search"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+
+    <!--  Spinner for categorie -->
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bg"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_search"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:spinnerMode="dialog"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+
+
+    <!--  Spinner for brand -->
+
+    <Spinner
+        android:id="@+id/spinnerBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bg"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_search"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_text_to_search"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:spinnerMode="dialog"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <!--  SeekBar for rating -->
+    <SeekBar
+        android:id="@+id/seekBarRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/search_bg"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_search"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_text_to_search"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:visibility="gone" />
+</LinearLayout>

@@ -15,6 +15,10 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
+import com.google.android.myapplication.Utilities.SearchProduct.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Oana on 08-Apr-17.
@@ -34,6 +38,8 @@ public class DialogFragmentViewIngredient extends DialogFragment {
         ratingMethods = new RatingMethods();
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -45,11 +51,12 @@ public class DialogFragmentViewIngredient extends DialogFragment {
         btnOk = (Button) rootView.findViewById(R.id.btnIngredientDetails);
         ingredientMethods=new IngredientMethods();
         Bundle bundle = getArguments();
+
         position = bundle.getInt("poz");
 
         if(bundle.getString("from").equals(IngredientsFragment.class.getSimpleName()))
         {
-            ingredient=ingredientMethods.select().get(position);
+            ingredient=ListViewAdapter.arrayList.get(position);
         }
             else if(bundle.getString("from").equals(ListIngredientsActivity.class.getSimpleName())) {
             ingredient = ListIngredientsActivity.ingredientsBD.get(position);

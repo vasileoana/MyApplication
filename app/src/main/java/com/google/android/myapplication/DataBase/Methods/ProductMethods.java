@@ -47,6 +47,29 @@ public class ProductMethods {
     }
 
 
+    public int update(Product product)
+    { int code=0;
+        try {
+
+            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+            ContentValues values = new ContentValues();
+            values.put(Product.label_idCategory,product.getIdCategory());
+            values.put(Product.label_description,product.getDescription());
+            values.put(Product.label_brand,product.getBrand());
+            values.put(Product.label_function,product.getFunction());
+
+            // Update Row
+            code = (int) db.update(Product.TABLE, values, Product.label_idProduct+"=?", new String[] {String.valueOf(product.getIdProduct())} );
+            DatabaseManager.getInstance().closeDatabase();
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
+        return code;
+    }
+
+
+
     public List<Product> select() {
         List<Product> products = new ArrayList<>();
         Product product;
@@ -96,6 +119,11 @@ public class ProductMethods {
         return id;
     }
 
+    public void delete(int idProduct) {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        db.delete(Product.TABLE,"IdProduct=?",new String[]{(String.valueOf(idProduct))});
+        DatabaseManager.getInstance().closeDatabase();
+    }
 
     public List<Product> selectProductsByUser(int idUser) {
         List<Product> products = new ArrayList<>();
@@ -123,5 +151,86 @@ public class ProductMethods {
 
         return products;
     }
+    public Product selectProductById(int id) {
 
+        Product product=new Product();
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " WHERE "+Product.label_idProduct+"="+id+";";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                product = new Product();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
+                product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return product;
+    }
+
+
+    public List<Product> selectAllProductsExceptUsers(int idUser) {
+        List<Product> products = new ArrayList<>();
+        Product product;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+" WHERE "+ProductAnalysis.label_idUser+"!="+idUser+";";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                product = new Product();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
+                product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
+                products.add(product);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return products;
+    }
+
+
+
+    public List<Product> selectAllProducts() {
+        List<Product> products = new ArrayList<>();
+        Product product;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+";";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                product = new Product();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
+                product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
+                products.add(product);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return products;
+    }
 }

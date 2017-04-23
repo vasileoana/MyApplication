@@ -24,20 +24,18 @@ import java.util.Locale;
 public class ListViewAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Ingredient> arrayList;
+     static List<Ingredient> arrayList;
     private LayoutInflater inflater;
     private List<Ingredient> filterArrayList;
-    private List<Ingredient> filterByName;
     private List<Ingredient> filterByRating;
     private RatingMethods ratingMethods;//duplicate list for filtering
 
-    //to do particulzarizar sa caute alfabetic
+    //todo particulzarizar sa caute alfabetic
     public ListViewAdapter(Context context, List<Ingredient> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         ratingMethods = new RatingMethods();
         inflater = LayoutInflater.from(context);
-        filterByName=new ArrayList<>();
         filterByRating=new ArrayList<>();
         this.filterArrayList = new ArrayList<>();//initiate filter list
         this.filterArrayList.addAll(arrayList);//add all items of array list to filter list
@@ -92,77 +90,93 @@ public class ListViewAdapter extends BaseAdapter {
 
     // Filter Class to filter data
     public void filter(FilterIngredients filterIngredients, String charText, boolean isSearchWithPrefix, int rating) {
-
-        //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
-        if (filterIngredients == FilterIngredients.NAME || filterIngredients == FilterIngredients.RATING)
-            charText = charText.toLowerCase(Locale.getDefault());
-
-        arrayList.clear();//Clear the main ArrayList
-
-        //If search query is null or length is 0 then add all filterList items back to arrayList
-        if (charText.length() == 0) {
+        if(charText==null){
             arrayList.addAll(filterArrayList);
-        } else {
+        }else {
+            //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
+            if (filterIngredients == FilterIngredients.NAME || filterIngredients == FilterIngredients.RATING)
+                charText = charText.toLowerCase(Locale.getDefault());
 
-            //Else if search query is not null do a loop to all filterList items
-            for (Ingredient model : filterArrayList) {
+            arrayList.clear();//Clear the main ArrayList
 
-                //Now check the type of search filter
-                switch (filterIngredients) {
-                    case NAME:
-                        if (isSearchWithPrefix) {
-                            //if STARTS WITH radio button is selected then it will match the exact NAME which match with search query
-                            if (model.getName().toLowerCase(Locale.getDefault()).startsWith(charText))
-                                arrayList.add(model);
-                        } else {
-                            //if CONTAINS radio button is selected then it will match the NAME wherever it contains search query
-                            if (model.getName().toLowerCase(Locale.getDefault()).contains(charText))
-                                arrayList.add(model);
-                        }
+            //If search query is null or length is 0 then add all filterList items back to arrayList
+            if (charText.length() == 0) {
+                arrayList.addAll(filterArrayList);
+            } else {
 
-                        break;
+                //Else if search query is not null do a loop to all filterList items
+                for (Ingredient model : filterArrayList) {
+
+                    //Now check the type of search filter
+                    switch (filterIngredients) {
+                        case NAME:
+                            if (isSearchWithPrefix) {
+                                //if STARTS WITH radio button is selected then it will match the exact NAME which match with search query
+                                if (model.getName().toLowerCase(Locale.getDefault()).startsWith(charText))
+                                    arrayList.add(model);
+                            } else {
+                                //if CONTAINS radio button is selected then it will match the NAME wherever it contains search query
+                                if (model.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                                    arrayList.add(model);
+                            }
+
+                            break;
+                        case RATING:
+                            if (isSearchWithPrefix) {
+                                //if STARTS WITH radio button is selected then it will match the exact NAME which match with search query
+                                if (model.getName().toLowerCase(Locale.getDefault()).startsWith(charText))
+                                    arrayList.add(model);
+                            } else {
+                                //if CONTAINS radio button is selected then it will match the NAME wherever it contains search query
+                                if (model.getName().toLowerCase(Locale.getDefault()).contains(charText))
+                                    arrayList.add(model);
+                            }
+                    }
 
                 }
-
             }
         }
-        notifyDataSetChanged();
-        filterByRating.clear();
-        filterByRating.addAll(arrayList);
+            notifyDataSetChanged();
+            filterByRating.clear();
+            filterByRating.addAll(arrayList);
 
 
     }
     //todo de facut o functie care returneaza id-ul pt numele ratingurilor
     public void filterRatings(FilterIngredients filterIngredients, int rating) {
+            if(rating==-1){
 
-        arrayList.clear();
-      //Clear the main ArrayList
-            for (int i = 0; i < filterByRating.size(); i++) {
-                Ingredient ingredient = filterByRating.get(i);
+            }
+            else {
+                arrayList.clear();
+                //Clear the main ArrayList
+                for (int i = 0; i < filterByRating.size(); i++) {
+                    Ingredient ingredient = filterByRating.get(i);
                     //todo de facut o functie care returneaza id-ul pt numele ratingurilor
-                        switch (rating) {
-                            case 0: {
-                                if (ingredient.getIdRating() == 1)
-                                    arrayList.add(ingredient);
-                                break;
-                            }
-                            case 1: {
-                                if (ingredient.getIdRating() == 2)
-                                    arrayList.add(ingredient);
-                                break;
-                            }
-                            case 2: {
-                                if (ingredient.getIdRating() == 3)
-                                    arrayList.add(ingredient);
-                                break;
-                            }
-                            case 3: {
-                                if (ingredient.getIdRating() == 4)
-                                    arrayList.add(ingredient);
-                                break;
-                            }
+                    switch (rating) {
+                        case 0: {
+                            if (ingredient.getIdRating() == 1)
+                                arrayList.add(ingredient);
+                            break;
                         }
+                        case 1: {
+                            if (ingredient.getIdRating() == 2)
+                                arrayList.add(ingredient);
+                            break;
+                        }
+                        case 2: {
+                            if (ingredient.getIdRating() == 3)
+                                arrayList.add(ingredient);
+                            break;
+                        }
+                        case 3: {
+                            if (ingredient.getIdRating() == 4)
+                                arrayList.add(ingredient);
+                            break;
+                        }
+                    }
                 }
+            }
         notifyDataSetChanged();
     }
 

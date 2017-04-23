@@ -73,4 +73,5 @@
         android:id="@+id/btnAddAnalysis"
         android:background="#ffffff"
         android:text="@string/OK"/>
+
 </LinearLayout>

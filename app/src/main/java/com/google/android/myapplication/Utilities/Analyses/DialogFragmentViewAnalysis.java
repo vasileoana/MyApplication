@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
@@ -53,6 +55,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
         tvAnalysysProductFunction= (TextView) rootView.findViewById(R.id.tvAnalysysProductFunction);
         tvAnalysysProductDescription=(TextView) rootView.findViewById(R.id.tvAnalysysProductDescription);
         tvAnalysysBrandName=(TextView) rootView.findViewById(R.id.tvAnalysysBrandName);
+
         btnOK= (Button) rootView.findViewById(R.id.btnOK);
 
         int position= (int) getArguments().get("position");
@@ -68,6 +71,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dismiss();
             }
         });

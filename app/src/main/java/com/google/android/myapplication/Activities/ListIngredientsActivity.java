@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
+import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddAnalysis;
@@ -26,6 +27,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
     ListView lv;
     List<String> bdIng;
     Button btnSaveAnalysis;
+    ProductMethods productMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
         ingredients = getIntent().getExtras().getStringArrayList("list");
         ingredientsBD = new ArrayList<>();
         ingredientMethods = new IngredientMethods();
+        productMethods=new ProductMethods();
         lv = (ListView) findViewById(R.id.lvIng);
         bdIng = new ArrayList<>();
         for (String ing : ingredients) {
@@ -56,21 +59,25 @@ public class ListIngredientsActivity extends AppCompatActivity {
 
             }
         });
-        Intent intent = getIntent();
+      /*  Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
 
         int idUser = 0;
         if (bundle != null) {
             idUser = bundle.getInt("userId");
         }
+*/
 
         btnSaveAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 DialogFragmentAddAnalysis dialogFragment = new DialogFragmentAddAnalysis();
+                Bundle bundle=new Bundle();
+                bundle.putString("operatie","adaugare");
+                dialogFragment.setArguments(bundle);
                 dialogFragment.show(fragmentManager, "IngredientsFragment Manager");
+
             }
         });
     }

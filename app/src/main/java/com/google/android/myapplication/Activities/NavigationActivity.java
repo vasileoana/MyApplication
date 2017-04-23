@@ -49,6 +49,7 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchProductActivity.class);
+                intent.putExtra("userId", idUser);
                 startActivity(intent);
             }
         });

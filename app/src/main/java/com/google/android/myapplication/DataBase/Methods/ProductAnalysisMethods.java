@@ -16,10 +16,6 @@ import java.util.List;
 
 public class ProductAnalysisMethods {
 
-    public static final String label_idProductAnalysis="IdProductAnalysis";
-    public static final String label_idProduct="IdProduct";
-    public static final String label_idUser="IdUser";
-    public static final String label_date="Date";
 
     public static String create()
     {
@@ -27,6 +23,11 @@ public class ProductAnalysisMethods {
 
     }
 
+    public void delete(int idProduct) {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        db.delete(ProductAnalysis.TABLE,"IdProduct=?",new String[]{(String.valueOf(idProduct))});
+        DatabaseManager.getInstance().closeDatabase();
+    }
 
     public int insert(ProductAnalysis productAnalysis)
     {

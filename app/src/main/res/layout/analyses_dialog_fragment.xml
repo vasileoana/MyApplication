@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvAnalysysCategoryName"
@@ -22,35 +16,43 @@
             android:layout_width="wrap_content"
             android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_below="@+id/tvAnalysysCategoryName"/>
 
         <TextView
             android:id="@+id/tvAnalysysProductDescription"
             android:layout_width="wrap_content"
             android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_below="@+id/tvAnalysysProductFunction"/>
 
         <TextView
             android:id="@+id/tvAnalysysBrandName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_below="@+id/tvAnalysysProductDescription"/>
 
-            android:textSize="15sp" />
+
 
         <ListView
             android:id="@+id/lv_analyses_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:padding="20sp" />
+            android:padding="20sp"
+            android:layout_below="@+id/tvAnalysysBrandName" />
 
         <Button
             android:id="@+id/btnOK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-70dp"
-            android:text="@string/OK" />
-    </LinearLayout>
+            android:text="@string/OK"
+            android:layout_below="@+id/lv_analyses_ingredients"
+           />
+
+
 </RelativeLayout>

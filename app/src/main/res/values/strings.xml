@@ -59,4 +59,12 @@
     <string name="good">good</string>
     <string name="poor">poor</string>
     <string name="Function">Function</string>
+    <string name="Salvare">Salvare</string>
+    <string name="Editare" />
+    <string name="btnEditare">Editare</string>
+    <string name="btnSalvare">Salvare</string>
+    <string name="menu_edit">editare</string>
+    <string name="menu_delete">stergere</string>
+    <string name="refresh">refresh</string>
+    <string name="choose">Choose</string>
 </resources>
