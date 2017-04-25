@@ -48,6 +48,7 @@ public class AnalysesActivity extends AppCompatActivity {
                 DialogFragmentViewAnalysis dialogFragment = new DialogFragmentViewAnalysis();
                 Bundle bundle = new Bundle();
                 bundle.putInt("position",position);
+                bundle.putString("clasa", AnalysesActivity.class.getSimpleName());
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(fragmentManager, "Analysis Details");
             }

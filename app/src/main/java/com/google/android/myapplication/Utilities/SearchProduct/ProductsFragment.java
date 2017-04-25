@@ -24,6 +24,7 @@ import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.Analyses.DialogFragmentViewAnalysis;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,13 +149,36 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
 
                         break;
                     case 2:
+
                         filterProducts = FilterProducts.SORTARE;//Change filter type to Number if pos = 1
+                        try {
+                            adapter.sortAsc();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         spinnerCategorie.setVisibility(View.GONE);
                         searchEditText.setVisibility(View.GONE);
                         sorting.setVisibility(View.VISIBLE);
 
                         break;
 
+                }
+                break;
+            case R.id.rb_sort:
+                switch(pos) {
+                    case 0:
+                        try {
+                            adapter.sortAsc();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 1:
+                        try {
+                            adapter.sortDesc();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                 }
                 break;
         }
@@ -191,7 +215,6 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
                         }
                         case SORTARE: {
                             sorting.setVisibility(View.VISIBLE);
-                            //todo ceva sortari alfabetice dupa data , categorie idk
                                 break;
                         }
 
@@ -216,6 +239,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
             DialogFragmentViewAnalysis dialogFragment = new DialogFragmentViewAnalysis();
             Bundle bundle = new Bundle();
             bundle.putInt("position", position);
+            bundle.putString("clasa", ProductsFragment.class.getSimpleName());
             dialogFragment.setArguments(bundle);
             dialogFragment.show(fragmentManager, "Analyses Details");
 

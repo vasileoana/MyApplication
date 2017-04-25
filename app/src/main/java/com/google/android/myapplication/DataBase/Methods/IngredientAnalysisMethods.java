@@ -19,7 +19,7 @@ public class IngredientAnalysisMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+ IngredientAnalysis.TABLE+ " ( "+ IngredientAnalysis.label_idAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ IngredientAnalysis.label_idIngredient+ " INTEGER, "
+        return "CREATE TABLE IF NOT EXISTS "+ IngredientAnalysis.TABLE+ " ( "+ IngredientAnalysis.label_idAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ IngredientAnalysis.label_idIngredient+ " INTEGER, "
                 + IngredientAnalysis.label_idProduct+" INTEGER);";
 
     }

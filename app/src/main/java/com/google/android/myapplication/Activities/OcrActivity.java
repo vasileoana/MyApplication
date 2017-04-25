@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -74,10 +75,19 @@ public class OcrActivity extends Activity {
         ingredients = new ArrayList<>();
         idUser = getIntent().getExtras().getInt("userId");
         tvIndicatii= (TextView) findViewById(R.id.tvIndicatii);
+
+        if (checkSelfPermission(Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    1);
+        }
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
         switch (requestCode) {
             case OcrUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -222,7 +232,7 @@ public class OcrActivity extends Activity {
                     //  scanResults.setText(scanResults.getText() + blocks + "\n");
                     //  scanResults.setText(scanResults.getText() + "---------" + "\n");
                     // scanResults.setText(scanResults.getText() + "Lines: " + "\n");
-                    scanResults.setText(scanResults.getText() + lines);
+                    scanResults.setText(scanResults.getText() + lines+" ");
                     //  scanResults.setText(scanResults.getText() + "---------" + "\n");
                     // scanResults.setText(scanResults.getText() + "Words: " + "\n");
                     // scanResults.setText(scanResults.getText() + words + "\n");

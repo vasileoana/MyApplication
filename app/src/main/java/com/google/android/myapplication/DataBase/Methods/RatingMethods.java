@@ -19,7 +19,7 @@ public class RatingMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+ Rating.TABLE+ " ( "+ Rating.label_idRating+ " INTEGER PRIMARY KEY, "+Rating.label_rating+ " TEXT UNIQUE);";
+        return "CREATE TABLE IF NOT EXISTS "+ Rating.TABLE+ " ( "+ Rating.label_idRating+ " INTEGER PRIMARY KEY, "+Rating.label_rating+ " TEXT UNIQUE);";
 
     }
 

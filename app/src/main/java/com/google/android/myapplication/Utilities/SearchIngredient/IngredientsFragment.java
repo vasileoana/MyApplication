@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +35,8 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
     List<Ingredient> arrayList;
     private RadioGroup searchViaRadioGroup, filterNameByRadioGroup, filterRatingByRadioGroup;
     private EditText searchEditText;
+    private List<String> ingredientsName=new ArrayList<>();
+
     private TextView searchViaLabel, filterByLabel;
     private IngredientMethods ingredientMethods = new IngredientMethods();
     private int rating;
@@ -71,15 +77,22 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
         filterNameByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_name_radio_group);
         filterRatingByRadioGroup = (RadioGroup) view.findViewById(R.id.filter_rating_radio_group);
         searchEditText = (EditText) view.findViewById(R.id.search_text);
-
         searchViaLabel = (TextView) view.findViewById(R.id.search_via_label);
         filterByLabel = (TextView) view.findViewById(R.id.filter_by_label);
+
     }
+
+
+
+
 
 
     private void loadListView(View view) {
         listView = (ListView) view.findViewById(R.id.lv_search_ingredient);
         arrayList = ingredientMethods.select();
+        for(Ingredient ingredient:arrayList){
+            ingredientsName.add(ingredient.getName());
+        }
         adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
     }
@@ -91,6 +104,8 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
         searchViaLabel.setOnClickListener(this);
         filterByLabel.setOnClickListener(this);
         listView.setOnItemClickListener(this);
+
+
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

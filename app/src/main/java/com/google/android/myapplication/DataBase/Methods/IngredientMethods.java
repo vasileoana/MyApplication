@@ -21,7 +21,7 @@ public class IngredientMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Ingredient.label_name+ " TEXT UNIQUE, "
+        return "CREATE TABLE IF NOT EXISTS "+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Ingredient.label_name+ " TEXT UNIQUE, "
                 +Ingredient.label_description+" TEXT, "+Ingredient.label_idRating+ " INTEGER);";
 
     }
@@ -104,6 +104,28 @@ public class IngredientMethods {
         return ingredients;
     }
 
+
+    public Ingredient selectIngredient(String nume) {
+        Ingredient ingredient=new Ingredient();
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE "+Ingredient.label_name + " LIKE '" +nume+"';";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
+                ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
+                ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
+                ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return ingredient;
+    }
 
     public List<Ingredient> selectIngredients(int idProdus) {
         List<Ingredient> ingredients = new ArrayList<>();

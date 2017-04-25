@@ -20,7 +20,7 @@ public class CategoryMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+ Category.TABLE+ " ( "+ Category.label_idCategory+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Category.label_categoryName+ " TEXT UNIQUE, "+Category.label_idParent+ " INTEGER);";
+        return "CREATE TABLE IF NOT EXISTS "+ Category.TABLE+ " ( "+ Category.label_idCategory+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Category.label_categoryName+ " TEXT UNIQUE, "+Category.label_idParent+ " INTEGER);";
 
     }
 

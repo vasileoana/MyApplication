@@ -37,10 +37,10 @@
             android:id="@+id/tvAnalysysProductFunction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_below="@+id/tvAnalysysCategoryName"/>
+            />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,17 +71,35 @@
             android:id="@+id/tvAnalysysBrandName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_below="@+id/tvAnalysysProductDescription"/>
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Data"/>
+        <TextView
+            android:id="@+id/tvAnalysysDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Ingrediente"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"/>
         <ListView
             android:id="@+id/lv_analyses_ingredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
             android:padding="20sp"
-            android:layout_below="@+id/tvAnalysysBrandName"
             android:background="#fff"/>
 
         <Button

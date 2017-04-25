@@ -13,6 +13,7 @@ import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddAnalysis;
+import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddIng;
 import com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter;
 import com.google.android.myapplication.Utilities.SearchIngredient.DialogFragmentViewIngredient;
 
@@ -26,14 +27,17 @@ public class ListIngredientsActivity extends AppCompatActivity {
     IngredientMethods ingredientMethods;
     ListView lv;
     List<String> bdIng;
-    Button btnSaveAnalysis;
+    Button btnSaveAnalysis,btnAddIng;
     ProductMethods productMethods;
+    ListViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_ingredients);
         btnSaveAnalysis = (Button) findViewById(R.id.btnSaveAnalysis);
+        btnAddIng= (Button) findViewById(R.id.btnAddIng);
         ingredients = getIntent().getExtras().getStringArrayList("list");
         ingredientsBD = new ArrayList<>();
         ingredientMethods = new IngredientMethods();
@@ -43,8 +47,9 @@ public class ListIngredientsActivity extends AppCompatActivity {
         for (String ing : ingredients) {
             ingredientsBD.addAll(ingredientMethods.selectIngredients(ing));
         }
-        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(), R.layout.search_ingredients_adapter, ingredientsBD);
+         adapter = new ListViewAdapter(getApplicationContext(), R.layout.search_ingredients_adapter, ingredientsBD);
         lv.setAdapter(adapter);
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,14 +64,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
 
             }
         });
-      /*  Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
 
-        int idUser = 0;
-        if (bundle != null) {
-            idUser = bundle.getInt("userId");
-        }
-*/
 
         btnSaveAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +76,16 @@ public class ListIngredientsActivity extends AppCompatActivity {
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(fragmentManager, "IngredientsFragment Manager");
 
+            }
+        });
+
+        btnAddIng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                DialogFragmentAddIng dialogFragmentAddIng=new DialogFragmentAddIng();
+                dialogFragmentAddIng.show(fragmentManager, "Adauga ingredient");
+                adapter.notifyDataSetChanged();
             }
         });
     }

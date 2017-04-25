@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.myapplication.Activities.AnalysesActivity;
 import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMethods;
@@ -96,7 +95,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     p.setFunction(function);
                     p.setBrand(brand);
                     p.setIdCategory(idCategory);
-                    p.setDescription(p.getDescription());
+                    p.setDescription(description);
                     productMethods.update(p);
 
                     dismiss();
@@ -117,7 +116,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     product = new Product(description, brand, idCategory, function);
                     productMethods.insert(product);
                     int idProdus = productMethods.getIdProduct(product);
-                    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
                     int idUser = (int) getActivity().getIntent().getExtras().get("userId");
                     productAnalysis = new ProductAnalysis(idProdus, idUser, date);
                     productAnalysisMethods.insert(productAnalysis);

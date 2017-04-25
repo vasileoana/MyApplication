@@ -19,7 +19,7 @@ public class ProductMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
+        return "CREATE TABLE IF NOT EXISTS "+ Product.TABLE+ " ( "+ Product.label_idProduct+ " INTEGER PRIMARY KEY, "+ Product.label_idCategory+ " INTEGER, " +
                Product.label_description+ " TEXT, "+Product.label_function+ " TEXT, "+ Product.label_brand + " TEXT);";
 
     }
@@ -178,11 +178,11 @@ public class ProductMethods {
     }
 
 
-    public List<Product> selectAllProductsExceptUsers(int idUser) {
+    public List<Product> selectAllProducts() {
         List<Product> products = new ArrayList<>();
         Product product;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+" WHERE "+ProductAnalysis.label_idUser+"!="+idUser+";";
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+";";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -206,12 +206,38 @@ public class ProductMethods {
     }
 
 
-
-    public List<Product> selectAllProducts() {
+    public List<Product> selectAllProductsAsc() {
         List<Product> products = new ArrayList<>();
         Product product;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+";";
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+" ORDER BY "+ProductAnalysis.label_date+ " ASC;";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                product = new Product();
+                product.setIdProduct(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idProduct))));
+                product.setIdCategory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Product.label_idCategory))));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(Product.label_description)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(Product.label_brand)));
+                product.setFunction(cursor.getString(cursor.getColumnIndex(Product.label_function)));
+                products.add(product);
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return products;
+    }
+
+    public List<Product> selectAllProductsDesc() {
+        List<Product> products = new ArrayList<>();
+        Product product;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Product.TABLE+ " P INNER JOIN "+ ProductAnalysis.TABLE+ " PA ON P."+Product.label_idProduct+"=PA."+ProductAnalysis.label_idProduct+" ORDER BY "+ProductAnalysis.label_date+ " DESC;";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

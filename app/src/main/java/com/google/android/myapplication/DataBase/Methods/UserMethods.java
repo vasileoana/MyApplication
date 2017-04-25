@@ -20,7 +20,7 @@ public class UserMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS"+User.TABLE+ " ( "+ User.label_idUser+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+User.label_username+ " TEXT UNIQUE, "
+        return "CREATE TABLE IF NOT EXISTS "+User.TABLE+ " ( "+ User.label_idUser+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+User.label_username+ " TEXT UNIQUE, "
                +User.label_password+" TEXT, "+User.label_email+ " TEXT UNIQUE);";
 
     }

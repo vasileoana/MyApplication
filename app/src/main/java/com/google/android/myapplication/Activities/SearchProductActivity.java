@@ -29,31 +29,6 @@ public class SearchProductActivity extends AppCompatActivity {
     ListViewAdapter adapter;
     int id;
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_product);
-        lvSearchProduct = (ListView) findViewById(R.id.lvSearchProducts);
-        productMethods = new ProductMethods();
-        productAnalysisMethods = new ProductAnalysisMethods();
-        id = getIntent().getExtras().getInt("userId");
-        productList = productMethods.selectAllProductsExceptUsers(id);
-        adapter = new ListViewAdapter(getApplicationContext(), R.layout.analyses_adapter, productList);
-        lvSearchProduct.setAdapter(adapter);
-
-        lvSearchProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                DialogFragmentViewAnalysis dialogFragment = new DialogFragmentViewAnalysis();
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", position);
-                dialogFragment.setArguments(bundle);
-                dialogFragment.show(fragmentManager, "Analysis Details");
-            }
-        });
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

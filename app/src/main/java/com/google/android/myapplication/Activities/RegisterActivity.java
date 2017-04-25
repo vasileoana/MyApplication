@@ -2,14 +2,13 @@ package com.google.android.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
@@ -17,10 +16,10 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.Category;
-import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.Rating;
 import com.google.android.myapplication.DataBase.Model.User;
 import com.google.android.myapplication.R;
+import com.google.android.myapplication.Utilities.Register.ReadIngredients;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,19 +36,19 @@ public class RegisterActivity extends AppCompatActivity {
      IngredientMethods ingredientMethod;
      RatingMethods ratingMethods;
      CategoryMethods categoryMethods;
-     ProgressBar simpleProgressBar;
+
+    ReadIngredients readIngredients;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         userMethods=new UserMethods();
         ingredientMethod=new IngredientMethods();
         ratingMethods=new RatingMethods();
         categoryMethods=new CategoryMethods();
-
+        readIngredients=new ReadIngredients();
         tilUsername = (TextInputLayout) findViewById(R.id.tilUsername);
         tilPass = (TextInputLayout) findViewById(R.id.tilPassword);
         tilPass2 = (TextInputLayout) findViewById(R.id.tilPassword2);
@@ -61,8 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
 
         Button btnSend = (Button) findViewById(R.id.btnSend);
-
-        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,63 +80,31 @@ public class RegisterActivity extends AppCompatActivity {
                     etEmail.requestFocus();
                     tilEmail.setError("Type a valid email!");
                 } else {
-                    simpleProgressBar.setVisibility(View.VISIBLE);
+
                     tilEmail.setError(null);
                     username=etUsername.getText().toString().trim();
                     pass=etPass.getText().toString().trim();
                     email=etEmail.getText().toString().trim();
                     user = new User(username,pass,email);
 
-
-
-                    userMethods.insert(user);
-                    readingredients();
-                    readRatings();
-                    readCategories();
-                    Toast.makeText(RegisterActivity.this, "You have successfully registered!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
+                   if( userMethods.insert(user)>0) {
+                       readIngredients.execute(getAssets());
+                       readRatings();
+                       readCategories();
+                       Toast.makeText(RegisterActivity.this, "You have successfully registered!", Toast.LENGTH_SHORT).show();
+                       Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                       startActivity(intent);
+                   }
+                   else {
+                       Toast.makeText(RegisterActivity.this, "Username sau email deja existente! Introduceti atle date!", Toast.LENGTH_SHORT).show();
+                   }
+                   }
             }
         });
 
 
     }
 
-    public void readingredients(){
-        AssetManager assetManager=getAssets();
-        InputStream inputStream;
-        InputStreamReader inputStreamReader;
-        BufferedReader reader;
-
-        try {
-            inputStream=assetManager.open("ingredient.csv");
-            inputStreamReader=new InputStreamReader(inputStream);
-            reader=new BufferedReader(inputStreamReader);
-           String line;
-            Ingredient ingredient=new Ingredient();
-            while((line = reader.readLine()) != null) {
-                String[] entry = line.split(",");
-                String name = entry[0];
-                int idRating = Integer.parseInt(entry[1]);
-                String desc;
-                ingredient.setIdRating(idRating);
-                ingredient.setName(name);
-                if (entry.length == 3) {
-                    desc = entry[2];
-                ingredient.setDescription(desc);
-                }
-                else {
-                    ingredient.setDescription(null);
-                }
-                ingredientMethod.insert(ingredient);
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void readRatings(){
         AssetManager assetManager=getAssets();
