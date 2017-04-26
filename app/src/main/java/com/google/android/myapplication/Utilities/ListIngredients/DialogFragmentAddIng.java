@@ -41,6 +41,11 @@ public class DialogFragmentAddIng extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.add_ingredients_dialog_fragment, container, false);
         getDialog().setTitle("Adauga ingredient!");
+        ingredientMethods=new IngredientMethods();
+        ingredientList=ingredientMethods.select();
+        for(Ingredient ing:ingredientList){
+            ingredientsName.add(ing.getName());
+        }
         AutoCompleteTextView1 = (AutoCompleteTextView) rootView.findViewById(R.id.AutoCompleteTextView1);
         btnAdaugaIngredientul = (Button) rootView.findViewById(R.id.btnAdaugaIngredientul);
         btnRenunta = (Button) rootView.findViewById(R.id.btnRenunta);
@@ -55,21 +60,24 @@ public class DialogFragmentAddIng extends DialogFragment {
             public void onClick(View v) {
                 Ingredient ingredient = ingredientMethods.selectIngredient(AutoCompleteTextView1.getText().toString());
               boolean introdus=true;
-                for (Ingredient ing : ListIngredientsActivity.ingredientsBD) {
-                    if (ing.getName().equals("AutoCompleteTextView1.getText().toString()")) {
-                        introdus = false;
+                if(AutoCompleteTextView1.getText()!=null) {
+                    for (Ingredient ing : ListIngredientsActivity.ingredientsBD) {
+                        if (ing.getName().equals(AutoCompleteTextView1.getText().toString())) {
+                            introdus = false;
+                        }
                     }
-                }
-                    if(introdus){
+                    if (introdus) {
                         ListIngredientsActivity.ingredientsBD.add(ingredient);
                         Toast.makeText(getActivity().getApplicationContext(), "Ingredient inserat cu succes", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Ingredient existent in lista sau nu se regaseste in bd.", Toast.LENGTH_SHORT).show();
 
                     }
                     dismiss();
-
+                }
+                else{
+                Toast.makeText(getActivity().getApplicationContext(), "Introduceti un nume valid", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

@@ -79,29 +79,29 @@ public class IngredientMethods {
 
 
     public List<Ingredient> selectIngredients(String ing) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        Ingredient ingredient;
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE "+Ingredient.label_name + " LIKE '%" +ing+"%'";
+            List<Ingredient> ingredients = new ArrayList<>();
+            Ingredient ingredient;
+            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+            String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE "+Ingredient.label_name + " LIKE '%" +ing+"%'";
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+            Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                ingredient = new Ingredient();
-                ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
-                ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
-                ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
-                ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
-                ingredients.add(ingredient);
-            } while (cursor.moveToNext());
-        }
+            if (cursor.moveToFirst()) {
+                do {
+                    ingredient = new Ingredient();
+                    ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
+                    ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
+                    ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
+                    ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
+                    ingredients.add(ingredient);
+                } while (cursor.moveToNext());
+            }
 
 
-        cursor.close();
-        DatabaseManager.getInstance().closeDatabase();
+            cursor.close();
+            DatabaseManager.getInstance().closeDatabase();
 
-        return ingredients;
+            return ingredients;
     }
 
 

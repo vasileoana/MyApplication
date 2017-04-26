@@ -50,6 +50,7 @@ public class ListViewAdapter extends ArrayAdapter<Ingredient> {
         ImageView ingRating = (ImageView) view.findViewById(R.id.ivRatingIngredient);
         TextView ingName = (TextView) view.findViewById(R.id.twIngredient);
         String rating = ratingMethods.getRating(ingredients.get(position).getIdRating());
+        if(rating!=null)
         ingRating.setImageResource(RatingMethods.returnRatingImage(rating));
         ingName.setText(ingredients.get(position).getName());
 

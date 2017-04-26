@@ -1,4 +1,4 @@
-1, 2-Hexanediol,3,A synthetic preservative and moisture-binding agent belonging to a class of agents known as higher molecular glycols. It is considered non-sensitizing.
+1 2-Hexanediol,3,A synthetic preservative and moisture-binding agent belonging to a class of agents known as higher molecular glycols. It is considered non-sensitizing.
 10-Hydroxydecanoic Acid,3,A synthetic ingredient that functions as a skin-conditioning and occlusive agent
 Acacia farnesiana extract,4, A fragrant extract from a type of acacia tree. There is no research showing it to have any benefit for skin.
 Acacia senegal,3
@@ -112,6 +112,7 @@ antioxidant,2
 apple fruit extract,2
 apricot kernel,1
 apricot kernel oil,2
+aqua,3
 arachidic acid,3
 arachidyl alcohol,3
 arachidyl glucoside,3
@@ -514,7 +515,6 @@ Durvillaea antarctica extract,3
 ecamsule,2
 Echium plantagineum seed oil,2
 ectoin,3
-EDTA,3
 egg yolk,2
 eicosapentaenoic acid,2
 Elaeis guineensis,2
@@ -1579,7 +1579,7 @@ VP/hexadecene copolymer,3
 walnut extract,1
 walnut oil,3
 walnut-shell powder,1
-water/aqua ,3
+water,3
 watercress extract,1
 watermelon fruit extract,2
 wheat amino acids,3

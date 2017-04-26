@@ -35,7 +35,9 @@ import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.myapplication.R;
+import com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter;
 import com.google.android.myapplication.Utilities.Ocr.OcrUtility;
+import com.google.android.myapplication.Utilities.Ocr.SearchThread;
 
 
 public class OcrActivity extends Activity {
@@ -252,14 +254,23 @@ public class OcrActivity extends Activity {
 
     public void Show(View view) {
         String text = scanResults.getText().toString();
-        String[] vector = text.split("[,.:;-]");
+        //am facut un vector de cuvinte
+        String[] vector = text.split("[,.:;]");
         for (String ing : vector) {
-                ingredients.add(ing.replaceAll("'", " ").trim());
+            ingredients.add(ing.trim());
         }
-        Intent i = new Intent(getApplicationContext(), ListIngredientsActivity.class);
+        final Intent i = new Intent(getApplicationContext(), ListIngredientsActivity.class);
         i.putStringArrayListExtra("list", ingredients);
         i.putExtra("userId", idUser);
         startActivity(i);
+         /*   SearchThread searchThread=new SearchThread(){
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    startActivity(i);
 
+                }
+            };
+            searchThread.execute(ingredients);*/
     }
 }

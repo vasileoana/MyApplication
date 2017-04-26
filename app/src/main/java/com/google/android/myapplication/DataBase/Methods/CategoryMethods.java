@@ -35,7 +35,7 @@ public class CategoryMethods {
             values.put(Category.label_categoryName, category.getCategoryName());
 
             // Inserting Row
-            code = (int) db.insert(Category.TABLE, null, values);
+            code = (int) db.insertWithOnConflict(Category.TABLE, null,values, SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
 
 
