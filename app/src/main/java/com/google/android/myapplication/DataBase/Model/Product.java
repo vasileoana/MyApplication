@@ -23,7 +23,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(String description,String brand,int idCategory, String function) {
+    public Product(int id,String description,String brand,int idCategory, String function) {
+         this.idProduct=id;
+        this.description = description;
+        this.brand=brand;
+        this.idCategory=idCategory;
+        this.function=function;
+    }
+
+    public Product(String description,String brand,int idCategory, String function){
         this.description = description;
         this.brand=brand;
         this.idCategory=idCategory;

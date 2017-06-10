@@ -31,6 +31,7 @@ public class ProductMethods {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
             ContentValues values = new ContentValues();
+            values.put(Product.label_idProduct, product.getIdProduct());
             values.put(Product.label_idCategory,product.getIdCategory());
             values.put(Product.label_description,product.getDescription());
             values.put(Product.label_brand,product.getBrand());

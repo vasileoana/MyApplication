@@ -32,6 +32,7 @@ public class IngredientAnalysisMethods {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
             ContentValues values = new ContentValues();
+            values.put(IngredientAnalysis.label_idAnalysis, ingredientAnalysis.getIdAnalysis());
             values.put(IngredientAnalysis.label_idIngredient, ingredientAnalysis.getIdIngredient());
             values.put(IngredientAnalysis.label_idProduct, ingredientAnalysis.getIdProduct());
 

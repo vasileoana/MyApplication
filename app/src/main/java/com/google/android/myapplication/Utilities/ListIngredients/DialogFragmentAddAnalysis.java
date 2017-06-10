@@ -23,8 +23,14 @@ import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
 import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
+import com.google.android.myapplication.DataBase.Rest.GetIngredientAnalyses;
+import com.google.android.myapplication.DataBase.Rest.GetProductAnalyses;
+import com.google.android.myapplication.DataBase.Rest.GetProducts;
+import com.google.android.myapplication.DataBase.Rest.Post;
 import com.google.android.myapplication.R;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +53,10 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     CategoryMethods categoryMethods;
     int idCategory;
     Product p;
+    Post post=new Post();
+    GetProducts getProducts = new GetProducts();
+    GetIngredientAnalyses getIngredientAnalyses = new GetIngredientAnalyses();
+    GetProductAnalyses getProductAnalyses = new GetProductAnalyses();
 
     public DialogFragmentAddAnalysis() {
     }
@@ -56,6 +66,10 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.list_ingredients_dialog_fragment_add_analysis, container, false);
         getDialog().setTitle("Add analysis!");
+        //DOAR DACA ESTE CONEXIUNE LA RETEA
+        getProducts.execute("https://teme-vasileoana22.c9users.io/products");
+        getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
+        getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
         categoryMethods = new CategoryMethods();
         productMethods = new ProductMethods();
         ingredientAnalysisMethods = new IngredientAnalysisMethods();
@@ -97,7 +111,6 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     p.setIdCategory(idCategory);
                     p.setDescription(description);
                     productMethods.update(p);
-
                     dismiss();
                 }
             });
@@ -114,19 +127,51 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     String function = etFunction.getText().toString();
                     idCategory = categoryMethods.getIdCategory(category);
                     product = new Product(description, brand, idCategory, function);
-                    productMethods.insert(product);
-                    int idProdus = productMethods.getIdProduct(product);
-                    String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
-                    int idUser = (int) getActivity().getIntent().getExtras().get("userId");
-                    productAnalysis = new ProductAnalysis(idProdus, idUser, date);
-                    productAnalysisMethods.insert(productAnalysis);
+                    URL url = null;
+                    String link = "https://teme-vasileoana22.c9users.io/Products/" +
+                            idCategory + "/" + description + "/" + function + "/" + brand;
+                    try {
+                        url = new URL(link);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    post= new Post();
+                    post.execute(url);
 
+
+                   // productMethods.insert(product);
+                    //TREBUIE MAI INTAI SA INSEREZ IN TABELA CE A FOST PE SERVER
+
+                    int idProdus = productMethods.getIdProduct(product);
+                    String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                    int idUser = (int) getActivity().getIntent().getExtras().get("userId");
+                    //productAnalysis = new ProductAnalysis(idProdus, idUser, date);
+                   // productAnalysisMethods.insert(productAnalysis);
+
+                    //inserare pe server!
+                     String link2 = "https://teme-vasileoana22.c9users.io/ProductAnalyses/" +
+                            idProdus + "/" + idUser + "/" + date;
+                    try {
+                        url = new URL(link2);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    post= new Post();
+                    post.execute(url);
 
                     for (Ingredient i : ListIngredientsActivity.ingredientsBD) {
-                        ingredientAnalysis.setIdIngredient(i.getIdIngredient());
-                        ingredientAnalysis.setIdProduct(idProdus);
-                        ingredientAnalysisMethods.insert(ingredientAnalysis);
-                    }
+                        //ingredientAnalysis.setIdIngredient(i.getIdIngredient());
+                       // ingredientAnalysis.setIdProduct(idProdus);
+                      //  ingredientAnalysisMethods.insert(ingredientAnalysis);
+                       String link3 = "https://teme-vasileoana22.c9users.io/IngredientAnalyses/" +
+                                idProdus + "/" + i.getIdIngredient();
+                        try {
+                            url = new URL(link3);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        post= new Post();
+                        post.execute(url);                    }
                     Toast.makeText(getActivity().getApplicationContext(), "Analiza inserata cu succes!", Toast.LENGTH_SHORT).show();
 
                     dismiss();

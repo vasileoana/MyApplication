@@ -21,6 +21,12 @@ public class IngredientAnalysis {
     public IngredientAnalysis() {
     }
 
+    public IngredientAnalysis(int idAnalysis, int idProduct, int idIngredient) {
+        this.idAnalysis = idAnalysis;
+        this.idProduct = idProduct;
+        IdIngredient = idIngredient;
+    }
+
     public int getIdAnalysis() {
         return idAnalysis;
     }

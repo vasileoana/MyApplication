@@ -28,6 +28,13 @@ public class ProductAnalysis {
         this.date = date;
     }
 
+    public ProductAnalysis(int idProductAnalysis,int idProduct, int idUser, String date) {
+       this.idProductAnalysis=idProductAnalysis;
+        this.idProduct = idProduct;
+        this.idUser = idUser;
+        this.date = date;
+    }
+
     public int getIdProductAnalysis() {
         return idProductAnalysis;
     }

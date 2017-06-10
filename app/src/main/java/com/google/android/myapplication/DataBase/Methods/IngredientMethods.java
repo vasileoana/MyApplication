@@ -34,6 +34,7 @@ public class IngredientMethods {
 
            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
            ContentValues values = new ContentValues();
+         //  values.put(Ingredient.label_idIngredient, ingredient.getIdIngredient());
            values.put(Ingredient.label_name, ingredient.getName());
            values.put(Ingredient.label_description, ingredient.getDescription());
            values.put(Ingredient.label_idRating, ingredient.getIdRating());

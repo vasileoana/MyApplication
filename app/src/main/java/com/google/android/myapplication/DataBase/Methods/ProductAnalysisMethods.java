@@ -36,6 +36,7 @@ public class ProductAnalysisMethods {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
             ContentValues values = new ContentValues();
+            values.put(ProductAnalysis.label_idProductAnalysis, productAnalysis.getIdProductAnalysis());
             values.put(ProductAnalysis.label_date, productAnalysis.getDate());
             values.put(ProductAnalysis.label_idProduct, productAnalysis.getIdProduct());
            values.put(ProductAnalysis.label_idUser, productAnalysis.getIdUser());
