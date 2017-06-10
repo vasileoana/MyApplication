@@ -94,5 +94,7 @@
     <string name="Add_ing">Adauga un ingredient</string>
     <string name="Adauga">Adauga</string>
     <string name="Cancel">Renunta</string>
+    <string name="Informatii">Informatii cont</string>
+    <string name="Remove_ing">Sterge ingrediente</string>
 
 </resources>

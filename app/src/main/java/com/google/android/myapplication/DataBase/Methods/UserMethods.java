@@ -115,6 +115,21 @@ public class UserMethods {
 
     }
 
+    public long update(User user)
+    {
+        long code;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        ContentValues values = new ContentValues();
+        values.put(User.label_username,user.getUsername());
+        values.put(User.label_email,user.getEmail());
+        values.put(User.label_password,user.getPassword());
+
+        // Inserting Row
+        code= db.update(User.TABLE, values, User.label_idUser+"=?", new String[] {String.valueOf(user.getIdUser())} );
+        DatabaseManager.getInstance().closeDatabase();
+
+        return code;
+    }
 }
 
 

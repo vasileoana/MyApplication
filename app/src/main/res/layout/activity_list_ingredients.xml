@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FEFEF4"
+
+    >
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +17,16 @@
     android:background="#FEFEF4"
     tools:context="com.google.android.myapplication.Activities.ListIngredientsActivity">
 
+   <Button
+       android:text="@string/Save_analysis"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/btnSaveAnalysis"
+       android:textColor="#fff"
+       android:layout_margin="10dp"
+       android:padding="5dp"
+       android:background="@color/colorPrimary"
+       />
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -14,33 +34,123 @@
     android:layout_margin="10dp"
     android:background="#FEFEF4"
     android:layout_gravity="center_horizontal">
-   <Button
-       android:text="@string/Save_analysis"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:id="@+id/btnSaveAnalysis"
-       android:textColor="#fff"
-android:layout_margin="10dp"
-       android:padding="5dp"
-       android:background="@color/colorPrimary"
-       />
+
    <Button
        android:text="@string/Add_ing"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:id="@+id/btnAddIng"
        android:textColor="#fff"
-       android:layout_margin="10dp"
-   android:padding="5dp"
+       android:padding="5dp"
+       android:layout_margin="5dp"
+
        android:background="@color/colorPrimary"
        />
+   <Button
+       android:text="@string/Remove_ing"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/btnRemoveIng"
+       android:textColor="#fff"
+       android:layout_margin="5dp"
+       android:padding="5dp"
+       android:background="@color/colorPrimary"
+       />
+
+
 </LinearLayout>
 
-<ListView
-    android:padding="17sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/lvIng"
-    android:background="#FEFEF4"
-    />
-</LinearLayout>
+   <ListView
+       android:id="@+id/lvIng"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="#FEFEF4"
+       android:padding="17sp" />
+-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/viewA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f0f4c3"
+            android:orientation="horizontal"
+                android:paddingBottom="30dp"          >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp"
+                android:paddingTop="5dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btnAddIng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/add"
+                    android:layout_marginStart="37dp"
+                    android:layout_above="@+id/textView2" />
+                <TextView
+                    android:layout_below="@+id/btnAddIng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="Adauga un ingredient"/>
+
+                <ImageButton
+                    android:id="@+id/btnRemoveIng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/remove"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"/>
+                <TextView
+                    android:layout_below="@+id/btnRemoveIng"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sterge ingrediente"
+                    android:id="@+id/textView2" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FEFEF4"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <ListView
+                android:id="@+id/lvIng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FEFEF4"
+                android:choiceMode="singleChoice"
+                android:clickable="false"
+                android:padding="17sp"
+                android:listSelector="#f0f4c3"/>
+            </LinearLayout>
+
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/send"
+        app:layout_anchor="@id/viewA"
+
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>

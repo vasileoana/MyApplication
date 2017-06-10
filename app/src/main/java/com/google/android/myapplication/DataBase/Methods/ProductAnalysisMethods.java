@@ -19,7 +19,7 @@ public class ProductAnalysisMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS "+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+ProductAnalysis.label_idProduct+ " INTEGER, "+ProductAnalysis.label_idUser+ " INTEGER, "+ ProductAnalysis.label_date+ " TEXT);";
+        return "CREATE TABLE IF NOT EXISTS "+ ProductAnalysis.TABLE+ " ( "+ ProductAnalysis.label_idProductAnalysis+ " INTEGER PRIMARY KEY, "+ProductAnalysis.label_idProduct+ " INTEGER, "+ProductAnalysis.label_idUser+ " INTEGER, "+ ProductAnalysis.label_date+ " TEXT);";
 
     }
 

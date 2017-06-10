@@ -21,7 +21,7 @@ public class IngredientMethods {
 
     public static String create()
     {
-        return "CREATE TABLE IF NOT EXISTS "+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+Ingredient.label_name+ " TEXT UNIQUE, "
+        return "CREATE TABLE IF NOT EXISTS "+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY, "+Ingredient.label_name+ " TEXT UNIQUE, "
                 +Ingredient.label_description+" TEXT, "+Ingredient.label_idRating+ " INTEGER);";
 
     }

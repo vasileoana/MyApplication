@@ -1,10 +1,14 @@
 package com.google.android.myapplication.Activities;
 
+import android.media.Image;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
@@ -28,7 +32,8 @@ public class ListIngredientsActivity extends AppCompatActivity {
     IngredientMethods ingredientMethods;
     ListView lv;
     List<String> bdIng;
-    Button btnSaveAnalysis, btnAddIng;
+    ImageButton btnAddIng, btnRemoveIng;
+    FloatingActionButton  btnSaveAnalysis;
     ProductMethods productMethods;
     ListViewAdapter adapter;
     List<Ingredient> ingredienteReturnate;
@@ -39,8 +44,9 @@ public class ListIngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_ingredients);
-        btnSaveAnalysis = (Button) findViewById(R.id.btnSaveAnalysis);
-        btnAddIng = (Button) findViewById(R.id.btnAddIng);
+        btnSaveAnalysis = (FloatingActionButton) findViewById(R.id.fab);
+        btnRemoveIng = (ImageButton) findViewById(R.id.btnRemoveIng);
+        btnAddIng = (ImageButton) findViewById(R.id.btnAddIng);
         ingredients = getIntent().getExtras().getStringArrayList("list");
         ingredientsBD = new ArrayList<>();
         ingredientMethods = new IngredientMethods();
@@ -60,7 +66,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
 
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    /*   lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -73,7 +79,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
 
             }
         });
-
+*/
 
         btnSaveAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +103,26 @@ public class ListIngredientsActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-    }
+
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                btnRemoveIng.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SparseBooleanArray checked = lv.getCheckedItemPositions();
+                        for (int i = 0; i < lv.getCount(); i++){
+
+                            if (checked.get(i)==true)
+                            {
+                                ingredientsBD.remove(i);
+
+                            }
+                            adapter.notifyDataSetChanged();
+
+                        }
+                        lv.clearChoices();
+                    }
+                });
+                }
 
 
     public void algoritmCautare() {

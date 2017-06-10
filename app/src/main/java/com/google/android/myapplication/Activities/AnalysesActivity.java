@@ -1,6 +1,7 @@
 package com.google.android.myapplication.Activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -39,6 +40,7 @@ public class AnalysesActivity extends AppCompatActivity {
         id=getIntent().getExtras().getInt("userId");
         productAnalysisMethods=new ProductAnalysisMethods();
         productList=productMethods.selectProductsByUser(id);
+
         adapter=new ListViewAdapter(getApplicationContext(),R.layout.analyses_adapter,productList);
         lvMyAnalyses.setAdapter(adapter);
         lvMyAnalyses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,9 +100,16 @@ public class AnalysesActivity extends AppCompatActivity {
         bundle.putInt("id",p.getIdProduct());
         dialogFragment.setArguments(bundle);
         dialogFragment.setTargetFragment(dialogFragment,1);
-
         dialogFragment.show(fragmentManager, "Analysis");
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        productList=productMethods.selectProductsByUser(id);
+        adapter=new ListViewAdapter(getApplicationContext(),R.layout.analyses_adapter,productList);
+        lvMyAnalyses.setAdapter(adapter);
+
+    }
 }

@@ -60,7 +60,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
 
         }
         else {
-            productList=productMethods.selectAllProducts();
+            productList=productMethods.select();
 
         }
 

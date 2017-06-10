@@ -76,7 +76,8 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
 
     private void loadListView(View view) {
         listView = (ListView) view.findViewById(R.id.lv_search_product);
-        arrayList = productMethods.selectAllProducts();
+        //inainte era selectAllProducts()
+        arrayList = productMethods.select();
         adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
 
