@@ -24,19 +24,18 @@ import java.util.Locale;
 public class ListViewAdapter extends BaseAdapter {
 
     private Context context;
-     static List<Ingredient> arrayList;
+    static List<Ingredient> arrayList;
     private LayoutInflater inflater;
     private List<Ingredient> filterArrayList;
     private List<Ingredient> filterByRating;
     private RatingMethods ratingMethods;//duplicate list for filtering
 
-    //todo particulzarizar sa caute alfabetic
     public ListViewAdapter(Context context, List<Ingredient> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         ratingMethods = new RatingMethods();
         inflater = LayoutInflater.from(context);
-        filterByRating=new ArrayList<>();
+        filterByRating = new ArrayList<>();
         this.filterArrayList = new ArrayList<>();//initiate filter list
         this.filterArrayList.addAll(arrayList);//add all items of array list to filter list
     }
@@ -90,9 +89,9 @@ public class ListViewAdapter extends BaseAdapter {
 
     // Filter Class to filter data
     public void filter(FilterIngredients filterIngredients, String charText, boolean isSearchWithPrefix, int rating) {
-        if(charText==null){
+        if (charText == null) {
             arrayList.addAll(filterArrayList);
-        }else {
+        } else {
             //If Filter type is NAME and EMAIL then only do lowercase, else in case of NUMBER no need to do lowercase because of number format
             if (filterIngredients == FilterIngredients.NAME || filterIngredients == FilterIngredients.RATING)
                 charText = charText.toLowerCase(Locale.getDefault());
@@ -136,47 +135,44 @@ public class ListViewAdapter extends BaseAdapter {
                 }
             }
         }
-            notifyDataSetChanged();
-            filterByRating.clear();
-            filterByRating.addAll(arrayList);
+        notifyDataSetChanged();
+        filterByRating.clear();
+        filterByRating.addAll(arrayList);
 
 
     }
-    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
-    public void filterRatings(FilterIngredients filterIngredients, int rating) {
-            if(rating==-1){
 
-            }
-            else {
-                arrayList.clear();
-                //Clear the main ArrayList
-                for (int i = 0; i < filterByRating.size(); i++) {
-                    Ingredient ingredient = filterByRating.get(i);
-                    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
-                    switch (rating) {
-                        case 0: {
-                            if (ingredient.getIdRating() == 1)
-                                arrayList.add(ingredient);
-                            break;
-                        }
-                        case 1: {
-                            if (ingredient.getIdRating() == 2)
-                                arrayList.add(ingredient);
-                            break;
-                        }
-                        case 2: {
-                            if (ingredient.getIdRating() == 3)
-                                arrayList.add(ingredient);
-                            break;
-                        }
-                        case 3: {
-                            if (ingredient.getIdRating() == 4)
-                                arrayList.add(ingredient);
-                            break;
-                        }
+    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
+    public void filterRatings(int rating) {
+        filterByRating.addAll(arrayList);
+        arrayList.clear();
+        //Clear the main ArrayList
+            for (int i = 0; i < filterByRating.size(); i++) {
+                Ingredient ingredient = filterByRating.get(i);
+                switch (rating) {
+                    case 0: {
+                        if (ingredient.getIdRating() == 1)
+                            arrayList.add(ingredient);
+                        break;
+                    }
+                    case 1: {
+                        if (ingredient.getIdRating() == 2)
+                            arrayList.add(ingredient);
+                        break;
+                    }
+                    case 2: {
+                        if (ingredient.getIdRating() == 3)
+                            arrayList.add(ingredient);
+                        break;
+                    }
+                    case 3: {
+                        if (ingredient.getIdRating() == 4)
+                            arrayList.add(ingredient);
+                        break;
                     }
                 }
             }
+
         notifyDataSetChanged();
     }
 

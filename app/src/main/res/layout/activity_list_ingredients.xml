@@ -101,7 +101,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="Adauga un ingredient"/>
+                    android:text="Adauga un ingredient"
+                    android:id="@+id/textView1"/>
 
                 <ImageButton
                     android:id="@+id/btnRemoveIng"

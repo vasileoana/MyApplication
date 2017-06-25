@@ -260,4 +260,10 @@ public class ProductMethods {
 
         return products;
     }
+
+    public void delete() {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        db.delete(Product.TABLE, null, null);
+        DatabaseManager.getInstance().closeDatabase();
+    }
 }

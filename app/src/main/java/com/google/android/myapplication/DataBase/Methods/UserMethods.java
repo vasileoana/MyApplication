@@ -17,34 +17,33 @@ import java.util.List;
 public class UserMethods {
 
 
-
-    public static String create()
-    {
-        return "CREATE TABLE IF NOT EXISTS "+User.TABLE+ " ( "+ User.label_idUser+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+User.label_username+ " TEXT UNIQUE, "
-               +User.label_password+" TEXT, "+User.label_email+ " TEXT UNIQUE);";
+    public static String create() {
+        return "CREATE TABLE IF NOT EXISTS " + User.TABLE + " ( " + User.label_idUser + " INTEGER PRIMARY KEY, "
+                + User.label_username + " TEXT UNIQUE, "
+                + User.label_password + " TEXT, " + User.label_email + " TEXT UNIQUE);";
 
     }
 
 
-    public long insert(User user)
-    {
+    public long insert(User user) {
         long code;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
-        values.put(User.label_username,user.getUsername());
-        values.put(User.label_email,user.getEmail());
-        values.put(User.label_password,user.getPassword());
+        values.put(User.label_idUser, user.getUsername());
+        values.put(User.label_username, user.getUsername());
+        values.put(User.label_email, user.getEmail());
+        values.put(User.label_password, user.getPassword());
 
         // Inserting Row
-       code= db.insertWithOnConflict(User.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
+        code = db.insertWithOnConflict(User.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
         DatabaseManager.getInstance().closeDatabase();
 
         return code;
     }
 
-    public void delete( ) {
+    public void delete() {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(User.TABLE,null,null);
+        db.delete(User.TABLE, null, null);
         DatabaseManager.getInstance().closeDatabase();
     }
 
@@ -74,14 +73,16 @@ public class UserMethods {
     }
 
 
-    public User selectUser(String username,String pass) {
-        User user=null;
+    public User selectUser(String username, String pass) {
+        User user = null;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + User.TABLE + " WHERE "+User.label_username+ " LIKE '"+username+"' and "+User.label_password+" LIKE '"+pass+"';";
+        String selectQuery = " SELECT * FROM " + User.TABLE + " WHERE " +
+                User.label_username + " LIKE '" + username + "' and " +
+                User.label_password + " LIKE '" + pass + "';";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            user=new User();
+            user = new User();
             user.setIdUser(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.label_idUser))));
             user.setUsername(cursor.getString(cursor.getColumnIndex(User.label_username)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(User.label_password)));
@@ -96,13 +97,13 @@ public class UserMethods {
 
 
     public User selectUserById(int id) {
-        User user=null;
+        User user = null;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + User.TABLE + " WHERE "+User.label_idUser+ " LIKE '"+id+"';";
+        String selectQuery = " SELECT * FROM " + User.TABLE + " WHERE " + User.label_idUser + " LIKE '" + id + "';";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            user=new User();
+            user = new User();
             user.setIdUser(Integer.parseInt(cursor.getString(cursor.getColumnIndex(User.label_idUser))));
             user.setUsername(cursor.getString(cursor.getColumnIndex(User.label_username)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(User.label_password)));
@@ -115,17 +116,14 @@ public class UserMethods {
 
     }
 
-    public long update(User user)
-    {
+    public long update(User user) {
         long code;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
-        values.put(User.label_username,user.getUsername());
-        values.put(User.label_email,user.getEmail());
-        values.put(User.label_password,user.getPassword());
-
-        // Inserting Row
-        code= db.update(User.TABLE, values, User.label_idUser+"=?", new String[] {String.valueOf(user.getIdUser())} );
+        values.put(User.label_username, user.getUsername());
+        values.put(User.label_email, user.getEmail());
+        values.put(User.label_password, user.getPassword());
+        code = db.update(User.TABLE, values, User.label_idUser + "=?", new String[]{String.valueOf(user.getIdUser())});
         DatabaseManager.getInstance().closeDatabase();
 
         return code;

@@ -33,18 +33,14 @@ public class ProductAnalysisMethods {
     {
         long code=0;
         try {
-
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
             ContentValues values = new ContentValues();
             values.put(ProductAnalysis.label_idProductAnalysis, productAnalysis.getIdProductAnalysis());
             values.put(ProductAnalysis.label_date, productAnalysis.getDate());
             values.put(ProductAnalysis.label_idProduct, productAnalysis.getIdProduct());
            values.put(ProductAnalysis.label_idUser, productAnalysis.getIdUser());
-            // Inserting Row
             code= db.insertWithOnConflict(ProductAnalysis.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
-
-
         }
         catch(Exception e) {
             System.out.println(e.toString());
@@ -95,5 +91,11 @@ public class ProductAnalysisMethods {
         DatabaseManager.getInstance().closeDatabase();
 
         return date;
+    }
+
+    public void delete() {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        db.delete(ProductAnalysis.TABLE, null, null);
+        DatabaseManager.getInstance().closeDatabase();
     }
 }

@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         tvApp= (TextView) findViewById(R.id.tvApp);
         tvApp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {Intent intent=new Intent(getApplicationContext(),NavigationActivity.class);
+            public void onClick(View v) {Intent intent=new Intent(getApplicationContext(),OcrActivity.class);
                intent.putExtra("tipUtilizator","anonim");
-                //startActivity(intent);
+                startActivity(intent);
 
             }
         });

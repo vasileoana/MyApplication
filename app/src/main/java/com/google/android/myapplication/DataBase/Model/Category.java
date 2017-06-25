@@ -10,10 +10,8 @@ public class Category {
 
     public static final String label_categoryName="CategoryName";
     public static final String label_idCategory="IdCategory";
-    public static final String label_idParent="idSuccessor";
 
     private int idCategory;
-    private int idParent;
     private String categoryName ;
 
     public Category() {
@@ -39,19 +37,12 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public int getIdParent() {
-        return idParent;
-    }
 
-    public void setIdParent(int idParent) {
-        this.idParent = idParent;
-    }
 
     @Override
     public String toString() {
         return "Category{" +
                 "idCategory=" + idCategory +
-                ", idParent=" + idParent +
                 ", categoryName='" + categoryName + '\'' +
                 '}';
     }

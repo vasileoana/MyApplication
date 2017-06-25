@@ -19,35 +19,33 @@ import java.util.List;
 public class IngredientMethods {
 
 
-    public static String create()
-    {
-        return "CREATE TABLE IF NOT EXISTS "+ Ingredient.TABLE+ " ( "+ Ingredient.label_idIngredient+ " INTEGER PRIMARY KEY, "+Ingredient.label_name+ " TEXT UNIQUE, "
-                +Ingredient.label_description+" TEXT, "+Ingredient.label_idRating+ " INTEGER);";
+    public static String create() {
+        return "CREATE TABLE IF NOT EXISTS " + Ingredient.TABLE + " ( " + Ingredient.label_idIngredient +
+                " INTEGER PRIMARY KEY, " + Ingredient.label_name + " TEXT UNIQUE, "
+                + Ingredient.label_description + " TEXT, " + Ingredient.label_idRating + " INTEGER);";
 
     }
 
 
-    public long insert(Ingredient ingredient)
-    {
-        long code=0;
-       try {
+    public long insert(Ingredient ingredient) {
+        long code = 0;
+        try {
 
-           SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-           ContentValues values = new ContentValues();
-         //  values.put(Ingredient.label_idIngredient, ingredient.getIdIngredient());
-           values.put(Ingredient.label_name, ingredient.getName());
-           values.put(Ingredient.label_description, ingredient.getDescription());
-           values.put(Ingredient.label_idRating, ingredient.getIdRating());
+            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+            ContentValues values = new ContentValues();
+            //  values.put(Ingredient.label_idIngredient, ingredient.getIdIngredient());
+            values.put(Ingredient.label_name, ingredient.getName());
+            values.put(Ingredient.label_description, ingredient.getDescription());
+            values.put(Ingredient.label_idRating, ingredient.getIdRating());
 
-           // Inserting Row
-           code= db.insertWithOnConflict(Ingredient.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
-           DatabaseManager.getInstance().closeDatabase();
+            // Inserting Row
+            code = db.insertWithOnConflict(Ingredient.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+            DatabaseManager.getInstance().closeDatabase();
 
 
-       }
-       catch(Exception e) {
-           System.out.println(e.toString());
-    }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
         return code;
     }
 
@@ -72,7 +70,7 @@ public class IngredientMethods {
         }
 
 
-            cursor.close();
+        cursor.close();
         DatabaseManager.getInstance().closeDatabase();
 
         return ingredients;
@@ -80,36 +78,32 @@ public class IngredientMethods {
 
 
     public List<Ingredient> selectIngredients(String ing) {
-            List<Ingredient> ingredients = new ArrayList<>();
-            Ingredient ingredient;
-            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-            String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE "+Ingredient.label_name + " LIKE '%" +ing+"%'";
+        List<Ingredient> ingredients = new ArrayList<>();
+        Ingredient ingredient;
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE " + Ingredient.label_name + " LIKE '%" + ing + "%'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                ingredient = new Ingredient();
+                ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
+                ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
+                ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
+                ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
+                ingredients.add(ingredient);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
 
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    ingredient = new Ingredient();
-                    ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
-                    ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
-                    ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));
-                    ingredient.setName(cursor.getString(cursor.getColumnIndex(Ingredient.label_name)));
-                    ingredients.add(ingredient);
-                } while (cursor.moveToNext());
-            }
-
-
-            cursor.close();
-            DatabaseManager.getInstance().closeDatabase();
-
-            return ingredients;
+        return ingredients;
     }
 
 
     public Ingredient selectIngredient(String nume) {
-        Ingredient ingredient=new Ingredient();
+        Ingredient ingredient = new Ingredient();
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE "+Ingredient.label_name + " LIKE '" +nume+"';";
+        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE " + Ingredient.label_name + " LIKE '" + nume + "';";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -132,7 +126,7 @@ public class IngredientMethods {
         List<Ingredient> ingredients = new ArrayList<>();
         Ingredient ingredient;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT I.* FROM " + Ingredient.TABLE +" I INNER JOIN "+ IngredientAnalysis.TABLE+" IA ON I."+Ingredient.label_idIngredient+"=IA."+IngredientAnalysis.label_idIngredient+" WHERE IA."+IngredientAnalysis.label_idProduct+"="+idProdus+";";
+        String selectQuery = " SELECT I.* FROM " + Ingredient.TABLE + " I INNER JOIN " + IngredientAnalysis.TABLE + " IA ON I." + Ingredient.label_idIngredient + "=IA." + IngredientAnalysis.label_idIngredient + " WHERE IA." + IngredientAnalysis.label_idProduct + "=" + idProdus + ";";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

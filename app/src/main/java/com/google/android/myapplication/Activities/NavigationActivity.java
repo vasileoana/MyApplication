@@ -71,6 +71,7 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), OcrActivity.class);
+                intent.putExtra("tipUtilizator","logat");
                 intent.putExtra("userId", idUser);
                 startActivity(intent);
             }
@@ -90,7 +91,7 @@ public class NavigationActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header=navigationView.getHeaderView(0);
         textView= (TextView) header.findViewById(R.id.textView);
-        textView.setText(userMethods.selectUserById(idUser).getEmail());
+        textView.setText(userMethods.selectUserById(idUser).getUsername());
 
     }
 
@@ -109,11 +110,11 @@ public class NavigationActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
         if (id == R.id.menu_profile) {
             intent = new Intent(getApplicationContext(), ProfileActivity.class);
+           intent.putExtra("idUtilizator",idUser);
             startActivity(intent);
         } else if (id == R.id.menu_analyses) {
             intent = new Intent(getApplicationContext(), AnalysesActivity.class);

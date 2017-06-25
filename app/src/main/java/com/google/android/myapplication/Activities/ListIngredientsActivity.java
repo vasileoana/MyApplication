@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
@@ -33,13 +34,17 @@ public class ListIngredientsActivity extends AppCompatActivity {
     ListView lv;
     List<String> bdIng;
     ImageButton btnAddIng, btnRemoveIng;
-    FloatingActionButton  btnSaveAnalysis;
+    FloatingActionButton btnSaveAnalysis;
     ProductMethods productMethods;
     ListViewAdapter adapter;
     List<Ingredient> ingredienteReturnate;
     List<Ingredient> ingredientList;
     List<String> ingredientNameList;
     List<String> levenshteinList;
+    String tip_utilizator;
+    int idUser;
+    TextView addIng, removeIng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,20 @@ public class ListIngredientsActivity extends AppCompatActivity {
         btnSaveAnalysis = (FloatingActionButton) findViewById(R.id.fab);
         btnRemoveIng = (ImageButton) findViewById(R.id.btnRemoveIng);
         btnAddIng = (ImageButton) findViewById(R.id.btnAddIng);
+        tip_utilizator = getIntent().getExtras().getString("tipUtilizator");
+        addIng = (TextView) findViewById(R.id.textView1);
+        removeIng = (TextView) findViewById(R.id.textView2);
+        if (tip_utilizator.equals("logat")) {
+            idUser = (int) getIntent().getExtras().get("userId");
+        }
+        else {
+            btnSaveAnalysis.setVisibility(View.GONE);
+            btnRemoveIng.setVisibility(View.GONE);
+            btnAddIng.setVisibility(View.GONE);
+            addIng.setVisibility(View.GONE);
+            removeIng.setVisibility(View.GONE);
+        }
+
         ingredients = getIntent().getExtras().getStringArrayList("list");
         ingredientsBD = new ArrayList<>();
         ingredientMethods = new IngredientMethods();
@@ -66,27 +85,13 @@ public class ListIngredientsActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
 
 
-    /*   lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                DialogFragmentViewIngredient dialogFragment = new DialogFragmentViewIngredient();
-                Bundle bundle = new Bundle();
-                bundle.putInt("poz", position);
-                bundle.putString("from", ListIngredientsActivity.class.getSimpleName());
-                dialogFragment.setArguments(bundle);
-                dialogFragment.show(fragmentManager, "Ingredient Details");
-
-            }
-        });
-*/
-
         btnSaveAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 android.app.FragmentManager fragmentManager = getFragmentManager();
                 DialogFragmentAddAnalysis dialogFragment = new DialogFragmentAddAnalysis();
                 Bundle bundle = new Bundle();
+                bundle.putInt("userId", idUser);
                 bundle.putString("operatie", "adaugare");
                 dialogFragment.setArguments(bundle);
                 dialogFragment.show(fragmentManager, "IngredientsFragment Manager");
@@ -105,24 +110,23 @@ public class ListIngredientsActivity extends AppCompatActivity {
         });
 
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-                btnRemoveIng.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        SparseBooleanArray checked = lv.getCheckedItemPositions();
-                        for (int i = 0; i < lv.getCount(); i++){
+        btnRemoveIng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SparseBooleanArray checked = lv.getCheckedItemPositions();
+                for (int i = 0; i < lv.getCount(); i++) {
 
-                            if (checked.get(i)==true)
-                            {
-                                ingredientsBD.remove(i);
+                    if (checked.get(i) == true) {
+                        ingredientsBD.remove(i);
 
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        }
-                        lv.clearChoices();
                     }
-                });
+                    adapter.notifyDataSetChanged();
+
                 }
+                lv.clearChoices();
+            }
+        });
+    }
 
 
     public void algoritmCautare() {
@@ -133,8 +137,8 @@ public class ListIngredientsActivity extends AppCompatActivity {
             //il cautam in baza de date asa cum este sau il cautam aplicand alg levenstein
             List<Ingredient> ingList = cautareCuvantBD(ing);
             int j = 0;
-            Ingredient ingr=ingredientMethods.selectIngredient(ing);
-            if (ingList.size() > 1 && ingr != null && ingr.getIdRating()!=0) {
+            Ingredient ingr = ingredientMethods.selectIngredient(ing);
+            if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
                 //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
                 ingredientsBD.add(ingr);
             } else {
@@ -144,7 +148,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
                     ing = ing + " " + ingredients.get(poz);
                     //il caut iarasi in bd dar de data asta concatenat cu cuv alaturat
                     ingList = cautareCuvantBD(ing);
-                    if (poz < ingredients.size()-1) {
+                    if (poz < ingredients.size() - 1) {
                         j++;
                     } else {
                         j = 3;
@@ -162,8 +166,8 @@ public class ListIngredientsActivity extends AppCompatActivity {
             recursivLevenstein(ingredient, 0.7);
         } else if (ingredienteReturnate.size() == 1) {
             //daca bd-ul a returnat 1 element o sa presupunem ca e fix cel cautat
-            Ingredient ingr=ingredienteReturnate.get(0);
-            if (!ingredientsBD.contains(ingredienteReturnate.get(0)) && ingr!=null && ingr.getIdRating()!=0) {
+            Ingredient ingr = ingredienteReturnate.get(0);
+            if (!ingredientsBD.contains(ingredienteReturnate.get(0)) && ingr != null && ingr.getIdRating() != 0) {
                 ingredientsBD.add(ingr);
             }
         }
@@ -183,8 +187,8 @@ public class ListIngredientsActivity extends AppCompatActivity {
                 //daca a returnat doar un rezultat inseamna ca a gasit doar un ing asemanator
                 String numeIng = levenshtein.get(0);
                 //daca exista deja in lista de ingrediente pe care o vom baga in adapter la listview, nu il mai introducem iar
-               Ingredient ingr=ingredientMethods.selectIngredient(numeIng);
-                if (!ingredientsBD.contains((ingredientMethods.selectIngredient(numeIng))) && ingr!=null && ingr.getIdRating()!=0)
+                Ingredient ingr = ingredientMethods.selectIngredient(numeIng);
+                if (!ingredientsBD.contains((ingredientMethods.selectIngredient(numeIng))) && ingr != null && ingr.getIdRating() != 0)
                     ingredientsBD.add(ingr);
             } /*else if (levenshtein.size() == 0) {
                 //daca s-au returnat 0 rezultate incercam sa micsoram fuzzines, in ideea in care poate ocr-ul a incurcat mai multe caractere

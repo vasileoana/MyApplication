@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.myapplication.Activities.AnalysesActivity;
 import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
@@ -54,7 +55,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
         int id=getActivity().getIntent().getExtras().getInt("userId");
         String clasa= (String) getArguments().get("clasa");
 
-        if(clasa.equals("Analyses Details"))
+        if(clasa.equals(AnalysesActivity.class.getSimpleName()))
         {
             productList=productMethods.selectProductsByUser(id);
 

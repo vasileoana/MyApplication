@@ -5,15 +5,15 @@
         <item
             android:id="@+id/menu_profile"
             android:icon="@drawable/menu_profile"
-            android:title="Profile" />
+            android:title="Date personale" />
         <item
             android:id="@+id/menu_analyses"
             android:icon="@drawable/menu_analyses"
-            android:title="My analyses" />
+            android:title="Analizele mele" />
         <item
             android:id="@+id/menu_logout"
             android:icon="@drawable/menu_logout"
-            android:title="Logout" />
+            android:title="Iesire" />
 
     </group>
 

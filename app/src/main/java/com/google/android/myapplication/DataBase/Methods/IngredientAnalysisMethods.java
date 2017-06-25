@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.Utilities.DataBase.DatabaseManager;
 import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
 
@@ -76,5 +77,9 @@ public class IngredientAnalysisMethods {
     }
 
 
-
+    public void delete() {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        db.delete(IngredientAnalysis.TABLE, null, null);
+        DatabaseManager.getInstance().closeDatabase();
+    }
 }

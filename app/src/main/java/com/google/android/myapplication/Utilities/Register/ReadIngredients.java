@@ -18,35 +18,35 @@ import java.io.InputStreamReader;
 public class ReadIngredients extends AsyncTask< AssetManager, Void, Void> {
 
 
-    @Override
-    protected Void doInBackground(AssetManager... params) {
-        AssetManager assetManager=params[0];
-        InputStream inputStream;
-        InputStreamReader inputStreamReader;
-        BufferedReader reader;
-        IngredientMethods ingredientMethod=new IngredientMethods();
-        try {
-            inputStream=assetManager.open("ingredient.csv");
-            inputStreamReader=new InputStreamReader(inputStream);
-            reader=new BufferedReader(inputStreamReader);
-            String line;
-            Ingredient ingredient=new Ingredient();
-            while((line = reader.readLine()) != null) {
-                String[] entry = line.split(",");
-                String name = entry[0];
-                int idRating = Integer.parseInt(entry[1]);
-                String desc;
-                ingredient.setIdRating(idRating);
-                ingredient.setName(name);
-                if (entry.length == 3) {
-                    desc = entry[2];
-                    ingredient.setDescription(desc);
-                }
-                else {
-                    ingredient.setDescription(null);
-                }
-                ingredientMethod.insert(ingredient);
-            }
+                @Override
+                protected Void doInBackground(AssetManager... params) {
+                    AssetManager assetManager=params[0];
+                    InputStream inputStream;
+                    InputStreamReader inputStreamReader;
+                    BufferedReader reader;
+                    IngredientMethods ingredientMethod=new IngredientMethods();
+                    try {
+                        inputStream=assetManager.open("ingredient.csv");
+                        inputStreamReader=new InputStreamReader(inputStream);
+                        reader=new BufferedReader(inputStreamReader);
+                        String line;
+                        Ingredient ingredient=new Ingredient();
+                        while((line = reader.readLine()) != null) {
+                            String[] entry = line.split(",");
+                            String name = entry[0];
+                            int idRating = Integer.parseInt(entry[1]);
+                            String desc;
+                            ingredient.setIdRating(idRating);
+                            ingredient.setName(name);
+                            if (entry.length == 3) {
+                                desc = entry[2];
+                                ingredient.setDescription(desc);
+                            }
+                            else {
+                                ingredient.setDescription(null);
+                            }
+                            ingredientMethod.insert(ingredient);
+                        }
 
 
         } catch (IOException e) {

@@ -135,7 +135,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
             case R.id.search_via_radio_group:
                 switch (pos) {
                     case 0:
-                        filterProducts = FilterProducts.TEXT;//Change filter type to Name if pos = 0
+                        filterProducts = FilterProducts.TEXT;
                         spinnerCategorie.setVisibility(View.GONE);
                         searchEditText.setVisibility(View.VISIBLE);
                         sorting.setVisibility(View.GONE);
@@ -143,7 +143,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
                         break;
 
                     case 1:
-                        filterProducts = FilterProducts.CATEGORIE;//Change filter type to Number if pos = 1
+                        filterProducts = FilterProducts.CATEGORIE;
                         spinnerCategorie.setVisibility(View.VISIBLE);
                         searchEditText.setVisibility(View.GONE);
                         sorting.setVisibility(View.GONE);

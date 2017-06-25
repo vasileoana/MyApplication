@@ -9,24 +9,61 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="#f7f7dd"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.google.android.myapplication.Activities.ProfileActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/btnSalvare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/Salvare"
+            android:visibility="gone"
+            android:textColor="#ffffff"
+            android:textSize="17sp"/>
+
+        <Button
+            android:id="@+id/btnModificare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/btnEditare"
+            android:textColor="#ffffff"
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="20sp"
+    android:id="@+id/tvProfileUsername"
+    android:text="eeeeeee"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:text="@string/Informatii"
-        android:layout_gravity="center"/>
+        android:id="@+id/tvProfileEmail"
+        android:text="eeeeeee"/>
+
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android.support.design:counterMaxLength="3"
         >
 
@@ -35,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Username"
+            android:visibility="gone"
 
 
             />
@@ -44,6 +82,7 @@
         android:id="@+id/tilPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
 
         android.support.design:counterMaxLength="3">
 
@@ -51,6 +90,8 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+
             android:hint="@string/Password"
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
@@ -67,6 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Password2"
+            android:visibility="gone"
+
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -74,6 +117,7 @@
         android:id="@+id/tilEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
 
         android.support.design:counterMaxLength="3">
 
@@ -82,18 +126,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Email"
+            android:visibility="gone"
+
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/Send"
-        android:id="@+id/btnSend"
-        android:textColor="#ffffff"
-        android:textSize="17sp"
-        android:background="@color/colorPrimary"/>
-
 
 </LinearLayout>
+

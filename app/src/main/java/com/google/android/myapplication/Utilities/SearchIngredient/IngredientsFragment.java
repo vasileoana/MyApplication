@@ -135,14 +135,14 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
             case R.id.search_via_radio_group:
                 switch (pos) {
                     case 0:
-                        filterIngredients = FilterIngredients.NAME;//Change filter type to Name if pos = 0
+                        filterIngredients = FilterIngredients.NAME;
                         cautareNume = true;
                         filterNameByRadioGroup.setVisibility(View.VISIBLE);
                         filterRatingByRadioGroup.setVisibility(View.GONE);
                         break;
 
                     case 1:
-                        filterIngredients = FilterIngredients.RATING;//Change filter type to Number if pos = 1
+                        filterIngredients = FilterIngredients.RATING;
                         cautareNume = false;
                         filterNameByRadioGroup.setVisibility(View.GONE);
                         filterRatingByRadioGroup.setVisibility(View.VISIBLE);
@@ -161,16 +161,16 @@ public class IngredientsFragment extends android.support.v4.app.Fragment impleme
             case R.id.filter_rating_radio_group:
                 switch (pos) {
                     case 0:
-                        adapter.filterRatings(filterIngredients, 0);
+                        adapter.filterRatings(0);
                         break;
                     case 1:
-                        adapter.filterRatings(filterIngredients, 1);
+                        adapter.filterRatings(1);
                         break;
                     case 2:
-                        adapter.filterRatings(filterIngredients, 2);
+                        adapter.filterRatings(2);
                         break;
                     case 3:
-                        adapter.filterRatings(filterIngredients, 3);
+                        adapter.filterRatings(3);
                         break;
                 }
                 break;

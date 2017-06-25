@@ -45,9 +45,10 @@ public class ListViewAdapter extends BaseAdapter {
     private List<Product> filterArrayList;
     private List<Product> ratingArrayList;
     private List<Product> categoriesArrayList;
-    private CategoryMethods categoryMethods=new CategoryMethods();
-    private ProductAnalysisMethods productAnalysisMethods=new ProductAnalysisMethods();
-    private ProductMethods productMethods=new ProductMethods();
+    private CategoryMethods categoryMethods = new CategoryMethods();
+    private ProductAnalysisMethods productAnalysisMethods = new ProductAnalysisMethods();
+    private ProductMethods productMethods = new ProductMethods();
+
     public ListViewAdapter(Context context, List<Product> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
@@ -55,9 +56,9 @@ public class ListViewAdapter extends BaseAdapter {
         categoryMethods = new CategoryMethods();
         this.filterArrayList = new ArrayList<>();//initiate filter list
         this.filterArrayList.addAll(arrayList);//add all items of array list to filter list
-        this.ratingArrayList=new ArrayList<>();
+        this.ratingArrayList = new ArrayList<>();
         this.ratingArrayList.addAll(arrayList);
-        this.categoriesArrayList=new ArrayList<>();
+        this.categoriesArrayList = new ArrayList<>();
         this.categoriesArrayList.addAll(arrayList);
     }
 
@@ -122,25 +123,29 @@ public class ListViewAdapter extends BaseAdapter {
         if (charText.length() == 0) {
             arrayList.addAll(filterArrayList);
         } else {
-
-            //Else if search query is not null do a loop to all filterList items
             for (Product model : filterArrayList) {
-
-                //Now check the type of search filter
                 switch (filterProducts) {
                     case TEXT: {
 
-                        if (model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
+                        if (model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
                             arrayList.add(model);
                         break;
                     }
                     case SORTARE: {
-                        if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) || model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
+                        if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
                             arrayList.add(model);
                         break;
                     }
                     case CATEGORIE: {
-                        if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) || model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) || model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) || model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
+                        if (categoryMethods.getCategoryName(model.getIdCategory()).toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getBrand().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getDescription().toLowerCase(Locale.getDefault()).contains(charText) ||
+                                model.getFunction().toLowerCase(Locale.getDefault()).contains(charText))
                             arrayList.add(model);
                         break;
                     }
@@ -157,8 +162,8 @@ public class ListViewAdapter extends BaseAdapter {
 
     }
 
-    public void filterCategories(String categorie){
-        if(!categorie.equals("All")) {
+    public void filterCategories(String categorie) {
+        if (!categorie.equals("All")) {
             arrayList.clear();
             for (Product p : categoriesArrayList) {
                 if (categoryMethods.getCategoryName(p.getIdCategory()).equals(categorie)) {
@@ -172,12 +177,14 @@ public class ListViewAdapter extends BaseAdapter {
 
     public void sortAsc() throws ParseException {
 
-            HashMap<Integer,Date > map=new HashMap<>();
-        for(Product p:arrayList){
-           String dateString =productAnalysisMethods.getDate(p.getIdProduct());
+        HashMap<Integer, Date> map = new HashMap<>();
+        for (Product p : arrayList) {
+            String dateString = productAnalysisMethods.getDate(p.getIdProduct());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date date = format.parse(dateString);
-                map.put(p.getIdProduct(),date);
+            if (dateString != null) {
+                Date date = format.parse(dateString);
+                map.put(p.getIdProduct(), date);
+            }
         }
         arrayList.clear();
         Object[] a = map.entrySet().toArray();
@@ -191,8 +198,8 @@ public class ListViewAdapter extends BaseAdapter {
         int id;
         Product p;
         for (Object e : a) {
-             id=((Map.Entry<Integer, Date>) e).getKey();
-             p =productMethods.selectProductById(id);
+            id = ((Map.Entry<Integer, Date>) e).getKey();
+            p = productMethods.selectProductById(id);
             arrayList.add(p);
 
         }
@@ -202,12 +209,12 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public void sortDesc() throws ParseException {
-        HashMap<Integer,Date > map=new HashMap<>();
-        for(Product p:arrayList){
-            String dateString =productAnalysisMethods.getDate(p.getIdProduct());
+        HashMap<Integer, Date> map = new HashMap<>();
+        for (Product p : arrayList) {
+            String dateString = productAnalysisMethods.getDate(p.getIdProduct());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date = format.parse(dateString);
-            map.put(p.getIdProduct(),date);
+            map.put(p.getIdProduct(), date);
         }
         arrayList.clear();
         Object[] a = map.entrySet().toArray();
@@ -221,8 +228,8 @@ public class ListViewAdapter extends BaseAdapter {
         int id;
         Product p;
         for (Object e : a) {
-            id=((Map.Entry<Integer, Date>) e).getKey();
-            p =productMethods.selectProductById(id);
+            id = ((Map.Entry<Integer, Date>) e).getKey();
+            p = productMethods.selectProductById(id);
             arrayList.add(p);
 
         }

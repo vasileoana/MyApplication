@@ -29,6 +29,9 @@ import com.google.android.myapplication.DataBase.Rest.GetIngredientAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProductAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProducts;
 import com.google.android.myapplication.DataBase.Rest.Post;
+import com.google.android.myapplication.DataBase.Rest.PostIngredientAnalysis;
+import com.google.android.myapplication.DataBase.Rest.PostProduct;
+import com.google.android.myapplication.DataBase.Rest.PostProductAnalyses;
 import com.google.android.myapplication.R;
 
 import java.net.MalformedURLException;
@@ -56,14 +59,14 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     int idCategory;
     URL url = null;
     Product p;
-    Post postProd, postIng, postAn;
-    /*GetProducts getProducts = new GetProducts();
-    GetIngredientAnalyses getIngredientAnalyses = new GetIngredientAnalyses();
-    GetProductAnalyses getProductAnalyses = new GetProductAnalyses();*/
+    PostIngredientAnalysis postIngredientAnalysis;
+    PostProductAnalyses postProductAnalyses;
+    PostProduct postProd;
     int idProdus;
     String date;
     int idUser;
     AnalysesActivity activitate;
+
     public DialogFragmentAddAnalysis() {
     }
 
@@ -71,7 +74,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.list_ingredients_dialog_fragment_add_analysis, container, false);
-        getDialog().setTitle("Add analysis!");
+        getDialog().setTitle("Adauga analiza!");
 
         categoryMethods = new CategoryMethods();
         productMethods = new ProductMethods();
@@ -89,7 +92,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
         Bundle bundle = this.getArguments();
 
         String operatie = bundle.getString("operatie");
-
+//todo validari
         if (operatie.equals("editare")) {
             int id = bundle.getInt("id");
             p = productMethods.selectProductById(id);
@@ -118,11 +121,12 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     dismiss();
                 }
             });
-        } else if(operatie.equals("adaugare")) {
+        } else if (operatie.equals("adaugare")) {
             btnOk = (Button) rootView.findViewById(R.id.btnAddAnalysis);
             btnOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    idUser = (int) getActivity().getIntent().getExtras().get("userId");
 
                     //todo validari
 
@@ -132,70 +136,42 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                     String function = etFunction.getText().toString();
                     idCategory = categoryMethods.getIdCategory(category);
                     product = new Product(description, brand, idCategory, function);
-
+                    date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                     String link = "https://teme-vasileoana22.c9users.io/Products/" +
-                            idCategory + "/" + description + "/" + function + "/" + brand;
+                            idCategory + "/" + description.replaceAll(" ", "%20") + "/" + function.replaceAll(" ", "%20") + "/" + brand.replaceAll(" ", "%20");
                     try {
                         url = new URL(link);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-                    postProd = new Post(){
+
+                    postProd = (PostProduct) new PostProduct() {
                         @Override
-                        protected void onPostExecute(Void aVoid) {
-                            //iau produsele de pe server si le bag in sqlLite
-                            GetProducts getProducts = new GetProducts(){
-                                @Override
-                                protected void onPostExecute(Void aVoid) {
-                                    //dupa ce s-a populat tabela Products vreau sa iau id-ul analizei si sa fac inserare pe server
-                                    idProdus = productMethods.getIdProduct(product);
-                                    date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                                    idUser = (int) getActivity().getIntent().getExtras().get("userId");
-                                    String link2 = "https://teme-vasileoana22.c9users.io/ProductAnalyses/" +
-                                            idProdus + "/" + idUser + "/" + date;
-                                    try {
-                                        url = new URL(link2);
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
-                                    }
-                                    //salvez analizele pe server
-                                    postAn = new Post();
-                                    postAn.execute(url);
-
-
-                                    for (Ingredient i : ListIngredientsActivity.ingredientsBD){
-                                        String link3 = "https://teme-vasileoana22.c9users.io/IngredientAnalyses/" +
-                                                idProdus + "/" + i.getIdIngredient();
-                                        try {
-                                            url = new URL(link3);
-                                        } catch (MalformedURLException e) {
-                                            e.printStackTrace();
-                                        }
-                                        //salvez ingredientele analizei pe server
-                                        postIng = new Post(){
-                                            @Override
-                                            protected void onPostExecute(Void aVoid) {
-                                                //bag in bd locala analizza si ing analizele
-                                                //le voi face cu parametru
-                                                GetProductAnalyses getProductAnalyses = new GetProductAnalyses();
-                                                getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
-                                                GetIngredientAnalyses getIngredientAnalyses = new GetIngredientAnalyses();
-                                                getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
-
-                                            }
-                                        };
-                                        postIng.execute(url);
-                                    }
+                        protected void onPostExecute(Product product) {
+                            super.onPostExecute(product);
+                            for (Ingredient i : ListIngredientsActivity.ingredientsBD) {
+                                String link3 = "https://teme-vasileoana22.c9users.io/IngredientAnalyses/" +
+                                        product.getIdProduct() + "/" + i.getIdIngredient();
+                                try {
+                                    url = new URL(link3);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
                                 }
-                            };
-                            //se insereaza in bd
-                            getProducts.execute("https://teme-vasileoana22.c9users.io/products");
-
+                                postIngredientAnalysis = (PostIngredientAnalysis) new PostIngredientAnalysis().execute(url);
+                            }
+                            String link2 = "https://teme-vasileoana22.c9users.io/ProductAnalyses/" +
+                                    product.getIdProduct() + "/" + idUser + "/" + date;
+                            try {
+                                url = new URL(link2);
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            postProductAnalyses = (PostProductAnalyses) new PostProductAnalyses().execute(url);
+                            Toast.makeText(getActivity().getApplicationContext(), "Analiza inserata cu succes!", Toast.LENGTH_SHORT).show();
+                            dismiss();
                         }
-                    };
-                    postProd.execute(url); //am inserat un produs pe server
+                    }.execute(url);
 
-                    dismiss();
                 }
             });
         }
@@ -210,6 +186,5 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
         } catch (ClassCastException e) {
         }
     }
-
 
 }

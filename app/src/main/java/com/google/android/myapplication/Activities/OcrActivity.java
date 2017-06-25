@@ -55,6 +55,7 @@ public class OcrActivity extends Activity {
     static final String LOG_TAG = "Text API";
     ArrayList<String> ingredients;
     int idUser = 0;
+    String tipUtilizator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,11 @@ public class OcrActivity extends Activity {
         scanResults = (EditText) findViewById(R.id.results);
         detector = new TextRecognizer.Builder(getApplicationContext()).build();
         ingredients = new ArrayList<>();
-        idUser = getIntent().getExtras().getInt("userId");
-        tvIndicatii= (TextView) findViewById(R.id.tvIndicatii);
+        tipUtilizator = getIntent().getExtras().getString("tipUtilizator");
+        if (!tipUtilizator.equals("anonim")) {
+            idUser = getIntent().getExtras().getInt("userId");
+        }
+        tvIndicatii = (TextView) findViewById(R.id.tvIndicatii);
 
         if (checkSelfPermission(Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -100,33 +104,33 @@ public class OcrActivity extends Activity {
                     else if (userChosenTask.equals("Choose from Library"))
                         galleryIntent();
                 } else {
-                    //de compeltat
+                    Toast.makeText(this, "Permisiunea nu a fost acordata", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
 
     private void selectImage() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
-                "Cancel"};
+        final CharSequence[] items = {"Realizeaza fotografie", "Alege din galerie",
+                "Iesire"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(OcrActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Adauga fotografie!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result = OcrUtility.checkPermission(OcrActivity.this);
 
-                if (items[item].equals("Take Photo")) {
-                    userChosenTask = "Take Photo";
+                if (items[item].equals("Realizeaza fotografie")) {
+                    userChosenTask = "Realizeaza fotografie";
                     if (result)
                         cameraIntent();
 
-                } else if (items[item].equals("Choose from Library")) {
-                    userChosenTask = "Choose from Library";
+                } else if (items[item].equals("Alege din galerie")) {
+                    userChosenTask = "Alege din galerie";
                     if (result)
                         galleryIntent();
-                } else if (items[item].equals("Cancel")) {
+                } else if (items[item].equals("Iesire")) {
                     dialog.dismiss();
                 }
             }
@@ -136,17 +140,17 @@ public class OcrActivity extends Activity {
     }
 
 
-
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
+
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
         btnOcr.setVisibility(View.VISIBLE);
         tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
@@ -172,7 +176,7 @@ public class OcrActivity extends Activity {
     }
 
     private void onCaptureImageResult(Intent data) {
-        thumbnail = (Bitmap) data.getExtras().get("data");
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
@@ -203,14 +207,11 @@ public class OcrActivity extends Activity {
                 e.printStackTrace();
             }
         }
-
         ivImage.setImageBitmap(bm);
 
     }
 
     public void Ocr(View view) {
-
-
         Bitmap bitmap;
         bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
         try {
@@ -219,18 +220,11 @@ public class OcrActivity extends Activity {
                 SparseArray<TextBlock> textBlocks = detector.detect(frame);
                 String blocks = "";
                 String lines = "";
-                String words = "";
                 for (int index = 0; index < textBlocks.size(); index++) {
-                    //extract scanned text blocks here
                     TextBlock tBlock = textBlocks.valueAt(index);
                     blocks = blocks + tBlock.getValue();
                     for (Text line : tBlock.getComponents()) {
-                        //extract scanned text lines here
                         lines = lines + line.getValue();
-                        //  for (Text element : line.getComponents()) {
-                        //extract scanned text words here
-                        //   words = words + element.getValue() + ", ";
-                        // }
                     }
                     scanResults.setVisibility(View.VISIBLE);
                     btnShow.setVisibility(View.VISIBLE);
@@ -243,7 +237,7 @@ public class OcrActivity extends Activity {
                     //  scanResults.setText(scanResults.getText() + blocks + "\n");
                     //  scanResults.setText(scanResults.getText() + "---------" + "\n");
                     // scanResults.setText(scanResults.getText() + "Lines: " + "\n");
-                    scanResults.setText(scanResults.getText() + lines+" ");
+                    scanResults.setText(scanResults.getText() + lines + " ");
                     //  scanResults.setText(scanResults.getText() + "---------" + "\n");
                     // scanResults.setText(scanResults.getText() + "Words: " + "\n");
                     // scanResults.setText(scanResults.getText() + words + "\n");
@@ -270,7 +264,10 @@ public class OcrActivity extends Activity {
         }
         final Intent i = new Intent(getApplicationContext(), ListIngredientsActivity.class);
         i.putStringArrayListExtra("list", ingredients);
-        i.putExtra("userId", idUser);
+        if (!tipUtilizator.equals("anonim")) {
+            i.putExtra("userId", idUser);
+        }
+        i.putExtra("tipUtilizator", tipUtilizator);
         startActivity(i);
          /*   SearchThread searchThread=new SearchThread(){
                 @Override
@@ -281,10 +278,6 @@ public class OcrActivity extends Activity {
                 }
             };
             searchThread.execute(ingredients);*/
-
-
-
-
 
 
     }

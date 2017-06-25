@@ -22,12 +22,7 @@ import java.util.List;
 
 public class SearchProductActivity extends AppCompatActivity {
 
-    ListView lvSearchProduct;
-    ProductMethods productMethods;
-    List<Product> productList;
-    ProductAnalysisMethods productAnalysisMethods;
-    ListViewAdapter adapter;
-    int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
