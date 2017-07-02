@@ -5,8 +5,15 @@ import android.os.AsyncTask;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Product;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,29 +26,42 @@ import java.net.URL;
  * Created by Oana on 25-Jun-17.
  */
 
-public class PostProduct extends AsyncTask<URL, Void, Product> {
+public class PostProduct extends AsyncTask<Product, Void, Product> {
 
 
     @Override
-    protected Product doInBackground(URL... urls) {
-        Product product = null;
-        URL url = urls[0];
+    protected Product doInBackground(Product... products) {
+        Product productNou = null;
+        Product product = products[0];
         ProductMethods productMethods = new ProductMethods();
 
+        String url = "https://teme-vasileoana22.c9users.io/Product/";
         try {
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            InputStream input = con.getInputStream();
+            HttpPost request = new HttpPost(url);
+            JSONStringer json = new JSONStringer()
+                    .object()
+                    .key("Description").value(product.getDescription())
+                    .key("IFunction").value(product.getFunction())
+                    .key("Brand").value(product.getBrand())
+                    .key("IdCategory").value(product.getIdCategory())
+                    .endObject();
+
+            StringEntity entity = new StringEntity(json.toString());
+            entity.setContentType("application/json;charset=UTF-8");//text/plain;charset=UTF-8
+            entity.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8"));
+            request.setEntity(entity);
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response = httpClient.execute(request);
+
+            InputStream input = response.getEntity().getContent();
             InputStreamReader reader = new InputStreamReader(input);
             BufferedReader in = new BufferedReader(reader);
             String line = in.readLine();
-            JSONObject jObject = new JSONObject(line);
+
+            JSONObject jObject =  new JSONObject(line);
             int id = jObject.getInt("id");
-            int idCateg = jObject.getInt("IdCategory");
-            String description = jObject.getString("Description");
-            String function = jObject.getString("IFunction");
-            String brand = jObject.getString("Brand");
-            product = new Product(id, description, brand, idCateg, function);
-            productMethods.insert(product);
+            productNou = new Product(id, product.getDescription(), product.getBrand(), product.getIdCategory(),product.getFunction());
+            productMethods.insert(productNou);
 
 
         } catch (IOException e) {
@@ -49,6 +69,6 @@ public class PostProduct extends AsyncTask<URL, Void, Product> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return product;
+        return productNou;
     }
 }

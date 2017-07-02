@@ -25,10 +25,10 @@ public class GetProducts extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... args) {
-        String linkUsers = args[0];
+        String link = args[0];
         ProductMethods productMethods= new ProductMethods();
         try {
-            URL url = new URL(linkUsers);
+            URL url = new URL(link);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             InputStream input = con.getInputStream();
             InputStreamReader reader = new InputStreamReader(input);

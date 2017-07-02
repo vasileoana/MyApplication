@@ -29,7 +29,7 @@ public class UserMethods {
         long code;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
-        values.put(User.label_idUser, user.getUsername());
+        values.put(User.label_idUser, user.getIdUser());
         values.put(User.label_username, user.getUsername());
         values.put(User.label_email, user.getEmail());
         values.put(User.label_password, user.getPassword());
@@ -123,9 +123,8 @@ public class UserMethods {
         values.put(User.label_username, user.getUsername());
         values.put(User.label_email, user.getEmail());
         values.put(User.label_password, user.getPassword());
-        code = db.update(User.TABLE, values, User.label_idUser + "=?", new String[]{String.valueOf(user.getIdUser())});
+        code = db.updateWithOnConflict(User.TABLE, values, User.label_idUser + "=?", new String[]{String.valueOf(user.getIdUser())}, SQLiteDatabase.CONFLICT_IGNORE);
         DatabaseManager.getInstance().closeDatabase();
-
         return code;
     }
 }

@@ -79,45 +79,46 @@
             android:layout_height="wrap_content"
             android:background="#f0f4c3"
             android:orientation="horizontal"
-                android:paddingBottom="30dp"          >
+            android:paddingBottom="30dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingEnd="40dp"
                 android:paddingStart="40dp"
-                android:paddingTop="5dp"
-                >
+                android:paddingTop="5dp">
 
                 <ImageButton
                     android:id="@+id/btnAddIng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/add"
+                    android:layout_above="@+id/textView2"
                     android:layout_marginStart="37dp"
-                    android:layout_above="@+id/textView2" />
+                    android:background="@drawable/add" />
+
                 <TextView
-                    android:layout_below="@+id/btnAddIng"
+                    android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="Adauga un ingredient"
-                    android:id="@+id/textView1"/>
+                    android:layout_below="@+id/btnAddIng"
+                    android:text="Adauga un ingredient" />
 
                 <ImageButton
-                    android:id="@+id/btnRemoveIng"
+                    android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/remove"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"/>
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/send2" />
+
                 <TextView
-                    android:layout_below="@+id/btnRemoveIng"
-                    android:layout_alignParentEnd="true"
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sterge ingrediente"
-                    android:id="@+id/textView2" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/btnSave"
+                    android:text="Salveaza analiza" />
 
 
             </RelativeLayout>
@@ -133,25 +134,16 @@
 
             <ListView
                 android:id="@+id/lvIng"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FEFEF4"
                 android:choiceMode="singleChoice"
                 android:clickable="false"
-                android:padding="17sp"
-                android:listSelector="#f0f4c3"/>
-            </LinearLayout>
+                android:listSelector="#f0f4c3"
+                android:padding="17sp" />
+        </LinearLayout>
 
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/send"
-        app:layout_anchor="@id/viewA"
 
-        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

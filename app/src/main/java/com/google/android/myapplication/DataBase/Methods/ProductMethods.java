@@ -26,7 +26,8 @@ public class ProductMethods {
 
 
     public long insert(Product product)
-    { long code=0;
+    {
+        long code=0;
         try {
 
             SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
@@ -36,8 +37,6 @@ public class ProductMethods {
             values.put(Product.label_description,product.getDescription());
             values.put(Product.label_brand,product.getBrand());
             values.put(Product.label_function,product.getFunction());
-
-            // Inserting Row
             code= db.insertWithOnConflict(Product.TABLE, null, values,SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
         }
@@ -58,9 +57,8 @@ public class ProductMethods {
             values.put(Product.label_description,product.getDescription());
             values.put(Product.label_brand,product.getBrand());
             values.put(Product.label_function,product.getFunction());
-
-            // Update Row
-            code = (int) db.update(Product.TABLE, values, Product.label_idProduct+"=?", new String[] {String.valueOf(product.getIdProduct())} );
+            code = db.updateWithOnConflict(Product.TABLE, values, Product.label_idProduct+"=?",
+                    new String[] {String.valueOf(product.getIdProduct())}, SQLiteDatabase.CONFLICT_IGNORE);
             DatabaseManager.getInstance().closeDatabase();
         }
         catch(Exception e){
@@ -97,6 +95,8 @@ public class ProductMethods {
 
         return products;
     }
+
+
 
 
     public int getIdProduct(Product product) {

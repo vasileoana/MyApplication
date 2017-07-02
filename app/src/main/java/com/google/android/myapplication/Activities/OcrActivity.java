@@ -258,7 +258,7 @@ public class OcrActivity extends Activity {
     public void Show(View view) {
         String text = scanResults.getText().toString();
         //am facut un vector de cuvinte
-        String[] vector = text.split("[,.:;]");
+        String[] vector = text.replace("'","").split("[,.:;]");
         for (String ing : vector) {
             ingredients.add(ing.trim());
         }
@@ -269,15 +269,7 @@ public class OcrActivity extends Activity {
         }
         i.putExtra("tipUtilizator", tipUtilizator);
         startActivity(i);
-         /*   SearchThread searchThread=new SearchThread(){
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    startActivity(i);
 
-                }
-            };
-            searchThread.execute(ingredients);*/
 
 
     }

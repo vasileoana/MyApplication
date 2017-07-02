@@ -76,4 +76,6 @@ public class ProductAnalysis {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+
 }

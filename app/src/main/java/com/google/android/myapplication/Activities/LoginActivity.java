@@ -15,18 +15,25 @@ import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMetho
 import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
+import com.google.android.myapplication.DataBase.Methods.SyncProdusMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.Category;
+import com.google.android.myapplication.DataBase.Model.Ingredient;
+import com.google.android.myapplication.DataBase.Model.SyncProdus;
 import com.google.android.myapplication.DataBase.Model.User;
+import com.google.android.myapplication.DataBase.Rest.DeleteProduct;
+import com.google.android.myapplication.DataBase.Rest.DeleteSyncProduct;
 import com.google.android.myapplication.DataBase.Rest.GetIngredientAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProductAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProducts;
 import com.google.android.myapplication.DataBase.Rest.GetUser;
+import com.google.android.myapplication.DataBase.Rest.PutProduct;
+import com.google.android.myapplication.DataBase.Rest.PutSyncProduct;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.Register.CheckInternetConnection;
-import com.google.android.myapplication.Utilities.Register.ReadCategories;
-import com.google.android.myapplication.Utilities.Register.ReadIngredients;
-import com.google.android.myapplication.Utilities.Register.ReadRatings;
+import com.google.android.myapplication.DataBase.Files.ReadCategories;
+import com.google.android.myapplication.DataBase.Files.ReadIngredients;
+import com.google.android.myapplication.DataBase.Files.ReadRatings;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -55,12 +62,27 @@ public class LoginActivity extends AppCompatActivity {
     ProductMethods productMethods;
     IngredientAnalysisMethods ingredientAnalysisMethods;
     ProductAnalysisMethods productAnalysisMethods;
+    SyncProdusMethods syncProdusMethods;
+    List<Integer> listaEditate;
+    List<Integer> listaSterse;
+    PutSyncProduct putSyncProduct;
+    DeleteSyncProduct deleteSyncProduct;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        listaEditate = new ArrayList<>();
+        listaSterse = new ArrayList<>();
         categoryMethods = new CategoryMethods();
+        syncProdusMethods = new SyncProdusMethods();
         productMethods = new ProductMethods();
         ingredientAnalysisMethods = new IngredientAnalysisMethods();
         productAnalysisMethods = new ProductAnalysisMethods();
@@ -78,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         readIngredients = new ReadIngredients();
         readRatings = new ReadRatings();
         readCategories = new ReadCategories();
+
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -109,19 +132,20 @@ public class LoginActivity extends AppCompatActivity {
 
                             getUser = (GetUser) new GetUser() {
                                 @Override
-                                protected void onPostExecute(User user) {
-                                    user_gasit = user;
+                                protected void onPostExecute(User userReturnat) {
+                                    user_gasit = userReturnat;
+                                    if (user_gasit != null) {
+                                        user = user_gasit;
+                                        Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                                        intent.putExtra("userId", user.getIdUser());
+                                        intent.putExtra("tipUtilizator", "logat");
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Nume de utilizator sau parola incorecte!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }.execute(url);
 
-                            if (user_gasit != null) {
-                                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                                intent.putExtra("userId", user_gasit.getIdUser());
-                                intent.putExtra("tipUtilizator", "logat");
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Nume de utilizator sau parola incorecte!", Toast.LENGTH_SHORT).show();
-                            }
                         }
                     } else {
                         if (categoryList.size() == 0) {
@@ -132,13 +156,29 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
-                            //sincronizare bd cu tabele de pe server
-                            productMethods.delete();
-                            productAnalysisMethods.delete();
-                            ingredientAnalysisMethods.delete();
-                            getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
-                            getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
-                            getProducts.execute("https://teme-vasileoana22.c9users.io/products");
+                            listaEditate = syncProdusMethods.selectEditate();
+                            listaSterse = syncProdusMethods.selectSterse();
+                            deleteSyncProduct = (DeleteSyncProduct) new DeleteSyncProduct(){
+                                @Override
+                                protected void onPostExecute(Void aVoid) {
+                                    super.onPostExecute(aVoid);
+                                    putSyncProduct = (PutSyncProduct) new PutSyncProduct(){
+                                        @Override
+                                        protected void onPostExecute(Void aVoid) {
+                                            super.onPostExecute(aVoid);
+                                            productMethods.delete();
+                                            productAnalysisMethods.delete();
+                                            ingredientAnalysisMethods.delete();
+                                            getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
+                                            getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
+                                            getProducts.execute("https://teme-vasileoana22.c9users.io/products");
+                                            syncProdusMethods.delete();
+                                        }
+                                    }.execute(listaEditate);
+                                }
+                            }.execute(listaSterse);
+
+
                         }
                         Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                         intent.putExtra("userId", user.getIdUser());
@@ -149,5 +189,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

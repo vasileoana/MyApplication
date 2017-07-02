@@ -100,7 +100,8 @@ public class ListViewAdapter extends BaseAdapter {
         viewHolder.category.setText(categoryMethods.getCategoryName(model.getIdCategory()));
         viewHolder.brand.setText(model.getBrand());
         viewHolder.functie.setText(model.getFunction());
-        viewHolder.data.setText(productAnalysisMethods.getDate(model.getIdProduct()));
+        int id = model.getIdProduct();
+        viewHolder.data.setText(productAnalysisMethods.getDate(id));
         return view;
     }
 

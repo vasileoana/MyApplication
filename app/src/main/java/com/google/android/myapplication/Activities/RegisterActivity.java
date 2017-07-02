@@ -2,7 +2,6 @@ package com.google.android.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,27 +17,17 @@ import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
-import com.google.android.myapplication.DataBase.Model.Category;
-import com.google.android.myapplication.DataBase.Model.IngredientAnalysis;
-import com.google.android.myapplication.DataBase.Model.Product;
-import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
-import com.google.android.myapplication.DataBase.Model.Rating;
 import com.google.android.myapplication.DataBase.Model.User;
 import com.google.android.myapplication.DataBase.Rest.GetIngredientAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProductAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProducts;
-import com.google.android.myapplication.DataBase.Rest.GetUser;
 import com.google.android.myapplication.DataBase.Rest.PostUser;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.Register.CheckInternetConnection;
-import com.google.android.myapplication.Utilities.Register.ReadCategories;
-import com.google.android.myapplication.Utilities.Register.ReadIngredients;
-import com.google.android.myapplication.Utilities.Register.ReadRatings;
+import com.google.android.myapplication.DataBase.Files.ReadCategories;
+import com.google.android.myapplication.DataBase.Files.ReadIngredients;
+import com.google.android.myapplication.DataBase.Files.ReadRatings;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -91,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etUsername.getText().toString().trim().length() <= 0) {
+                if (etUsername.getText().toString().trim().length() == 0) {
                     etUsername.requestFocus();
                     tilUsername.setError("Numele de utilizator este necesar!");
                 } else if (etPass.getText().toString().length() < 6) {
@@ -147,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.makeText(RegisterActivity.this, "Username sau email deja existente!", Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        }.execute(url);
+                        }.execute(user);
 
                     } else {
                         Toast.makeText(RegisterActivity.this, "Pentru a finaliza inregistrarea este necesara o conexiune la Internet!", Toast.LENGTH_SHORT).show();

@@ -85,17 +85,34 @@ public class RatingMethods {
         return rating;
     }
 
+    public int getId(String nume) {
+        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = " SELECT "+ Rating.label_idRating +" FROM " + Rating.TABLE+" WHERE "+Rating.label_rating + " LIKE '"+nume+"'";
+        int id=0;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            id= Integer.parseInt(cursor.getString(cursor.getColumnIndex(Rating.label_idRating)));
+        }
+
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+
+        return id;
+    }
+
      public static int returnRatingImage(String rating) {
         switch (rating) {
-            case "POOR":
+            case "SLAB":
                 return R.drawable.poor;
-            case "GOOD":
+            case "BUN":
                 return R.drawable.good;
-            case "BEST":
+            case "FOARTE BUN":
                 return R.drawable.best;
-            case "AVERAGE":
+            case "MEDIU":
                 return R.drawable.average;
         }
         return R.drawable.good;
     }
+
 }

@@ -142,31 +142,29 @@ public class ListViewAdapter extends BaseAdapter {
 
     }
 
-    //todo de facut o functie care returneaza id-ul pt numele ratingurilor
     public void filterRatings(int rating) {
         filterByRating.addAll(arrayList);
         arrayList.clear();
-        //Clear the main ArrayList
             for (int i = 0; i < filterByRating.size(); i++) {
                 Ingredient ingredient = filterByRating.get(i);
                 switch (rating) {
                     case 0: {
-                        if (ingredient.getIdRating() == 1)
+                        if (ingredient.getIdRating() == ratingMethods.getId("FOARTE BUN"))
                             arrayList.add(ingredient);
                         break;
                     }
                     case 1: {
-                        if (ingredient.getIdRating() == 2)
+                        if (ingredient.getIdRating() == ratingMethods.getId("BUN"))
                             arrayList.add(ingredient);
                         break;
                     }
                     case 2: {
-                        if (ingredient.getIdRating() == 3)
+                        if (ingredient.getIdRating() == ratingMethods.getId("MEDIU"))
                             arrayList.add(ingredient);
                         break;
                     }
                     case 3: {
-                        if (ingredient.getIdRating() == 4)
+                        if (ingredient.getIdRating() == ratingMethods.getId("SLAB"))
                             arrayList.add(ingredient);
                         break;
                     }
@@ -179,13 +177,13 @@ public class ListViewAdapter extends BaseAdapter {
 
     private int returnRatingImage(String rating) {
         switch (rating) {
-            case "POOR":
+            case "SLAB":
                 return R.drawable.poor;
-            case "GOOD":
+            case "BUN":
                 return R.drawable.good;
-            case "BEST":
+            case "FOARTE BUN":
                 return R.drawable.best;
-            case "AVERAGE":
+            case "MEDIU":
                 return R.drawable.average;
         }
         return R.drawable.good;

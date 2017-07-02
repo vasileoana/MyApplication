@@ -15,6 +15,7 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.R;
+import com.google.android.myapplication.Utilities.Analyses.DialogFragmentViewAnalysis;
 import com.google.android.myapplication.Utilities.SearchProduct.*;
 
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public class DialogFragmentViewIngredient extends DialogFragment {
         }
             else if(bundle.getString("from").equals(ListIngredientsActivity.class.getSimpleName())) {
             ingredient = ListIngredientsActivity.ingredientsBD.get(position);
+        }
+        else if(bundle.getString("from").equals(DialogFragmentViewAnalysis.class.getSimpleName())){
+            ingredient = DialogFragmentViewAnalysis.ingredients.get(position);
         }
         tvIngredientName.setText(ingredient.getName());
         String rating = ratingMethods.getRating(ingredient.getIdRating());

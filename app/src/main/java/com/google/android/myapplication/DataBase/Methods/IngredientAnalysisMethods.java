@@ -82,4 +82,12 @@ public class IngredientAnalysisMethods {
         db.delete(IngredientAnalysis.TABLE, null, null);
         DatabaseManager.getInstance().closeDatabase();
     }
+
+    public void deleteProduct(Integer idProduct) {
+       {
+            SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
+            db.delete(IngredientAnalysis.TABLE,"IdProduct=?",new String[]{(String.valueOf(idProduct))});
+            DatabaseManager.getInstance().closeDatabase();
+        }
+    }
 }

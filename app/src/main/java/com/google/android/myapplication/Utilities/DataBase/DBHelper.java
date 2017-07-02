@@ -11,12 +11,14 @@ import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Methods.RatingMethods;
+import com.google.android.myapplication.DataBase.Methods.SyncProdusMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.Category;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.DataBase.Model.Rating;
+import com.google.android.myapplication.DataBase.Model.SyncProdus;
 import com.google.android.myapplication.DataBase.Model.User;
 
 /**
@@ -46,6 +48,7 @@ public class DBHelper  extends SQLiteOpenHelper{
         db.execSQL(CategoryMethods.create());
         db.execSQL(ProductAnalysisMethods.create());
         db.execSQL(ProductMethods.create());
+        db.execSQL(SyncProdusMethods.create());
 }
 
     @Override
@@ -58,6 +61,7 @@ public class DBHelper  extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + Category.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ProductAnalysis.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + Product.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + SyncProdus.TABLE);
         onCreate(db);
 
     }

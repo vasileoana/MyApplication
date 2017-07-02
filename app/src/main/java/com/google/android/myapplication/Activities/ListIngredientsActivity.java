@@ -1,5 +1,7 @@
 package com.google.android.myapplication.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +36,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
     ListView lv;
     List<String> bdIng;
     ImageButton btnAddIng, btnRemoveIng;
-    FloatingActionButton btnSaveAnalysis;
+    ImageButton btnSaveAnalysis;
     ProductMethods productMethods;
     ListViewAdapter adapter;
     List<Ingredient> ingredienteReturnate;
@@ -45,20 +47,19 @@ public class ListIngredientsActivity extends AppCompatActivity {
     int idUser;
     TextView addIng, removeIng;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_ingredients);
-        btnSaveAnalysis = (FloatingActionButton) findViewById(R.id.fab);
-        btnRemoveIng = (ImageButton) findViewById(R.id.btnRemoveIng);
+        btnSaveAnalysis = (ImageButton) findViewById(R.id.btnSave);
         btnAddIng = (ImageButton) findViewById(R.id.btnAddIng);
         tip_utilizator = getIntent().getExtras().getString("tipUtilizator");
         addIng = (TextView) findViewById(R.id.textView1);
         removeIng = (TextView) findViewById(R.id.textView2);
         if (tip_utilizator.equals("logat")) {
             idUser = (int) getIntent().getExtras().get("userId");
-        }
-        else {
+        } else {
             btnSaveAnalysis.setVisibility(View.GONE);
             btnRemoveIng.setVisibility(View.GONE);
             btnAddIng.setVisibility(View.GONE);
@@ -85,6 +86,47 @@ public class ListIngredientsActivity extends AppCompatActivity {
         lv.setAdapter(adapter);
 
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                DialogFragmentViewIngredient dialogFragmentViewIngredient = new DialogFragmentViewIngredient();
+                Bundle bundle = new Bundle();
+                bundle.putString("from", ListIngredientsActivity.class.getSimpleName());
+                bundle.putInt("poz", i);
+                dialogFragmentViewIngredient.setArguments(bundle);
+                dialogFragmentViewIngredient.show(fragmentManager, "ViewIngredient");
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(ListIngredientsActivity.this);
+                builder1.setMessage("Sunteti sigur ca stergeti acest ingredient?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Da",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                ingredientsBD.remove(i);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Nu",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+                return true;
+            }
+        });
         btnSaveAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,23 +151,6 @@ public class ListIngredientsActivity extends AppCompatActivity {
             }
         });
 
-        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        btnRemoveIng.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SparseBooleanArray checked = lv.getCheckedItemPositions();
-                for (int i = 0; i < lv.getCount(); i++) {
-
-                    if (checked.get(i) == true) {
-                        ingredientsBD.remove(i);
-
-                    }
-                    adapter.notifyDataSetChanged();
-
-                }
-                lv.clearChoices();
-            }
-        });
     }
 
 

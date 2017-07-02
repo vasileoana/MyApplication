@@ -27,6 +27,11 @@ public class IngredientAnalysis {
         IdIngredient = idIngredient;
     }
 
+    public IngredientAnalysis(int idProduct, int idIngredient) {
+        this.idProduct = idProduct;
+        IdIngredient = idIngredient;
+    }
+
     public int getIdAnalysis() {
         return idAnalysis;
     }

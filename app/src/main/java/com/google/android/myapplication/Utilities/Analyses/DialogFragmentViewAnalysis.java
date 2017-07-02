@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import com.google.android.myapplication.DataBase.Model.Product;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.*;
+import com.google.android.myapplication.Utilities.SearchIngredient.DialogFragmentViewIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +40,12 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
     TextView tvAnalysysCategoryName,tvAnalysysProductFunction,tvAnalysysProductDescription,tvAnalysysBrandName,tvAnalysysDate;
     ProductMethods productMethods;
     List<Product> productList;
-    List<Ingredient> ingredients;
+    public static List<Ingredient> ingredients;
     CategoryMethods categoryMethods;
     IngredientMethods ingredientMethods;
     ProductAnalysisMethods productAnalysisMethods;
     Button btnOK;
+    Product p;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -75,18 +78,33 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
         btnOK= (Button) rootView.findViewById(R.id.btnOK);
 
         int position= (int) getArguments().get("position");
-        Product p=productList.get(position);
+         p=productList.get(position);
         ingredients=ingredientMethods.selectIngredients(p.getIdProduct());
         tvAnalysysCategoryName.setText(categoryMethods.getCategoryName(p.getIdCategory()));
         tvAnalysysBrandName.setText(p.getBrand());
         tvAnalysysProductFunction.setText(p.getFunction());
         tvAnalysysProductDescription.setText(p.getDescription());
-        String date =productAnalysisMethods.getDate(p.getIdProduct());
+        int id2 = p.getIdProduct();
+        String date =productAnalysisMethods.getDate(id2);
         tvAnalysysDate.setText(date);
 
         com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter adapter = new com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter(getActivity().getApplicationContext(), R.layout.search_ingredients_adapter, ingredients);
 
            lv_analyses_ingredients.setAdapter(adapter);
+
+        lv_analyses_ingredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                DialogFragmentViewIngredient dialogFragmentViewIngredient = new DialogFragmentViewIngredient();
+                Bundle bundle=new Bundle();
+                bundle.putString("from",DialogFragmentViewAnalysis.class.getSimpleName());
+                bundle.putInt("poz",i);
+                dialogFragmentViewIngredient.setArguments(bundle);
+                dialogFragmentViewIngredient.show(fragmentManager,"ViewIngredient");
+
+            }
+        });
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override

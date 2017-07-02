@@ -76,13 +76,12 @@ public class ProductAnalysisMethods {
     public String getDate(int id) {
         String date=null;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + ProductAnalysis.TABLE+" WHERE "+ProductAnalysis.label_idProduct+"="+id+";";
+        String selectQuery = "SELECT * FROM " + ProductAnalysis.TABLE+" WHERE "+ProductAnalysis.label_idProduct+"="+id+";";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-
                date=cursor.getString(cursor.getColumnIndex(ProductAnalysis.label_date));
             } while (cursor.moveToNext());
         }
@@ -98,4 +97,6 @@ public class ProductAnalysisMethods {
         db.delete(ProductAnalysis.TABLE, null, null);
         DatabaseManager.getInstance().closeDatabase();
     }
+
+
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/search_via_label"
@@ -19,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <RadioButton
             android:id="@+id/name_radio_button"
@@ -104,6 +104,29 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
+
+        <RadioButton
+            android:id="@+id/rb_rating_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/best"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rb_rating_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/good"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
         <RadioButton
             android:id="@+id/rb_rating_0"
             android:layout_width="match_parent"
@@ -116,26 +139,6 @@
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
-        <RadioButton
-            android:id="@+id/rb_rating_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/best"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-        <RadioButton
-            android:id="@+id/rb_rating_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/good"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
 
         <RadioButton
             android:id="@+id/rb_rating_3"
@@ -157,8 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/search_bg"
-        android:drawableStart="@drawable/ic_search"
         android:drawablePadding="5dp"
+        android:drawableStart="@drawable/ic_search"
         android:gravity="center_vertical"
         android:hint="@string/enter_text_to_search"
         android:maxLines="1"
@@ -166,7 +169,6 @@
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
         android:textSize="12sp" />
-
 
 
 </LinearLayout>

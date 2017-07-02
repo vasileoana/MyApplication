@@ -45,8 +45,6 @@ public class GetIngredientAnalyses extends AsyncTask<String, Void, Void> {
                 int id = Integer.parseInt(jObject.get("id").toString());
                 int idProduct = Integer.parseInt(jObject.get("idProduct").toString());
                 int idIngredient = Integer.parseInt(jObject.get("IdIngredient").toString());
-
-
                 ingredientAnalisys = new IngredientAnalysis(id,idProduct,idIngredient);
                 ingredientMethods.insert(ingredientAnalisys);
             }

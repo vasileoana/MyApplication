@@ -14,7 +14,9 @@ import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.DataBase.Model.User;
+import com.google.android.myapplication.DataBase.Rest.PutUser;
 import com.google.android.myapplication.R;
+import com.google.android.myapplication.Utilities.Register.CheckInternetConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
     Button btnSalvare, btnEditare;
     int idUser;
     User utilizator;
+    PutUser putUser;
+    CheckInternetConnection checkInternetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
         idUser = getIntent().getExtras().getInt("idUtilizator");
         userMethods = new UserMethods();
         utilizator = userMethods.selectUserById(idUser);
-
+        checkInternetConnection = new CheckInternetConnection();
         tilUsername = (TextInputLayout) findViewById(R.id.tilUsername);
         tilPass = (TextInputLayout) findViewById(R.id.tilPassword);
         tilPass2 = (TextInputLayout) findViewById(R.id.tilPassword2);
@@ -60,72 +64,80 @@ public class ProfileActivity extends AppCompatActivity {
         btnEditare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvProfileUsername.setVisibility(View.GONE);
-                tvProfileEmail.setVisibility(View.GONE);
+                if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
+                    tvProfileUsername.setVisibility(View.GONE);
+                    tvProfileEmail.setVisibility(View.GONE);
 
-                tilUsername.setVisibility(View.VISIBLE);
-                tilPass.setVisibility(View.VISIBLE);
-                tilPass2.setVisibility(View.VISIBLE);
-                tilEmail.setVisibility(View.VISIBLE);
-                etUsername.setVisibility(View.VISIBLE);
-                etPass.setVisibility(View.VISIBLE);
-                etPass2.setVisibility(View.VISIBLE);
-                etEmail.setVisibility(View.VISIBLE);
-                btnEditare.setVisibility(View.GONE);
-                btnSalvare.setVisibility(View.VISIBLE);
-                etUsername.setText(utilizator.getUsername());
-                etEmail.setText(utilizator.getEmail());
+                    tilUsername.setVisibility(View.VISIBLE);
+                    tilPass.setVisibility(View.VISIBLE);
+                    tilPass2.setVisibility(View.VISIBLE);
+                    tilEmail.setVisibility(View.VISIBLE);
+                    etUsername.setVisibility(View.VISIBLE);
+                    etPass.setVisibility(View.VISIBLE);
+                    etPass2.setVisibility(View.VISIBLE);
+                    etEmail.setVisibility(View.VISIBLE);
+                    btnEditare.setVisibility(View.GONE);
+                    btnSalvare.setVisibility(View.VISIBLE);
+                    etUsername.setText(utilizator.getUsername());
+                    etEmail.setText(utilizator.getEmail());
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Trebuie conexiune la Internet!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btnSalvare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etUsername.getText().toString().trim().length() <= 0) {
-                    etUsername.requestFocus();
-                    tilUsername.setError("Numele de utilizator este necesar!");
-                } else if (etPass.getText().toString().length() < 6) {
-                    tilUsername.setError(null);
-                    etPass.requestFocus();
-                    tilPass.setError("Alegeti o parola de minim 6 caractere!");
-                } else if (etPass2.getText().toString().compareTo(etPass.getText().toString()) != 0) {
-                    tilPass.setError(null);
-                    etPass2.requestFocus();
-                    tilPass2.setError("Parola trebuie sa fie identica cu cea de mai sus!");
-                } else if (etEmail.getText().toString().trim().length() <= 2 || !etEmail.getText().toString().contains("@")) {
-                    tilPass2.setError(null);
-                    etEmail.requestFocus();
-                    tilEmail.setError("Scrieti o adresa de email valida!");
+                if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
+                    if (etUsername.getText().toString().trim().length() <= 0) {
+                        etUsername.requestFocus();
+                        tilUsername.setError("Numele de utilizator este necesar!");
+                    } else if (etPass.getText().toString().length() < 6) {
+                        tilUsername.setError(null);
+                        etPass.requestFocus();
+                        tilPass.setError("Alegeti o parola de minim 6 caractere!");
+                    } else if (etPass2.getText().toString().compareTo(etPass.getText().toString()) != 0) {
+                        tilPass.setError(null);
+                        etPass2.requestFocus();
+                        tilPass2.setError("Parola trebuie sa fie identica cu cea de mai sus!");
+                    } else if (etEmail.getText().toString().trim().length() <= 2 || !etEmail.getText().toString().contains("@")) {
+                        tilPass2.setError(null);
+                        etEmail.requestFocus();
+                        tilEmail.setError("Scrieti o adresa de email valida!");
+                    } else {
+
+                        tilEmail.setError(null);
+
+                        username = etUsername.getText().toString().trim();
+                        pass = etPass.getText().toString().trim();
+                        email = etEmail.getText().toString().trim();
+
+                        user = new User(username, pass, idUser, email);
+                        putUser = (PutUser) new PutUser() {
+                            @Override
+                            protected void onPostExecute(String s) {
+                                if (s.equals("updatat")) {
+                                    userMethods.update(user);
+                                    Toast.makeText(ProfileActivity.this, "Datele au fost modificate cu succes!", Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getApplicationContext(), NavigationActivity.class);
+                                    i.putExtra("tipUtilizator", "logat");
+                                    i.putExtra("userId", idUser);
+                                    startActivity(i);
+                                } else if (s.equals("exista")) {
+                                    Toast.makeText(ProfileActivity.this, "Nume de utilizator sau email existente!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ProfileActivity.this, "Utilizator inexistent", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }.execute(user);
+                    }
                 } else {
-
-                    tilEmail.setError(null);
-
-                    username = etUsername.getText().toString().trim();
-                    pass = etPass.getText().toString().trim();
-                    email = etEmail.getText().toString().trim();
-
-                    user = new User(username, pass, idUser, email);
-
-                    if (userMethods.update(user) > 0) {
-                        Toast.makeText(ProfileActivity.this, "Datele au fost modificate cu succes!", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), NavigationActivity.class);
-                        i.putExtra("tipUtilizator","logat");
-                        i.putExtra("userId",idUser);
-
-                        startActivity(i);
-                    } else if (username.equals(utilizator.getUsername()) || email.equals(utilizator.getEmail())) {
-                        Toast.makeText(ProfileActivity.this, "Datele au fost modificate cu succes!", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), NavigationActivity.class);
-                        i.putExtra("tipUtilizator","logat");
-                        i.putExtra("userId",idUser);
-                        startActivity(i);
-                    }
-                    else{
-                        Toast.makeText(ProfileActivity.this, "Nume de utilizator sau email deja existente!Introduceti alte date!", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(ProfileActivity.this, "Trebuie conexiune la Internet!", Toast.LENGTH_SHORT).show();
 
                 }
             }
+
         });
     }
 }

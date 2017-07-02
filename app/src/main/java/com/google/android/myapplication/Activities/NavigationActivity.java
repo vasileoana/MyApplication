@@ -1,5 +1,7 @@
 package com.google.android.myapplication.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -97,13 +99,16 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+      /*  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
+        }*/
+
+        Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
     }
 
 
@@ -121,8 +126,8 @@ public class NavigationActivity extends AppCompatActivity
             intent.putExtra("userId", idUser);
             startActivity(intent);
         } else if (id == R.id.menu_logout) {
-            finish();
-        }
+            Intent intent2 = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent2);        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
