@@ -18,5 +18,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.CenterAnimation">
+        <item name="android:windowBackground">@drawable/ll_face_logo</item>
+    </style>
+
+        <style name="Button" parent="Theme.AppCompat">
+            <item name="colorControlHighlight">#3f51b5</item>
+            <item name="colorButtonNormal">#ffab00</item>
+        </style>
+
 
 </resources>

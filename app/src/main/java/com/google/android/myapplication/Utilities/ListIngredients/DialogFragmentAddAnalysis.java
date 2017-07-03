@@ -2,6 +2,8 @@ package com.google.android.myapplication.Utilities.ListIngredients;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,7 +73,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     int idUser;
     AnalysesActivity activitate;
     CheckInternetConnection checkInternetConnection;
-
+    public static Context context ;
     public DialogFragmentAddAnalysis() {
     }
 
@@ -80,6 +82,7 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.list_ingredients_dialog_fragment_add_analysis, container, false);
         getDialog().setTitle("Adauga analiza!");
+      context= getActivity().getApplicationContext();
         syncProdusMethods = new SyncProdusMethods();
         checkInternetConnection = new CheckInternetConnection();
         categoryMethods = new CategoryMethods();
@@ -178,6 +181,8 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                             product = new Product(description, brand, idCategory, function);
                             date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+
+
                             postProd = (PostProduct) new PostProduct() {
 
                                 @Override
@@ -194,6 +199,10 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                                         protected void onPostExecute(Void aVoid) {
                                             super.onPostExecute(aVoid);
                                             Toast.makeText(getActivity().getApplicationContext(), "Analiza inserata cu succes!", Toast.LENGTH_SHORT).show();
+                                            if(PostProduct.dialog != null && PostProduct.dialog.isShowing()){
+                                                PostProduct.dialog.dismiss();
+                                            }
+
                                             dismiss();
                                         }
                                     }.execute(productAnalysis);

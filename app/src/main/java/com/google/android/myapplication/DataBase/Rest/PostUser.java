@@ -6,6 +6,7 @@ import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.User;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -56,7 +57,12 @@ public class PostUser extends AsyncTask<User, Void, User> {
             InputStreamReader reader = new InputStreamReader(input);
             BufferedReader in = new BufferedReader(reader);
             String line = in.readLine();
-            if(!line.equals("exista"))
+
+            if(response.getStatusLine().getStatusCode()/100==5){
+                userNou = new User();
+                userNou.setUsername("server-inchis");
+            }
+           else if(!line.equals("exista"))
             {
                 JSONObject jObject =  new JSONObject(line);
                 int id = jObject.getInt("id");
@@ -66,6 +72,7 @@ public class PostUser extends AsyncTask<User, Void, User> {
                 userNou = new User(username, pass, id , email);
                 userMethods.insert(userNou);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

@@ -27,6 +27,7 @@ import com.google.android.myapplication.DataBase.Rest.GetIngredientAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProductAnalyses;
 import com.google.android.myapplication.DataBase.Rest.GetProducts;
 import com.google.android.myapplication.DataBase.Rest.GetUser;
+import com.google.android.myapplication.DataBase.Rest.IsServerOpen;
 import com.google.android.myapplication.DataBase.Rest.PutProduct;
 import com.google.android.myapplication.DataBase.Rest.PutSyncProduct;
 import com.google.android.myapplication.R;
@@ -35,6 +36,11 @@ import com.google.android.myapplication.DataBase.Files.ReadCategories;
 import com.google.android.myapplication.DataBase.Files.ReadIngredients;
 import com.google.android.myapplication.DataBase.Files.ReadRatings;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     List<Integer> listaSterse;
     PutSyncProduct putSyncProduct;
     DeleteSyncProduct deleteSyncProduct;
+    IsServerOpen isServerOpen;
 
     @Override
     public void onBackPressed() {
@@ -80,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         listaEditate = new ArrayList<>();
+
         listaSterse = new ArrayList<>();
         categoryMethods = new CategoryMethods();
         syncProdusMethods = new SyncProdusMethods();
@@ -158,21 +166,30 @@ public class LoginActivity extends AppCompatActivity {
                         if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
                             listaEditate = syncProdusMethods.selectEditate();
                             listaSterse = syncProdusMethods.selectSterse();
-                            deleteSyncProduct = (DeleteSyncProduct) new DeleteSyncProduct(){
+                            deleteSyncProduct = (DeleteSyncProduct) new DeleteSyncProduct() {
                                 @Override
                                 protected void onPostExecute(Void aVoid) {
                                     super.onPostExecute(aVoid);
-                                    putSyncProduct = (PutSyncProduct) new PutSyncProduct(){
+                                    putSyncProduct = (PutSyncProduct) new PutSyncProduct() {
                                         @Override
                                         protected void onPostExecute(Void aVoid) {
                                             super.onPostExecute(aVoid);
-                                            productMethods.delete();
-                                            productAnalysisMethods.delete();
-                                            ingredientAnalysisMethods.delete();
-                                            getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
-                                            getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
-                                            getProducts.execute("https://teme-vasileoana22.c9users.io/products");
-                                            syncProdusMethods.delete();
+                                            isServerOpen = (IsServerOpen) new IsServerOpen() {
+                                                @Override
+                                                protected void onPostExecute(String s) {
+                                                    if (!s.equals(5)) {
+                                                        productMethods.delete();
+                                                        productAnalysisMethods.delete();
+                                                        ingredientAnalysisMethods.delete();
+                                                        getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
+                                                        getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
+                                                        getProducts.execute("https://teme-vasileoana22.c9users.io/products");
+                                                        syncProdusMethods.delete();
+                                                    }
+                                                }
+                                            }.execute();
+
+
                                         }
                                     }.execute(listaEditate);
                                 }

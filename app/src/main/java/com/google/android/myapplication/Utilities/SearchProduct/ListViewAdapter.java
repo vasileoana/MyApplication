@@ -164,7 +164,14 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     public void filterCategories(String categorie) {
-        if (!categorie.equals("All")) {
+        if (categorie.equals("Toate")) {
+            arrayList.clear();
+            for (Product p : categoriesArrayList) {
+                    arrayList.add(p);
+
+            }
+        }
+        else {
             arrayList.clear();
             for (Product p : categoriesArrayList) {
                 if (categoryMethods.getCategoryName(p.getIdCategory()).equals(categorie)) {
@@ -172,6 +179,7 @@ public class ListViewAdapter extends BaseAdapter {
                 }
             }
         }
+
         notifyDataSetChanged();
 
     }
@@ -181,7 +189,7 @@ public class ListViewAdapter extends BaseAdapter {
         HashMap<Integer, Date> map = new HashMap<>();
         for (Product p : arrayList) {
             String dateString = productAnalysisMethods.getDate(p.getIdProduct());
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             if (dateString != null) {
                 Date date = format.parse(dateString);
                 map.put(p.getIdProduct(), date);
@@ -202,7 +210,6 @@ public class ListViewAdapter extends BaseAdapter {
             id = ((Map.Entry<Integer, Date>) e).getKey();
             p = productMethods.selectProductById(id);
             arrayList.add(p);
-
         }
 
         notifyDataSetChanged();
@@ -213,7 +220,7 @@ public class ListViewAdapter extends BaseAdapter {
         HashMap<Integer, Date> map = new HashMap<>();
         for (Product p : arrayList) {
             String dateString = productAnalysisMethods.getDate(p.getIdProduct());
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date date = format.parse(dateString);
             map.put(p.getIdProduct(), date);
         }

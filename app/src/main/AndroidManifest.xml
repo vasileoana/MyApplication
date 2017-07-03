@@ -42,6 +42,15 @@
             android:name=".Activities.SearchIngredientActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.ListIngredientsActivity" />
+
+        <activity
+            android:name=".Activities.SplashScreen"
+            android:theme="@style/AppTheme.CenterAnimation" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            </activity>
         <activity
             android:name=".Activities.NavigationActivity"
             android:label="@string/title_activity_navigation"
@@ -50,13 +59,16 @@
             android:name=".Activities.AnalysesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.MainActivity">
-            <intent-filter>
-              <action android:name="android.intent.action.MAIN" />
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
-
+        <activity
+            android:name=".Activities.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

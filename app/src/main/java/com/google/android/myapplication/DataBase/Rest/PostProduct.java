@@ -1,9 +1,13 @@
 package com.google.android.myapplication.DataBase.Rest;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Product;
+import com.google.android.myapplication.Utilities.Analyses.DialogFragmentViewAnalysis;
+import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddAnalysis;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -28,9 +32,21 @@ import java.net.URL;
 
 public class PostProduct extends AsyncTask<Product, Void, Product> {
 
+    public static ProgressDialog dialog = new ProgressDialog(ListIngredientsActivity.context);
+
+
+    @Override
+    protected void onPreExecute() {
+        //set message of the dialog
+        dialog.setMessage("Asteapta...");
+        //show dialog
+        dialog.show();
+        super.onPreExecute();
+    }
 
     @Override
     protected Product doInBackground(Product... products) {
+
         Product productNou = null;
         Product product = products[0];
         ProductMethods productMethods = new ProductMethods();
@@ -70,5 +86,10 @@ public class PostProduct extends AsyncTask<Product, Void, Product> {
             e.printStackTrace();
         }
         return productNou;
+    }
+
+    @Override
+    protected void onPostExecute(Product product) {
+        super.onPostExecute(product);
     }
 }

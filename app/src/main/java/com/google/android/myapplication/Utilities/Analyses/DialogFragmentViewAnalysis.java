@@ -50,7 +50,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.analyses_dialog_fragment, container, false);
-        getDialog().setTitle("View analysis!");
+        getDialog().setTitle("Vizualizeaza analiza!");
         ingredientMethods=new IngredientMethods();
         productMethods=new ProductMethods();
         productAnalysisMethods=new ProductAnalysisMethods();

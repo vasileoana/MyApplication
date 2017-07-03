@@ -152,27 +152,25 @@ public class OcrActivity extends Activity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
-        btnOcr.setVisibility(View.VISIBLE);
         tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
-        btnOcr.setVisibility(View.VISIBLE);
         tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
         }
+        btnOcr.setVisibility(View.VISIBLE);
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -226,12 +224,11 @@ public class OcrActivity extends Activity {
                     for (Text line : tBlock.getComponents()) {
                         lines = lines + line.getValue();
                     }
-                    scanResults.setVisibility(View.VISIBLE);
-                    btnShow.setVisibility(View.VISIBLE);
+
                     tvIndicatii.setText("Aflati nota fiecarui ingredient!");
                 }
                 if (textBlocks.size() == 0) {
-                    scanResults.setText("Scan Failed: Found nothing to scan");
+                    scanResults.setText("Incercati o poza mai clara!");
                 } else {
                     //  scanResults.setText(scanResults.getText() + "Blocks: " + "\n");
                     //  scanResults.setText(scanResults.getText() + blocks + "\n");
@@ -246,6 +243,8 @@ public class OcrActivity extends Activity {
             } else {
                 scanResults.setText("Could not set up the detector!");
             }
+            scanResults.setVisibility(View.VISIBLE);
+            btnShow.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT)
                     .show();
@@ -258,7 +257,7 @@ public class OcrActivity extends Activity {
     public void Show(View view) {
         String text = scanResults.getText().toString();
         //am facut un vector de cuvinte
-        String[] vector = text.replace("'","").split("[,.:;]");
+        String[] vector = text.replaceAll("'","").replaceAll(" ",",").split("[,.:;]");
         for (String ing : vector) {
             ingredients.add(ing.trim());
         }

@@ -1,6 +1,7 @@
 package com.google.android.myapplication.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
@@ -22,16 +23,18 @@ import com.google.android.myapplication.Utilities.ListIngredients.DialogFragment
 import com.google.android.myapplication.Utilities.ListIngredients.DialogFragmentAddIng;
 import com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter;
 import com.google.android.myapplication.Utilities.Ocr.LevenshteinDistanceSearch;
+import com.google.android.myapplication.Utilities.Ocr.OcrOnThread;
 import com.google.android.myapplication.Utilities.Ocr.SearchThread;
 import com.google.android.myapplication.Utilities.SearchIngredient.DialogFragmentViewIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListIngredientsActivity extends AppCompatActivity {
-
+ public class  ListIngredientsActivity extends AppCompatActivity {
+     public static Context context;
     public static List<Ingredient> ingredientsBD;
-    ArrayList<String> ingredients;
+     OcrOnThread ocrOnThread;
+     public static ArrayList<String> ingredients;
     IngredientMethods ingredientMethods;
     ListView lv;
     List<String> bdIng;
@@ -39,10 +42,10 @@ public class ListIngredientsActivity extends AppCompatActivity {
     ImageButton btnSaveAnalysis;
     ProductMethods productMethods;
     ListViewAdapter adapter;
-    List<Ingredient> ingredienteReturnate;
-    List<Ingredient> ingredientList;
-    List<String> ingredientNameList;
-    List<String> levenshteinList;
+     public static List<Ingredient> ingredienteReturnate;
+     public static List<Ingredient> ingredientList;
+     public static  List<String> ingredientNameList;
+     public static List<String> levenshteinList;
     String tip_utilizator;
     int idUser;
     TextView addIng, removeIng;
@@ -52,6 +55,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_ingredients);
+        context = ListIngredientsActivity.this;
         btnSaveAnalysis = (ImageButton) findViewById(R.id.btnSave);
         btnAddIng = (ImageButton) findViewById(R.id.btnAddIng);
         tip_utilizator = getIntent().getExtras().getString("tipUtilizator");
@@ -68,6 +72,7 @@ public class ListIngredientsActivity extends AppCompatActivity {
         }
 
         ingredients = getIntent().getExtras().getStringArrayList("list");
+
         ingredientsBD = new ArrayList<>();
         ingredientMethods = new IngredientMethods();
         ingredientList = ingredientMethods.select();
@@ -81,9 +86,19 @@ public class ListIngredientsActivity extends AppCompatActivity {
 
         levenshteinList = ingredientNameList;
 
-        algoritmCautare();
-        adapter = new ListViewAdapter(getApplicationContext(), R.layout.search_ingredients_adapter, ingredientsBD);
-        lv.setAdapter(adapter);
+      //  algoritmCautare();
+        ocrOnThread = (OcrOnThread) new OcrOnThread(){
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                if(OcrOnThread.dialog != null && OcrOnThread.dialog.isShowing()){
+                    OcrOnThread.dialog.dismiss();
+                }
+                adapter = new ListViewAdapter(getApplicationContext(), R.layout.search_ingredients_adapter, ingredientsBD);
+                lv.setAdapter(adapter);
+            }
+        }.execute();
+
 
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

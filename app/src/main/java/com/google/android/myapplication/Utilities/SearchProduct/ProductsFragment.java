@@ -93,7 +93,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
         filterByLabel = (TextView) view.findViewById(R.id.filter_by_label);
         sorting=(RadioGroup)view.findViewById(R.id.rb_sort);
         List<String> spinnerList=new ArrayList<>();
-        spinnerList.add("All");
+        spinnerList.add("Toate");
         spinnerList.addAll(categoryMethods.selectCategories());
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, spinnerList);
         spinnerCategorie.setAdapter(adapter);
@@ -251,7 +251,10 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+
         adapter.filterCategories(spinnerCategorie.getSelectedItem().toString());
+
+
     }
 
     @Override

@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             protected void onPostExecute(User user) {
                                 user_rezultat = user;
-                                if (user_rezultat != null) {
+                                if (user_rezultat != null && !user_rezultat.getUsername().equals("server-inchis")) {
                                     AssetManager assetManager = getAssets();
                                     if (categoryMethods.select().size() == 0) {
                                         readIngredients.execute(getAssets());
@@ -132,8 +132,12 @@ public class RegisterActivity extends AppCompatActivity {
                                     Toast.makeText(RegisterActivity.this, "Inregistrare realizata cu succes!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
-                                } else {
+                                } else if(user_rezultat == null) {
                                     Toast.makeText(RegisterActivity.this, "Username sau email deja existente!", Toast.LENGTH_SHORT).show();
+                                }
+                                else if(user_rezultat.getUsername().equals("server-inchis")){
+                                    Toast.makeText(RegisterActivity.this, "Momentan serverul este inchis!", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         }.execute(user);
