@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.myapplication.Activities.AnalysesActivity;
 import com.google.android.myapplication.Activities.ListIngredientsActivity;
+import com.google.android.myapplication.Activities.NavigationActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.IngredientAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
@@ -204,6 +205,8 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
                                             }
 
                                             dismiss();
+                                            Intent i = new Intent(getActivity().getApplicationContext(), NavigationActivity.class);
+                                            startActivity(i);
                                         }
                                     }.execute(productAnalysis);
 

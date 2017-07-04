@@ -42,8 +42,8 @@ public class PostProductAnalyses extends AsyncTask<ProductAnalysis, Void, Void> 
             HttpPost request = new HttpPost(url);
             JSONStringer json = new JSONStringer()
                     .object()
-                    .key("idProduct").value(productAnalysis.getIdProduct())
-                    .key("IdUser").value(productAnalysis.getIdUser())
+                    .key("idProdus").value(productAnalysis.getIdProduct())
+                    .key("IdUtilizator").value(productAnalysis.getIdUser())
                     .key("Data").value(productAnalysis.getDate())
                     .endObject();
 
@@ -61,8 +61,8 @@ public class PostProductAnalyses extends AsyncTask<ProductAnalysis, Void, Void> 
             String line = in.readLine();
             JSONObject jObject = new JSONObject(line);
             int id = jObject.getInt("id");
-            int idProduct = jObject.getInt("idProduct");
-            int idUser = jObject.getInt("IdUser");
+            int idProduct = jObject.getInt("idProdus");
+            int idUser = jObject.getInt("IdUtilizator");
             String date = jObject.getString("Data");
             productAnalysisNou = new ProductAnalysis(id, idProduct, idUser, date);
             productMethods.insert(productAnalysisNou);

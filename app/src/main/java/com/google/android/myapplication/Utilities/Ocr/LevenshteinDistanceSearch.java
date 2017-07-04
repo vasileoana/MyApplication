@@ -1,6 +1,7 @@
 package com.google.android.myapplication.Utilities.Ocr;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,20 +41,28 @@ public class LevenshteinDistanceSearch {
 
     public static List<String> Search(String word, List<String> wordList, double fuzzyness) {
         List<String> foundWords = new ArrayList<>();
-        double maxFuzy = 0;
+        HashMap<String,Double> map = new HashMap<>();
+      int d = LevenshteinDistance(word, "ceteareth-20");
         for (String s : wordList) {
             int levenshteinDistance =
                     LevenshteinDistance(word, s);
             int length = Math.max(word.length(), s.length());
             double score = 1.0 - (double) levenshteinDistance / length;
 
-            if (score > maxFuzy) {
-                foundWords.clear();
-                foundWords.add(s);
-                maxFuzy = score;
-            } else if (score == maxFuzy) {
-                foundWords.add(s);
+            if (score >=fuzzyness) {
+                map.put(s,score);
             }
+
+        }
+        Double max=0.0;
+        for(double val : map.values()){
+            if(val>max)
+                max=val;
+        }
+        for(String key : map.keySet() ){
+           if(map.get(key).doubleValue() == max) {
+               foundWords.add(key);
+           }
         }
         return foundWords;
     }

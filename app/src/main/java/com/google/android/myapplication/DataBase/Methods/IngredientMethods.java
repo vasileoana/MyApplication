@@ -81,7 +81,7 @@ public class IngredientMethods {
         List<Ingredient> ingredients = new ArrayList<>();
         Ingredient ingredient;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE " + Ingredient.label_name + " LIKE '%" + ing + "%'";
+        String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE " + "Upper("+Ingredient.label_name+")" + " LIKE Upper('%" + ing + "%')";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
@@ -101,7 +101,7 @@ public class IngredientMethods {
 
 
     public Ingredient selectIngredient(String nume) {
-        Ingredient ingredient = new Ingredient();
+        Ingredient ingredient = null;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         String selectQuery = " SELECT * FROM " + Ingredient.TABLE + " WHERE " + Ingredient.label_name + " LIKE '" + nume + "';";
 
@@ -109,6 +109,7 @@ public class IngredientMethods {
 
         if (cursor.moveToFirst()) {
             do {
+                ingredient = new Ingredient();
                 ingredient.setIdIngredient(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idIngredient))));
                 ingredient.setDescription(cursor.getString(cursor.getColumnIndex(Ingredient.label_description)));
                 ingredient.setIdRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Ingredient.label_idRating))));

@@ -39,9 +39,9 @@ public class GetUser  extends AsyncTask<URL, Void, User> {
             if(jsonArray.length()==1) {
                 JSONObject jObject = jsonArray.getJSONObject(0);
                 int id = Integer.parseInt(jObject.get("id").toString());
-                String username = jObject.get("Username").toString();
-                String parola = jObject.get("Password").toString();
-                String email = jObject.get("Email").toString();
+                String username = jObject.get("nume_utilizator").toString();
+                String parola = jObject.get("parola").toString();
+                String email = jObject.get("email").toString();
 
                 user = new User(username, parola, id, email);
                 userMethods.insert(user);

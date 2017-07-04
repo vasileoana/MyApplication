@@ -1,5 +1,6 @@
 package com.google.android.myapplication.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.google.android.myapplication.DataBase.Methods.ProductAnalysisMethods;
 import com.google.android.myapplication.DataBase.Methods.UserMethods;
 import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.DataBase.Model.User;
+import com.google.android.myapplication.DataBase.Rest.IsServerOpen;
 import com.google.android.myapplication.DataBase.Rest.PutUser;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.Register.CheckInternetConnection;
@@ -34,11 +36,13 @@ public class ProfileActivity extends AppCompatActivity {
     User utilizator;
     PutUser putUser;
     CheckInternetConnection checkInternetConnection;
-
+    IsServerOpen isServerOpen;
+    public static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        context = ProfileActivity.this;
         idUser = getIntent().getExtras().getInt("idUtilizator");
         userMethods = new UserMethods();
         utilizator = userMethods.selectUserById(idUser);
@@ -114,23 +118,36 @@ public class ProfileActivity extends AppCompatActivity {
                         email = etEmail.getText().toString().trim();
 
                         user = new User(username, pass, idUser, email);
-                        putUser = (PutUser) new PutUser() {
+                        isServerOpen = (IsServerOpen) new IsServerOpen(){
                             @Override
                             protected void onPostExecute(String s) {
-                                if (s.equals("updatat")) {
-                                    userMethods.update(user);
-                                    Toast.makeText(ProfileActivity.this, "Datele au fost modificate cu succes!", Toast.LENGTH_SHORT).show();
-                                    Intent i = new Intent(getApplicationContext(), NavigationActivity.class);
-                                    i.putExtra("tipUtilizator", "logat");
-                                    i.putExtra("userId", idUser);
-                                    startActivity(i);
-                                } else if (s.equals("exista")) {
-                                    Toast.makeText(ProfileActivity.this, "Nume de utilizator sau email existente!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(ProfileActivity.this, "Utilizator inexistent", Toast.LENGTH_SHORT).show();
+                                super.onPostExecute(s);
+                                if(!s.equals("5")) {
+                                    putUser = (PutUser) new PutUser() {
+                                        @Override
+                                        protected void onPostExecute(String s) {
+                                            if (s.equals("updatat")) {
+                                                userMethods.update(user);
+                                                Toast.makeText(ProfileActivity.this, "Datele au fost modificate cu succes!", Toast.LENGTH_SHORT).show();
+                                                Intent i = new Intent(getApplicationContext(), NavigationActivity.class);
+                                                i.putExtra("tipUtilizator", "logat");
+                                                i.putExtra("userId", idUser);
+                                                startActivity(i);
+                                            } else if (s.equals("exista")) {
+                                                Toast.makeText(ProfileActivity.this, "Nume de utilizator sau email existente!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(ProfileActivity.this, "Utilizator inexistent", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }.execute(user);
+                                }
+                                else {
+                                    Toast.makeText(ProfileActivity.this, "Eroare de server!", Toast.LENGTH_SHORT).show();
+
                                 }
                             }
-                        }.execute(user);
+                        }.execute();
+
                     }
                 } else {
                     Toast.makeText(ProfileActivity.this, "Trebuie conexiune la Internet!", Toast.LENGTH_SHORT).show();

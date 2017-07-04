@@ -41,10 +41,10 @@ public class PutProduct extends AsyncTask<Product, Void, Void>{
             JSONStringer json = new JSONStringer()
                     .object()
                     .key("id").value(prod.getIdProduct())
-                    .key("IdCategory").value(prod.getIdCategory())
-                    .key("Description").value(prod.getDescription())
-                    .key("IFunction").value(prod.getFunction())
-                    .key("Brand").value(prod.getBrand())
+                    .key("IdCategorie").value(prod.getIdCategory())
+                    .key("Descriere").value(prod.getDescription())
+                    .key("Functie").value(prod.getFunction())
+                    .key("Marca").value(prod.getBrand())
                     .endObject();
 
             StringEntity entity = new StringEntity(json.toString());

@@ -16,7 +16,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingTop="144dp"
-        tools:ignore="HardcodedText"
         >
 
         <TextView

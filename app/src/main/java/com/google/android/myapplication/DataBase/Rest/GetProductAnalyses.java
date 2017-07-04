@@ -42,9 +42,9 @@ public class GetProductAnalyses extends AsyncTask<String, Void, Void> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 jObject = jsonArray.getJSONObject(i);
                 int idAnaliza = Integer.parseInt(jObject.get("id").toString());
-                int idProduct = Integer.parseInt(jObject.get("idProduct").toString());
+                int idProduct = Integer.parseInt(jObject.get("idProdus").toString());
                 String data = jObject.get("Data").toString();
-                int idUser = Integer.parseInt(jObject.get("IdUser").toString());
+                int idUser = Integer.parseInt(jObject.get("IdUtilizator").toString());
 
                 productAnalysis = new ProductAnalysis(idAnaliza,idProduct,idUser,data);
                 productMethods.insert(productAnalysis);

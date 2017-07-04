@@ -41,9 +41,9 @@ public class PostUser extends AsyncTask<User, Void, User> {
             HttpPost request = new HttpPost(url);
             JSONStringer json = new JSONStringer()
                     .object()
-                    .key("Username").value(user.getUsername())
-                    .key("Password").value(user.getPassword())
-                    .key("Email").value(user.getEmail())
+                    .key("nume_utilizator").value(user.getUsername())
+                    .key("parola").value(user.getPassword())
+                    .key("email").value(user.getEmail())
                     .endObject();
 
             StringEntity entity = new StringEntity(json.toString());
@@ -66,9 +66,9 @@ public class PostUser extends AsyncTask<User, Void, User> {
             {
                 JSONObject jObject =  new JSONObject(line);
                 int id = jObject.getInt("id");
-                String username = jObject.getString("Username");
-                String pass = jObject.getString("Password");
-                String email = jObject.getString("Email");
+                String username = jObject.getString("nume_utilizator");
+                String pass = jObject.getString("parola");
+                String email = jObject.getString("email");
                 userNou = new User(username, pass, id , email);
                 userMethods.insert(userNou);
             }

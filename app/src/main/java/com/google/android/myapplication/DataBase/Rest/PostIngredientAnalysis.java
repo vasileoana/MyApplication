@@ -39,7 +39,7 @@ public class PostIngredientAnalysis extends AsyncTask<IngredientAnalysis, Void, 
             HttpPost request = new HttpPost(url);
             JSONStringer json = new JSONStringer()
                     .object()
-                    .key("idProduct").value(ingAn.getIdProduct())
+                    .key("idProdus").value(ingAn.getIdProduct())
                     .key("IdIngredient").value(ingAn.getIdIngredient())
                     .endObject();
 

@@ -39,11 +39,11 @@ public class GetProducts extends AsyncTask<String, Void, Void> {
             Product product = null;
             for (int i = 0; i < jsonArray.length(); i++) {
                 jObject = jsonArray.getJSONObject(i);
-                int idCategory = Integer.parseInt(jObject.get("IdCategory").toString());
+                int idCategory = Integer.parseInt(jObject.get("IdCategorie").toString());
                 int idProduct = Integer.parseInt(jObject.get("id").toString());
-                String description = jObject.get("Description").toString();
-                String function = jObject.get("IFunction").toString();
-                String brand = jObject.get("Brand").toString();
+                String description = jObject.get("Descriere").toString();
+                String function = jObject.get("Functie").toString();
+                String brand = jObject.get("Marca").toString();
 
                 product = new Product(idProduct,description,brand,idCategory,function);
                 productMethods.insert(product);

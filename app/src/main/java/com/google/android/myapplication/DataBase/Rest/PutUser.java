@@ -35,9 +35,9 @@ public class PutUser extends AsyncTask<User, Void, String> {
             JSONStringer json = new JSONStringer()
                     .object()
                     .key("id").value(user.getIdUser())
-                    .key("Username").value(user.getUsername())
-                    .key("Password").value(user.getPassword())
-                    .key("Email").value(user.getEmail())
+                    .key("nume_utilizator").value(user.getUsername())
+                    .key("parola").value(user.getPassword())
+                    .key("email").value(user.getEmail())
                     .endObject();
 
             StringEntity entity = new StringEntity(json.toString());

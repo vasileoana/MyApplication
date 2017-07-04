@@ -49,7 +49,6 @@ public class OcrActivity extends Activity {
     ImageView ivImage;
     static Bitmap bm = null;
     String userChosenTask;
-    static Bitmap thumbnail;
     TextView scanResults, tvIndicatii;
     TextRecognizer detector;
     static final String LOG_TAG = "Text API";
@@ -152,13 +151,12 @@ public class OcrActivity extends Activity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
-        tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
+
     }
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
-        tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     @Override
@@ -171,6 +169,7 @@ public class OcrActivity extends Activity {
                 onCaptureImageResult(data);
         }
         btnOcr.setVisibility(View.VISIBLE);
+        tvIndicatii.setText("Obtine textul din poza si valideaza-l!");
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -230,15 +229,8 @@ public class OcrActivity extends Activity {
                 if (textBlocks.size() == 0) {
                     scanResults.setText("Incercati o poza mai clara!");
                 } else {
-                    //  scanResults.setText(scanResults.getText() + "Blocks: " + "\n");
-                    //  scanResults.setText(scanResults.getText() + blocks + "\n");
-                    //  scanResults.setText(scanResults.getText() + "---------" + "\n");
-                    // scanResults.setText(scanResults.getText() + "Lines: " + "\n");
                     scanResults.setText(scanResults.getText() + lines + " ");
-                    //  scanResults.setText(scanResults.getText() + "---------" + "\n");
-                    // scanResults.setText(scanResults.getText() + "Words: " + "\n");
-                    // scanResults.setText(scanResults.getText() + words + "\n");
-                    // scanResults.setText(scanResults.getText() + "---------" + "\n");
+
                 }
             } else {
                 scanResults.setText("Could not set up the detector!");
@@ -257,8 +249,9 @@ public class OcrActivity extends Activity {
     public void Show(View view) {
         String text = scanResults.getText().toString();
         //am facut un vector de cuvinte
-        String[] vector = text.replaceAll("'","").replaceAll(" ",",").split("[,.:;]");
+        String[] vector = text.replaceAll("'","").replaceAll(" ",",").replace("-","").split("[,.:;]");
         for (String ing : vector) {
+            if(!ing.isEmpty())
             ingredients.add(ing.trim());
         }
         final Intent i = new Intent(getApplicationContext(), ListIngredientsActivity.class);

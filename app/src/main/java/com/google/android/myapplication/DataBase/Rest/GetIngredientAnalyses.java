@@ -43,7 +43,7 @@ public class GetIngredientAnalyses extends AsyncTask<String, Void, Void> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 jObject = jsonArray.getJSONObject(i);
                 int id = Integer.parseInt(jObject.get("id").toString());
-                int idProduct = Integer.parseInt(jObject.get("idProduct").toString());
+                int idProduct = Integer.parseInt(jObject.get("idProdus").toString());
                 int idIngredient = Integer.parseInt(jObject.get("IdIngredient").toString());
                 ingredientAnalisys = new IngredientAnalysis(id,idProduct,idIngredient);
                 ingredientMethods.insert(ingredientAnalisys);

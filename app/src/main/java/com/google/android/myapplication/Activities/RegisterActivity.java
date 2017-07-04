@@ -1,5 +1,6 @@
 package com.google.android.myapplication.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.design.widget.TextInputLayout;
@@ -33,6 +34,7 @@ import java.net.URL;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    public static Context context;
     TextInputLayout tilUsername, tilPass, tilPass2, tilEmail;
     EditText etUsername, etPass, etPass2, etEmail;
     String username, pass, email;
@@ -53,11 +55,11 @@ public class RegisterActivity extends AppCompatActivity {
     GetProductAnalyses getProductAnalyses = new GetProductAnalyses();
     PostUser postUser;
     User user_rezultat;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+       context = RegisterActivity.this;
         userMethods = new UserMethods();
         ingredientMethod = new IngredientMethods();
         ratingMethods = new RatingMethods();
@@ -80,72 +82,74 @@ public class RegisterActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etUsername.getText().toString().trim().length() == 0) {
-                    etUsername.requestFocus();
-                    tilUsername.setError("Numele de utilizator este necesar!");
-                } else if (etPass.getText().toString().length() < 6) {
-                    tilUsername.setError(null);
-                    etPass.requestFocus();
-                    tilPass.setError("Alegeti o parola de minim 6 caractere!");
-                } else if (etPass2.getText().toString().compareTo(etPass.getText().toString()) != 0) {
-                    tilPass.setError(null);
-                    etPass2.requestFocus();
-                    tilPass2.setError("Parola trebuie sa fie identica cu cea de mai sus!");
-                } else if (etEmail.getText().toString().trim().length() <= 2 || !etEmail.getText().toString().contains("@")) {
-                    tilPass2.setError(null);
-                    etEmail.requestFocus();
-                    tilEmail.setError("Scrieti o adresa de email valida!");
-                } else {
 
-                    tilEmail.setError(null);
-                    username = etUsername.getText().toString().trim();
-                    pass = etPass.getText().toString().trim();
-                    email = etEmail.getText().toString().trim();
-                    user = new User(username, pass, email);
+                        if (etUsername.getText().toString().trim().length() == 0) {
+                            etUsername.requestFocus();
+                            tilUsername.setError("Numele de utilizator este necesar!");
+                        } else if (etPass.getText().toString().length() < 6) {
+                            tilUsername.setError(null);
+                            etPass.requestFocus();
+                            tilPass.setError("Alegeti o parola de minim 6 caractere!");
+                        } else if (etPass2.getText().toString().compareTo(etPass.getText().toString()) != 0) {
+                            tilPass.setError(null);
+                            etPass2.requestFocus();
+                            tilPass2.setError("Parola trebuie sa fie identica cu cea de mai sus!");
+                        } else if (etEmail.getText().toString().trim().length() <= 2 || !etEmail.getText().toString().contains("@")) {
+                            tilPass2.setError(null);
+                            etEmail.requestFocus();
+                            tilEmail.setError("Scrieti o adresa de email valida!");
+                        } else {
 
-                    if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
-                        URL url = null;
-                        try {
-                            url = new URL("https://teme-vasileoana22.c9users.io/Users/" + username + "/" + pass + "/" + email);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                            tilEmail.setError(null);
+                            username = etUsername.getText().toString().trim();
+                            pass = etPass.getText().toString().trim();
+                            email = etEmail.getText().toString().trim();
+                            user = new User(username, pass, email);
+
+                            if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
+                                URL url = null;
+                                try {
+                                    url = new URL("https://teme-vasileoana22.c9users.io/Users/" + username + "/" + pass + "/" + email);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+
+                                postUser = (PostUser) new PostUser() {
+                                    @Override
+                                    protected void onPostExecute(User user) {
+                                        user_rezultat = user;
+                                        if (user_rezultat != null && !user_rezultat.getUsername().equals("server-inchis")) {
+                                            AssetManager assetManager = getAssets();
+                                            if (categoryMethods.select().size() == 0) {
+                                                readIngredients.execute(getAssets());
+                                                readRatings.readRatings(assetManager, ratingMethods);
+                                                readCategories.readCategories(assetManager, categoryMethods);
+                                            }
+                                            productMethods.delete();
+                                            productAnalysisMethods.delete();
+                                            ingredientAnalysisMethods.delete();
+                                            getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
+                                            getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
+                                            getProducts.execute("https://teme-vasileoana22.c9users.io/products");
+
+                                            Toast.makeText(RegisterActivity.this, "Inregistrare realizata cu succes!", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+                                        } else if(user_rezultat == null) {
+                                            Toast.makeText(RegisterActivity.this, "Username sau email deja existente!", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else if(user_rezultat.getUsername().equals("server-inchis")){
+                                            Toast.makeText(RegisterActivity.this, "Momentan serverul este inchis!", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                }.execute(user);
+
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Pentru a finaliza inregistrarea este necesara o conexiune la Internet!", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
-                        postUser = (PostUser) new PostUser() {
-                            @Override
-                            protected void onPostExecute(User user) {
-                                user_rezultat = user;
-                                if (user_rezultat != null && !user_rezultat.getUsername().equals("server-inchis")) {
-                                    AssetManager assetManager = getAssets();
-                                    if (categoryMethods.select().size() == 0) {
-                                        readIngredients.execute(getAssets());
-                                        readRatings.readRatings(assetManager, ratingMethods);
-                                        readCategories.readCategories(assetManager, categoryMethods);
-                                    }
-                                    productMethods.delete();
-                                    productAnalysisMethods.delete();
-                                    ingredientAnalysisMethods.delete();
-                                    getProductAnalyses.execute("https://teme-vasileoana22.c9users.io/ProductAnalyses");
-                                    getIngredientAnalyses.execute("https://teme-vasileoana22.c9users.io/IngredientAnalyses");
-                                    getProducts.execute("https://teme-vasileoana22.c9users.io/products");
-
-                                    Toast.makeText(RegisterActivity.this, "Inregistrare realizata cu succes!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                } else if(user_rezultat == null) {
-                                    Toast.makeText(RegisterActivity.this, "Username sau email deja existente!", Toast.LENGTH_SHORT).show();
-                                }
-                                else if(user_rezultat.getUsername().equals("server-inchis")){
-                                    Toast.makeText(RegisterActivity.this, "Momentan serverul este inchis!", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        }.execute(user);
-
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Pentru a finaliza inregistrarea este necesara o conexiune la Internet!", Toast.LENGTH_SHORT).show();
-                    }
-                }
             }
         });
 

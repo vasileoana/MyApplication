@@ -8,6 +8,7 @@ import com.google.android.myapplication.Activities.ListIngredientsActivity;
 import com.google.android.myapplication.DataBase.Methods.IngredientMethods;
 import com.google.android.myapplication.DataBase.Model.Ingredient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,20 +46,25 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
             List<Ingredient> ingList = cautareCuvantBD(ing);
             int j = 0;
             Ingredient ingr = ingredientMethods.selectIngredient(ing);
-            if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
-                //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
-                ListIngredientsActivity.ingredientsBD.add(ingr);
-            } else {
-                while (j < 3 && ingList.size() > 1 && i < ListIngredientsActivity.ingredients.size() - 1) {
-                    //ex am alcool si mi apar mai multe rezultate. incerc sa le combin cu stringurile vecine
-                    int poz = i + 1;
-                    ing = ing + " " + ListIngredientsActivity.ingredients.get(poz);
-                    //il caut iarasi in bd dar de data asta concatenat cu cuv alaturat
-                    ingList = cautareCuvantBD(ing);
-                    if (poz < ListIngredientsActivity.ingredients.size() - 1) {
-                        j++;
-                    } else {
-                        j = 3;
+                if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
+                    //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
+               ListIngredientsActivity.ingredientsBD.add(ingr);
+            } else{
+                while (j < 3 && ingList.size() >= 1 && i < ListIngredientsActivity.ingredients.size() - 1) {
+                    if(ingList.size()==1){
+                       //adaugata pt ca sa nu mai dubleze alcolu
+                        j=3;
+                    }else {
+                        //ex am alcool si mi apar mai multe rezultate. incerc sa le combin cu stringurile vecine
+                        int poz = i + 1;
+                        ing = ing + " " + ListIngredientsActivity.ingredients.get(poz);
+                        //il caut iarasi in bd dar de data asta concatenat cu cuv alaturat
+                        ingList = cautareCuvantBD(ing);
+                        if (poz < ListIngredientsActivity.ingredients.size() - 1) {
+                            j++;
+                        } else {
+                            j = 3;
+                        }
                     }
                 }
             }
@@ -67,10 +73,16 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
 
     public List<Ingredient> cautareCuvantBD(String ingredient) {
         //cauta toate ingredientele care contin cuvantul in ele, ex: avem mai multe ingrediente care au alcool in ele
-        ListIngredientsActivity.ingredienteReturnate = ingredientMethods.selectIngredients(ingredient);
+        Ingredient ing = ingredientMethods.selectIngredient(ingredient);
+        if(ing!= null)
+        {
+            ListIngredientsActivity.ingredientsBD.add(ing);
+            return ListIngredientsActivity.ingredienteReturnate;
+        }
+         ListIngredientsActivity.ingredienteReturnate = ingredientMethods.selectIngredients(ingredient);
         if (ListIngredientsActivity.ingredienteReturnate.size() == 0) {
             //inseamna ca in bd nu se gaseste niciun rezultat si se incearca a se corecta inputul
-            recursivLevenstein(ingredient, 0.7);
+            recursivLevenstein(ingredient, 0.8);
         } else if (ListIngredientsActivity.ingredienteReturnate.size() == 1) {
             //daca bd-ul a returnat 1 element o sa presupunem ca e fix cel cautat
             Ingredient ingr = ListIngredientsActivity.ingredienteReturnate.get(0);
@@ -87,9 +99,11 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
         //un fuzzy mare inseamna ca dorim cu cat mai putine modficari inputul sa se potriveasca cu un anumit cuv din dictionar
         //un fuzzy mic mareste sansele de a returna mai multe ingrediente care se scriu asemanator, adica au cateva caractere in comun
 
-        if (fuzzy >= 0.5 && fuzzy <= 1) {
+        if (fuzzy <= 1) {
             //merge greu randu urm
-            List<String> levenshtein = LevenshteinDistanceSearch.Search(ing, ListIngredientsActivity.levenshteinList, fuzzy);
+           List<String> levenshtein = LevenshteinDistanceSearch.Search(ing, ListIngredientsActivity.levenshteinList, fuzzy);
+
+
             if (levenshtein.size() == 1) {
                 //daca a returnat doar un rezultat inseamna ca a gasit doar un ing asemanator
                 String numeIng = levenshtein.get(0);

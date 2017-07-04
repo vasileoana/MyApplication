@@ -56,10 +56,10 @@ public class PostProduct extends AsyncTask<Product, Void, Product> {
             HttpPost request = new HttpPost(url);
             JSONStringer json = new JSONStringer()
                     .object()
-                    .key("Description").value(product.getDescription())
-                    .key("IFunction").value(product.getFunction())
-                    .key("Brand").value(product.getBrand())
-                    .key("IdCategory").value(product.getIdCategory())
+                    .key("Descriere").value(product.getDescription())
+                    .key("Functie").value(product.getFunction())
+                    .key("Marca").value(product.getBrand())
+                    .key("IdCategorie").value(product.getIdCategory())
                     .endObject();
 
             StringEntity entity = new StringEntity(json.toString());

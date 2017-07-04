@@ -36,7 +36,7 @@ public class DeleteProductAnalyses extends AsyncTask<Integer, Void, Void>
             HttpDelete request = new HttpDelete(urlString);
             JSONStringer json = new JSONStringer()
                     .object()
-                    .key("idProduct").value(String.valueOf(id))
+                    .key("idProdus").value(String.valueOf(id))
                     .endObject();
 
             StringEntity entity = new StringEntity(json.toString());
