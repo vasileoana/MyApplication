@@ -19,13 +19,16 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
     public static ProgressDialog dialog = new ProgressDialog(ListIngredientsActivity.context);
 
     IngredientMethods ingredientMethods = new IngredientMethods();
+    int i = 0;
+    boolean gasit;
+
     @Override
     protected void onPreExecute() {
         //set message of the dialog
         dialog.setMessage("Asteapta...");
         //show dialog
-        if(!((Activity) ListIngredientsActivity.context).isFinishing())
-        dialog.show();
+        if (!((Activity) ListIngredientsActivity.context).isFinishing())
+            dialog.show();
         super.onPreExecute();
     }
 
@@ -36,37 +39,36 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
     }
 
 
-
     public void algoritmCautare() {
 //ingredients reprezinta vectorul preluat cu split din ceea ce a reusit sa transforme OCR-ul
-        for (int i = 0; i < ListIngredientsActivity.ingredients.size(); i++) {
+        for (i = 0; i < ListIngredientsActivity.ingredients.size(); i++) {
+            gasit = false;
             //preluam pe rand cate un element
             String ing = ListIngredientsActivity.ingredients.get(i);
             //il cautam in baza de date asa cum este sau il cautam aplicand alg levenstein
             List<Ingredient> ingList = cautareCuvantBD(ing);
             int j = 0;
             Ingredient ingr = ingredientMethods.selectIngredient(ing);
-                if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
-                    //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
-               ListIngredientsActivity.ingredientsBD.add(ingr);
-            } else{
-                while (j < 3 && ingList.size() >= 1 && i < ListIngredientsActivity.ingredients.size() - 1) {
+            if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
+                //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
+                ListIngredientsActivity.ingredientsBD.add(ingr);
+            } else {
+                while (j < 3 && ingList.size() > 1 && i < ListIngredientsActivity.ingredients.size() - 1) {
+
+                    int poz = i + 1;
+                    ing = ing + " " + ListIngredientsActivity.ingredients.get(poz);
+                    //il caut iarasi in bd dar de data asta concatenat cu cuv alaturat
+                    ingList = cautareCuvantBD(ing);
                     if(ingList.size()==1){
-                       //adaugata pt ca sa nu mai dubleze alcolu
-                        j=3;
-                    }else {
-                        //ex am alcool si mi apar mai multe rezultate. incerc sa le combin cu stringurile vecine
-                        int poz = i + 1;
-                        ing = ing + " " + ListIngredientsActivity.ingredients.get(poz);
-                        //il caut iarasi in bd dar de data asta concatenat cu cuv alaturat
-                        ingList = cautareCuvantBD(ing);
-                        if (poz < ListIngredientsActivity.ingredients.size() - 1) {
-                            j++;
-                        } else {
-                            j = 3;
-                        }
+                        i++;
+                    }
+                    if (poz < ListIngredientsActivity.ingredients.size() - 1) {
+                        j++;
+                    } else {
+                        j = 3;
                     }
                 }
+
             }
         }
     }
@@ -74,12 +76,15 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
     public List<Ingredient> cautareCuvantBD(String ingredient) {
         //cauta toate ingredientele care contin cuvantul in ele, ex: avem mai multe ingrediente care au alcool in ele
         Ingredient ing = ingredientMethods.selectIngredient(ingredient);
-        if(ing!= null)
-        {
+        if (ing != null) {
             ListIngredientsActivity.ingredientsBD.add(ing);
-            return ListIngredientsActivity.ingredienteReturnate;
+
+            ListIngredientsActivity.ingredienteReturnate = new ArrayList<>();
+            ListIngredientsActivity.ingredienteReturnate.add(ing);
+            return  ListIngredientsActivity.ingredienteReturnate;
+
         }
-         ListIngredientsActivity.ingredienteReturnate = ingredientMethods.selectIngredients(ingredient);
+        ListIngredientsActivity.ingredienteReturnate = ingredientMethods.selectIngredients(ingredient);
         if (ListIngredientsActivity.ingredienteReturnate.size() == 0) {
             //inseamna ca in bd nu se gaseste niciun rezultat si se incearca a se corecta inputul
             recursivLevenstein(ingredient, 0.8);
@@ -101,7 +106,7 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
 
         if (fuzzy <= 1) {
             //merge greu randu urm
-           List<String> levenshtein = LevenshteinDistanceSearch.Search(ing, ListIngredientsActivity.levenshteinList, fuzzy);
+            List<String> levenshtein = LevenshteinDistanceSearch.Search(ing, ListIngredientsActivity.levenshteinList, fuzzy);
 
 
             if (levenshtein.size() == 1) {

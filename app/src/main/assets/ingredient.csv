@@ -15,7 +15,7 @@ acetyl tyrosine,3,
 acetylated castor oil,3,
 acetylated hydrogenated cottonseed glyceride,3,
 acetylated lanolin,3,
-acetylated lanolin alcohol,3,"alcool care nu usuca pielea, ci dimpotriva o catifeleaza; este de asemenea antiiritant si antialergic, dar poate bloca porii, mai ales la persoanele predispuse, si poate provoca astfel eruptii de puncte negre si alte imperfectiuni"
+acetylated lanolin alcohol,3,alcool care nu usuca pielea ci dimpotriva o catifeleaza; este de asemenea antiiritant si antialergic dar poate bloca porii mai ales la persoanele predispuse si poate provoca astfel eruptii de puncte negre si alte imperfectiuni
 acetylated palm kernel glycerides,3,
 Achillea millefolium,4,
 acid,1,
@@ -37,18 +37,18 @@ Aesculus hippocastanum,3,
 agar,3,
 AGE,4,
 Agrimonia eupatoria leaf extract,1,
-AHA,2,"grup de substante active extrase in general din acizi de fructe (acidul citric, extras din lamai; acidul glicolic, extras din sfecla de zahar; acidul lactic, extras din lapte; acidul malic, extras din mere), care ajuta la exfolierea pielii, in concentratii mari (peste 6-8 %), si la hidratarea ei, in concentratii mai mici; de asemenea, favorizeaza patrunderea in piele a altor ingrediente; sunt foarte folositi in produsele depigmentante, antirid, si antiacneice, dar pot fi iritanti pentru piele, si sunt fotosensibilizanti (cresc sensibilitatea pielii fata de radiatiile solare)
+AHA,2,grup de substante active extrase in general din acizi de fructe (acidul citric extras din lamai; acidul glicolic extras din sfecla de zahar; acidul lactic extras din lapte; acidul malic extras din mere) care ajuta la exfolierea pielii in concentratii mari (peste 6-8 %) si la hidratarea ei in concentratii mai mici; de asemenea favorizeaza patrunderea in piele a altor ingrediente; sunt foarte folositi in produsele depigmentante antirid si antiacneice dar pot fi iritanti pentru piele si sunt fotosensibilizanti (cresc sensibilitatea pielii fata de radiatiile solare)
 Ahnfeltia concinna extract,3,
 ahnfeltia extract,3,
 alanine,3,
 Alaria esculenta,3,
 albumin,4,
 alcloxa,4,
-alcohol,1,alcool cosmetic purificat, care se evaporeaza instantaneu, lasand substantele active sa patrunda in piele; poate avea si proprietati antibacteriene, si este mai putin iritant decat alcoolul etilic (ethyl alcohol)"
+alcohol,1,alcool cosmetic purificat care se evaporeaza instantaneu lasand substantele active sa patrunda in piele; poate avea si proprietati antibacteriene si este mai putin iritant decat alcoolul etilic (ethyl alcohol)
 Aleurites moluccana seed oil,2,
 alfalfa extract,2,
-algae,3,"substanta emolienta, cu presupuse proprietati antioxidante;"
-algae extract,3,"substanta emolienta, cu presupuse proprietati antioxidante;"
+algae,3,substanta emolienta cu presupuse proprietati antioxidante;
+algae extract,3,substanta emolienta cu presupuse proprietati antioxidante;
 algin,3,
 aliphatic hydrocarbon,3,
 alkaline,4,
@@ -130,7 +130,7 @@ artemia extract,3,
 Artemisia absinthium extract,1,
 Artemisia vulgaris,1,
 Ascophyllum nodosum,3,
-ascorbic acid,2,"vitamina C, este folosita in cosmetica drept antioxidant, si in concentratii mari ajuta la regenerarea pielii, la corectarea petelor pigmentare si la sinteza colagenului;"
+ascorbic acid,2,vitamina C este folosita in cosmetica drept antioxidant si in concentratii mari ajuta la regenerarea pielii la corectarea petelor pigmentare si la sinteza colagenului;
 ascorbyl glucosamine,2,
 ascorbyl glucoside,2,
 ascorbyl methylsilanol pectinate,2,
@@ -180,7 +180,7 @@ benzoic acid,3,
 benzoin extract,4,
 benzophenone,3,
 benzothonium chloride,3,
-benzoyl peroxide,2,"substanta activa antibacteriana, folosita in produsele antiacneice; poate usca si irita pielea;"
+benzoyl peroxide,2,substanta activa antibacteriana folosita in produsele antiacneice; poate usca si irita pielea;
 benzyl alcohol,3,
 benzyl salicylate,4,
 Berberis aristata,2,
@@ -228,7 +228,7 @@ Borago officinalis extract,2,
 Borago officinalis seed oil,2,
 borate,4,
 borax,4,
-boric acid,3,"acid conservant si antiseptic, dar potential iritant;"
+boric acid,3,acid conservant si antiseptic dar potential iritant;
 boron nitride,3,
 Boswellia carterii,4,
 Boswellia serrata extract,1,
@@ -274,7 +274,7 @@ Calophyllum inophyllum seed oil,3,
 Camellia japonica,2,
 Camellia oleifera,2,
 Camellia sinensis,2,
-camphor,4,substanta astringenta, folosita impotriva iritatiilor
+camphor,4,substanta astringenta folosita impotriva iritatiilor;
 cananga extract,4,
 Cananga odorata,4,
 candelilla wax,3,
@@ -292,7 +292,7 @@ carbomer,3,substante stabilizante si texturizante
 carbopol,3,
 carboxylic acid,2,
 cardamom,4,
-carmine,3,"igment rosu, potential iritant"
+carmine,3,igment rosu potential iritant
 carnauba wax,3,
 carnitine,2,
 carnosic acid,2,
@@ -592,7 +592,6 @@ Foeniculum vulgare extract,4,
 folic acid,3,
 formaldehyde-releasing preservative,1,
 fragrance,4,
-parfum,4,
 frankincense extract,4,
 fructose,3,
 fruit acid,1,
@@ -665,12 +664,12 @@ goji fruit extract,3,
 gold,4,
 Gossypium herbacuem seed oil,3,
 gotu kola,2,
-grape seed extract,2,"extract din seminte de struguri, un antioxidant foarte puternic"
-grape seed oil,2,"extract din seminte de struguri, un antioxidant foarte puternic"
+grape seed extract,2,extract din seminte de struguri un antioxidant foarte puternic
+grape seed oil,2,extract din seminte de struguri un antioxidant foarte puternic
 grapefruit oil,4,
 grapefruit peel extract,4,
 grapefruit seed extract,4,
-green tea,2,extract de ceai verde, un antioxidant foarte eficient;
+green tea,2,extract de ceai verde un antioxidant foarte eficient;
 gromwell,2,
 guar gum,3,
 guar hydroxypropyltrimonium chloride,3,
@@ -712,7 +711,7 @@ horsetail extract,1,
 Hortonia floribunda leaf extract,1,
 Huang qi,3,
 Humulus lupulus extract,1,
-hyaluronic acid,2,"substanta foarte hidratanta, poate retine de 1000 de ori mai multa apa fata de propria greutate; ajuta de asemenea alte ingrediente sa patrunda in piele"
+hyaluronic acid,2,substanta foarte hidratanta poate retine de 1000 de ori mai multa apa fata de propria greutate; ajuta de asemenea alte ingrediente sa patrunda in piele
 Hydnocarpus anthelmintica,4,
 Hydrastis canadenis,4,
 hydrocotyl extract,2,
@@ -762,12 +761,12 @@ isohexadecane,3,
 isoleucine,3,
 isononyl isononanoate,3,
 isoparaffin,3,
-isopropyl alcohol,4,"substanta cu proprietati antibacteriene, poate usca pielea"
-isopropyl isostearate,3,"substante emoliente, comedogene (blocheaza porii);"
-isopropyl lanolate,3,"substante emoliente, comedogene (blocheaza porii);"
-isopropyl myristate,3,"substante emoliente, comedogene (blocheaza porii);"
-isopropyl palmitate,3,"substante emoliente, comedogene (blocheaza porii);"
-isopropyl titanium triisostearte/triethoxycaprylylsilane crosspolymer,3,"substante emoliente, comedogene (blocheaza porii);"
+isopropyl alcohol,4,substanta cu proprietati antibacteriene poate usca pielea
+isopropyl isostearate,3,substante emoliente comedogene (blocheaza porii);
+isopropyl lanolate,3,substante emoliente comedogene (blocheaza porii);
+isopropyl myristate,3,substante emoliente comedogene (blocheaza porii);
+isopropyl palmitate,3,substante emoliente comedogene (blocheaza porii);
+isopropyl titanium triisostearte/triethoxycaprylylsilane crosspolymer,3,substante emoliente comedogene (blocheaza porii);
 isostearamide DEA,3,
 isostearic acid,3,
 ivy extract,4,
@@ -809,7 +808,7 @@ Laminaria longicruris,3,
 Laminaria ochroleuca extract,3,
 Laminaria saccharine,3,
 Lamium album flower extract,2,
-lanolin,3,"grasime extrasa din lana de oaie, folosita ca emolient; poate fi iritanta si comedogena;"
+lanolin,3,grasime extrasa din lana de oaie folosita ca emolient; poate fi iritanta si comedogena;
 lanolin alcohol,3,
 lappa extract,3,
 Larrea divaricata extract,3,
@@ -1109,8 +1108,8 @@ Perilla ocymoides,1,
 Persea gratissima oil,2,
 Persicaria hydropiper,2,
 petitgrain mandarin,4,
-petrolatum,3,substanta hidratanta si emolienta, neiritanta, dar potential oclusiva pentru pori
-PHA,2,substante asemanatoare acizilor de fructe, dar mai putin iritante
+petrolatum,3,substanta hidratanta si emolienta neiritanta dar potential oclusiva pentru pori
+PHA,2,substante asemanatoare acizilor de fructe dar mai putin iritante;
 phenoxyethanol,3,
 phenoxyisopropanol,3,
 phenyl trimethicone,3,
@@ -1166,7 +1165,7 @@ polyhydroxystearic acid,3,
 polyisobutene,3,
 polymer,3,
 polymethylsilsesquioxane,3,
-polypropylene glycol,3,substanta hidratanta, potential iritanta
+polypropylene glycol,3,substanta hidratanta potential iritanta
 polyquaternium-10,3,
 polyquaterniums,3,
 polysaccharide,2,
@@ -1201,7 +1200,7 @@ proline,3,
 propanediol,3,
 propolis,3,
 propylene carbonate,3,
-propylene glycol,3,substanta hidratanta, potential iritanta
+propylene glycol,3,substanta hidratanta potential iritanta
 propylene glycol dicaprylate/dicaprate,3,
 propylene glycol isostearate,3,
 propylene glycol laurate,3,
@@ -1249,9 +1248,9 @@ red clover,3,
 red raspberry extract,3,
 reducing agent,3,
 resveratrol,2,
-retinol,2,"substanta derivata din vitamina A, liposolubila, folosita in tratamentele antirid"
-retinyl ascorbate,2,"derivat al vitaminei A, mai stabil decat retinolul si mai putin iritant"
-retinyl palmitate,2,"derivat al vitaminei A, mai stabil decat retinolul si mai putin iritant"
+retinol,2,substanta derivata din vitamina A liposolubila folosita in tratamentele antirid
+retinyl ascorbate,2,derivat al vitaminei A mai stabil decat retinolul si mai putin iritant
+retinyl palmitate,2,derivat al vitaminei A mai stabil decat retinolul si mai putin iritant
 retinyl retinoate,2,
 riboflavin,1,
 rice bran oil,3,
@@ -1386,12 +1385,12 @@ sodium cocoyl isethionate,3,
 sodium dehydroacetate,3,
 sodium dilauramidoglutamide lysine,3,
 sodium hexametaphosphate,3,
-sodium hyaluronate,2,"substanta foarte hidratanta, poate retine de 1000 de ori mai multa apa fata de propria greutate; ajuta de asemenea alte ingrediente sa patrunda in piele"
+sodium hyaluronate,2,substanta foarte hidratanta poate retine de 1000 de ori mai multa apa fata de propria greutate; ajuta de asemenea alte ingrediente sa patrunda in piele
 sodium hydroxide,1,
 sodium hydroxymethylglycinate,3,
 sodium lactate,3,
 sodium lactobionate,1,
-sodium laureth sulfate,3,"detergent, potential iritant, dar necancerigen"
+sodium laureth sulfate,3,detergent potential iritant dar necancerigen
 sodium laureth-13 carboxylate,3,
 sodium lauroamphoacetate,3,
 sodium lauroyl lactylate,3,
@@ -1499,8 +1498,8 @@ Thymus serpillum extract,4,
 Thymus vulgaris,1,
 Thymus vulgaris oil,4,
 Tilia cordata,2,
-titanium dioxide,2,ecran solar fizic, protejeaza fata de radiatiile UVA si UVB
-tocopherol,2,antioxidant, hidratant, ajuta pielea sa se apere de radiatiile ultraviolete.
+titanium dioxide,2,ecran solar fizic protejeaza fata de radiatiile UVA si UVB
+tocopherol,2,antioxidant hidratant ajuta pielea sa se apere de radiatiile ultraviolete.
 tocopherol acetate,2,
 tocopheryl acetate,2,
 tocopheryl lineolate,2,
@@ -1559,7 +1558,7 @@ verbena extract,4,
 vetiver oil or extract,4,
 vinyl dimethicone/methicone silsesquioxane crosspolymer,3,
 Viola tricolor extract,1,
-vitamin A,2,"hidrateaza pielea, reduce aparenta porilor, curata porii si reduce ridurile fine; este fotosensibilizanta si nu trebuie sa fie folosita de femeile gravide sau de cele care alapteaza"
+vitamin A,2,hidrateaza pielea reduce aparenta porilor curata porii si reduce ridurile fine; este fotosensibilizanta si nu trebuie sa fie folosita de femeile gravide sau de cele care alapteaza
 vitamin B1,3,
 vitamin B12,3,
 vitamin B2,1,
@@ -1568,7 +1567,7 @@ vitamin B5,3,
 vitamin B6,1,
 vitamin C,2,stimuleaza sinteza colagenului; este un antioxidant foarte puternic
 vitamin D,3, regleaza procesul de refacere si reinnoire a celulelor;
-vitamin E,2,antioxidant, hidratant, ajuta pielea sa se apere de radiatiile ultraviolete
+vitamin E,2,antioxidant hidratant ajuta pielea sa se apere de radiatiile ultraviolete.
 vitamin F,2,
 vitamin H,3,
 vitamin K,3,
@@ -1579,8 +1578,8 @@ VP/hexadecene copolymer,3,
 walnut extract,1,
 walnut oil,3,
 walnut-shell powder,1,
-aqua,3
 water,3,
+aqua,3,
 watercress extract,1,
 watermelon fruit extract,2,
 wheat amino acids,3,
@@ -1626,3 +1625,4 @@ Zingiber officinale roscoe,4,
 Zingiber zerumbet,4,
 Zingiberaceae,4,
 Zizyphus jujuba fruit extract,3,
+Myreth3 myristate,3,agent de ingrijire a pielii emolient

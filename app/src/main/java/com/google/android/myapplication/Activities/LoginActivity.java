@@ -101,14 +101,15 @@ public class LoginActivity extends AppCompatActivity {
         readIngredients = new ReadIngredients();
         readRatings = new ReadRatings();
         readCategories = new ReadCategories();
-        isServerOpen = (IsServerOpen) new IsServerOpen() {
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-               raspunsServer=s;
-            }
-        }.execute();
-
+        if (checkInternetConnection.isNetworkAvailable(getApplicationContext())) {
+            isServerOpen = (IsServerOpen) new IsServerOpen() {
+                @Override
+                protected void onPostExecute(String s) {
+                    super.onPostExecute(s);
+                    raspunsServer = s;
+                }
+            }.execute();
+        }
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

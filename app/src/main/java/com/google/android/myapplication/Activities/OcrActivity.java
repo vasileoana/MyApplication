@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -36,6 +38,12 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.myapplication.DataBase.Files.ReadCategories;
+import com.google.android.myapplication.DataBase.Files.ReadIngredients;
+import com.google.android.myapplication.DataBase.Files.ReadRatings;
+import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
+import com.google.android.myapplication.DataBase.Methods.RatingMethods;
+import com.google.android.myapplication.DataBase.Model.Category;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.ListViewAdapter;
 import com.google.android.myapplication.Utilities.Ocr.OcrUtility;
@@ -55,11 +63,22 @@ public class OcrActivity extends Activity {
     ArrayList<String> ingredients;
     int idUser = 0;
     String tipUtilizator;
-
+    CategoryMethods categoryMethods = new CategoryMethods();
+    List<Category> categoryList;
+    ReadIngredients readIngredients;
+    ReadCategories readCategories;
+    ReadRatings readRatings;
+    RatingMethods ratingMethods;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
+        categoryList = new ArrayList<>();
+        categoryList = categoryMethods.select();
+        readCategories = new ReadCategories();
+        readIngredients = new ReadIngredients();
+        readRatings = new ReadRatings();
+        ratingMethods = new RatingMethods();
         btnSelect = (ImageButton) findViewById(R.id.btnSelectPhoto);
         btnShow = (ImageButton) findViewById(R.id.btnShow);
         btnOcr = (ImageButton) findViewById(R.id.btnOcr);
@@ -79,6 +98,12 @@ public class OcrActivity extends Activity {
         ingredients = new ArrayList<>();
         tipUtilizator = getIntent().getExtras().getString("tipUtilizator");
         if (!tipUtilizator.equals("anonim")) {
+            if (categoryList.size() == 0) {
+                AssetManager assetManager = getAssets();
+                readIngredients.execute(getAssets());
+                readRatings.readRatings(assetManager, ratingMethods);
+                readCategories.readCategories(assetManager, categoryMethods);
+            }
             idUser = getIntent().getExtras().getInt("userId");
         }
         tvIndicatii = (TextView) findViewById(R.id.tvIndicatii);
@@ -221,7 +246,15 @@ public class OcrActivity extends Activity {
                     TextBlock tBlock = textBlocks.valueAt(index);
                     blocks = blocks + tBlock.getValue();
                     for (Text line : tBlock.getComponents()) {
-                        lines = lines + line.getValue();
+                      char cratima = line.getValue().charAt(line.getValue().length()-1);
+                        if(String.valueOf(cratima).equals("-")){
+                            lines = lines + line.getValue().substring(0,line.getValue().length()-1);
+                        }
+                        else {
+                            lines = lines + line.getValue();
+
+                        }
+
                     }
 
                     tvIndicatii.setText("Aflati nota fiecarui ingredient!");

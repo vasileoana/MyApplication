@@ -206,6 +206,8 @@ public class DialogFragmentAddAnalysis extends DialogFragment {
 
                                             dismiss();
                                             Intent i = new Intent(getActivity().getApplicationContext(), NavigationActivity.class);
+                                            i.putExtra("tipUtilizator", "logat");
+                                            i.putExtra("userId", idUser);
                                             startActivity(i);
                                         }
                                     }.execute(productAnalysis);

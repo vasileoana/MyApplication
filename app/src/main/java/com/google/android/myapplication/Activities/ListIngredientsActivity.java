@@ -38,7 +38,7 @@ import java.util.List;
     IngredientMethods ingredientMethods;
     ListView lv;
     List<String> bdIng;
-    ImageButton btnAddIng, btnRemoveIng;
+    ImageButton btnAddIng;
     ImageButton btnSaveAnalysis;
     ProductMethods productMethods;
     ListViewAdapter adapter;
@@ -65,7 +65,6 @@ import java.util.List;
             idUser = (int) getIntent().getExtras().get("userId");
         } else {
             btnSaveAnalysis.setVisibility(View.GONE);
-            btnRemoveIng.setVisibility(View.GONE);
             btnAddIng.setVisibility(View.GONE);
             addIng.setVisibility(View.GONE);
             removeIng.setVisibility(View.GONE);

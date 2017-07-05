@@ -43,8 +43,10 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-            if(getIntent().getExtras().get("tipUtilizator").equals("logat"))
-        idUser= getIntent().getExtras().getInt("userId");
+
+               if (getIntent().getExtras().get("tipUtilizator").equals("logat")) {
+                   idUser = getIntent().getExtras().getInt("userId");
+               }
 
 
         btnSearchProduct = (ImageButton) findViewById(R.id.btnSearchProduct);
