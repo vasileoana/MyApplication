@@ -68,7 +68,11 @@ public class DialogFragmentViewIngredient extends DialogFragment {
         tvIngredientName.setText(ingredient.getName());
         String rating = ratingMethods.getRating(ingredient.getIdRating());
         int img = RatingMethods.returnRatingImage(rating);
-        tvIngredientDescription.setText(rating+"\n\n"+ingredient.getDescription() != null ? ingredient.getDescription() : "" );
+        if(ingredient.getDescription() != null)
+        tvIngredientDescription.setText(rating+"\n"+ingredient.getDescription());
+       else
+            tvIngredientDescription.setText(rating);
+
         ivIngredientRatingImg.setImageResource(img);
 
         btnOk.setOnClickListener(new View.OnClickListener() {

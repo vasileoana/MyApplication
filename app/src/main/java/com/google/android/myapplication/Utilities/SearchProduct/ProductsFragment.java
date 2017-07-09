@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.myapplication.Activities.SearchProductActivity;
 import com.google.android.myapplication.DataBase.Methods.CategoryMethods;
 import com.google.android.myapplication.DataBase.Methods.ProductMethods;
 import com.google.android.myapplication.DataBase.Model.Product;
@@ -37,7 +38,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
 
     private Context context;
     private ListView listView;
-    private List<Product> arrayList;
+    public static List<Product> arrayList;
     private ProductMethods productMethods = new ProductMethods();
     private ListViewAdapter adapter;
     private FilterProducts filterProducts;
@@ -77,7 +78,7 @@ public class ProductsFragment extends android.support.v4.app.Fragment implements
     private void loadListView(View view) {
         listView = (ListView) view.findViewById(R.id.lv_search_product);
         //inainte era selectAllProducts()
-        arrayList = productMethods.select();
+        arrayList = productMethods.selectAlteAnalize(SearchProductActivity.user);
         adapter = new ListViewAdapter(context, arrayList);
         listView.setAdapter(adapter);
 

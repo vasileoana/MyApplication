@@ -23,7 +23,7 @@ import java.util.List;
 public class SearchProductActivity extends AppCompatActivity {
 
 
-
+public static int user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,7 @@ public class SearchProductActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+         user=getIntent().getExtras().getInt("userId");
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         setupViewPager(viewPager);
 

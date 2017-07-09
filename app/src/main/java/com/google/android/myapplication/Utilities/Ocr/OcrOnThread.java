@@ -16,14 +16,15 @@ import java.util.List;
  */
 
 public class OcrOnThread extends AsyncTask<Void, Void, Void> {
-    public static ProgressDialog dialog = new ProgressDialog(ListIngredientsActivity.context);
-
+    public static ProgressDialog dialog ;
+    List<String> numeIngrediente = new ArrayList<>();
     IngredientMethods ingredientMethods = new IngredientMethods();
     int i = 0;
     boolean gasit;
 
     @Override
     protected void onPreExecute() {
+        dialog = new ProgressDialog(ListIngredientsActivity.context);
         //set message of the dialog
         dialog.setMessage("Asteapta...");
         //show dialog
@@ -49,10 +50,11 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
             List<Ingredient> ingList = cautareCuvantBD(ing);
             int j = 0;
             Ingredient ingr = ingredientMethods.selectIngredient(ing);
-            if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0) {
+            if (ingList.size() > 1 && ingr != null && ingr.getIdRating() != 0 && verificareExistenta(ingr.getName()) ) {
                 //vezi cazul glycerin si glycerine, in bd fiinc cu LIKE '%glycerin%'  mi se returneaza ambele
                 ListIngredientsActivity.ingredientsBD.add(ingr);
-            } else {
+            }
+            else {
                 while (j < 3 && ingList.size() > 1 && i < ListIngredientsActivity.ingredients.size() - 1) {
 
                     int poz = i + 1;
@@ -76,7 +78,7 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
     public List<Ingredient> cautareCuvantBD(String ingredient) {
         //cauta toate ingredientele care contin cuvantul in ele, ex: avem mai multe ingrediente care au alcool in ele
         Ingredient ing = ingredientMethods.selectIngredient(ingredient);
-        if (ing != null) {
+        if (ing != null &&  verificareExistenta(ing.getName())) {
             ListIngredientsActivity.ingredientsBD.add(ing);
 
             ListIngredientsActivity.ingredienteReturnate = new ArrayList<>();
@@ -91,7 +93,7 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
         } else if (ListIngredientsActivity.ingredienteReturnate.size() == 1) {
             //daca bd-ul a returnat 1 element o sa presupunem ca e fix cel cautat
             Ingredient ingr = ListIngredientsActivity.ingredienteReturnate.get(0);
-            if (!ListIngredientsActivity.ingredientsBD.contains(ListIngredientsActivity.ingredienteReturnate.get(0)) && ingr != null && ingr.getIdRating() != 0) {
+            if (!ListIngredientsActivity.ingredientsBD.contains(ListIngredientsActivity.ingredienteReturnate.get(0)) && (ingr != null) && (ingr.getIdRating() != 0) &&  verificareExistenta(ingr.getName())) {
                 ListIngredientsActivity.ingredientsBD.add(ingr);
             }
         }
@@ -114,7 +116,7 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
                 String numeIng = levenshtein.get(0);
                 //daca exista deja in lista de ingrediente pe care o vom baga in adapter la listview, nu il mai introducem iar
                 Ingredient ingr = ingredientMethods.selectIngredient(numeIng);
-                if (!ListIngredientsActivity.ingredientsBD.contains((ingredientMethods.selectIngredient(numeIng))) && ingr != null && ingr.getIdRating() != 0)
+                if (!ListIngredientsActivity.ingredientsBD.contains((ingredientMethods.selectIngredient(numeIng))) && (ingr != null) && (ingr.getIdRating() != 0) &&  verificareExistenta(ingr.getName()))
                     ListIngredientsActivity.ingredientsBD.add(ingr);
             } /*else if (levenshtein.size() == 0) {
                 //daca s-au returnat 0 rezultate incercam sa micsoram fuzzines, in ideea in care poate ocr-ul a incurcat mai multe caractere
@@ -126,5 +128,13 @@ public class OcrOnThread extends AsyncTask<Void, Void, Void> {
             }
 
         }
+    }
+
+    public boolean verificareExistenta(String nume){
+            if(numeIngrediente.contains(nume)){
+                return false;
+            }
+           numeIngrediente.add(nume);
+        return true;
     }
 }

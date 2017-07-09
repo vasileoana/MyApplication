@@ -25,6 +25,7 @@ import com.google.android.myapplication.DataBase.Model.ProductAnalysis;
 import com.google.android.myapplication.R;
 import com.google.android.myapplication.Utilities.ListIngredients.*;
 import com.google.android.myapplication.Utilities.SearchIngredient.DialogFragmentViewIngredient;
+import com.google.android.myapplication.Utilities.SearchProduct.ProductsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class DialogFragmentViewAnalysis extends DialogFragment {
 
         }
         else {
-            productList=productMethods.select();
+            productList= ProductsFragment.arrayList;
 
         }
 

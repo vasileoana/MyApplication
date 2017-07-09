@@ -63,21 +63,15 @@ public class OcrActivity extends Activity {
     ArrayList<String> ingredients;
     int idUser = 0;
     String tipUtilizator;
-    CategoryMethods categoryMethods = new CategoryMethods();
     List<Category> categoryList;
-    ReadIngredients readIngredients;
-    ReadCategories readCategories;
-    ReadRatings readRatings;
+
     RatingMethods ratingMethods;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
-        categoryList = new ArrayList<>();
-        categoryList = categoryMethods.select();
-        readCategories = new ReadCategories();
-        readIngredients = new ReadIngredients();
-        readRatings = new ReadRatings();
+
         ratingMethods = new RatingMethods();
         btnSelect = (ImageButton) findViewById(R.id.btnSelectPhoto);
         btnShow = (ImageButton) findViewById(R.id.btnShow);
@@ -98,12 +92,7 @@ public class OcrActivity extends Activity {
         ingredients = new ArrayList<>();
         tipUtilizator = getIntent().getExtras().getString("tipUtilizator");
         if (!tipUtilizator.equals("anonim")) {
-            if (categoryList.size() == 0) {
-                AssetManager assetManager = getAssets();
-                readIngredients.execute(getAssets());
-                readRatings.readRatings(assetManager, ratingMethods);
-                readCategories.readCategories(assetManager, categoryMethods);
-            }
+
             idUser = getIntent().getExtras().getInt("userId");
         }
         tvIndicatii = (TextView) findViewById(R.id.tvIndicatii);
@@ -235,57 +224,58 @@ public class OcrActivity extends Activity {
 
     public void Ocr(View view) {
         Bitmap bitmap;
-        bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
-        try {
-            if (detector.isOperational() && bitmap != null) {
-                Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-                SparseArray<TextBlock> textBlocks = detector.detect(frame);
-                String blocks = "";
-                String lines = "";
-                for (int index = 0; index < textBlocks.size(); index++) {
-                    TextBlock tBlock = textBlocks.valueAt(index);
-                    blocks = blocks + tBlock.getValue();
-                    for (Text line : tBlock.getComponents()) {
-                      char cratima = line.getValue().charAt(line.getValue().length()-1);
-                        if(String.valueOf(cratima).equals("-")){
-                            lines = lines + line.getValue().substring(0,line.getValue().length()-1);
-                        }
-                        else {
-                            lines = lines + line.getValue();
+        if (ivImage.getDrawable() != null) {
+            bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
+            try {
+                if (detector.isOperational() && bitmap != null) {
+                    Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                    SparseArray<TextBlock> textBlocks = detector.detect(frame);
+                    String blocks = "";
+                    String lines = "";
+                    for (int index = 0; index < textBlocks.size(); index++) {
+                        TextBlock tBlock = textBlocks.valueAt(index);
+                        blocks = blocks + tBlock.getValue();
+                        for (Text line : tBlock.getComponents()) {
+                            String cratima = line.getValue().substring(line.getValue().length() - 1);
+
+                            if (cratima.equals("-")) {
+                                lines = lines + line.getValue().substring(0, line.getValue().length() - 2);
+                            } else {
+                                lines = lines + " "+ line.getValue();
+
+                            }
 
                         }
+
+                        tvIndicatii.setText("Aflati nota fiecarui ingredient!");
+                    }
+                    if (textBlocks.size() == 0) {
+                        scanResults.setText("Incercati o poza mai clara!");
+                    } else {
+                        scanResults.setText(scanResults.getText() + lines + " ");
 
                     }
-
-                    tvIndicatii.setText("Aflati nota fiecarui ingredient!");
-                }
-                if (textBlocks.size() == 0) {
-                    scanResults.setText("Incercati o poza mai clara!");
                 } else {
-                    scanResults.setText(scanResults.getText() + lines + " ");
-
+                    scanResults.setText("Incercati cu o noua poza!");
                 }
-            } else {
-                scanResults.setText("Could not set up the detector!");
+                scanResults.setVisibility(View.VISIBLE);
+                btnShow.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT)
+                        .show();
+                Log.e(LOG_TAG, e.toString());
             }
-            scanResults.setVisibility(View.VISIBLE);
-            btnShow.setVisibility(View.VISIBLE);
-        } catch (Exception e) {
-            Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT)
-                    .show();
-            Log.e(LOG_TAG, e.toString());
         }
-
     }
 
 
     public void Show(View view) {
         String text = scanResults.getText().toString();
         //am facut un vector de cuvinte
-        String[] vector = text.replaceAll("'","").replaceAll(" ",",").replace("-","").split("[,.:;]");
+        String[] vector = text.replaceAll("'", "").replaceAll("[()+]", " ").replaceAll("!", "l").replaceAll(" ", ",").split("[()#,.:;]");
         for (String ing : vector) {
-            if(!ing.isEmpty())
-            ingredients.add(ing.trim());
+            if (!ing.isEmpty())
+                ingredients.add(ing.trim());
         }
         final Intent i = new Intent(getApplicationContext(), ListIngredientsActivity.class);
         i.putStringArrayListExtra("list", ingredients);
@@ -294,7 +284,6 @@ public class OcrActivity extends Activity {
         }
         i.putExtra("tipUtilizator", tipUtilizator);
         startActivity(i);
-
 
 
     }

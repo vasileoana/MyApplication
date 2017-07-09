@@ -26,19 +26,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_start">Sign in</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_login2">Sign in</string>
+
+    <string name="title_activity_login2">Conectate</string>
     <string name="search_via">Cauta dupa: </string>
     <string name="name">nume</string>
     <string name="number">rating</string>
@@ -51,7 +40,7 @@
     <string name="Save_analysis">Salveaza analiza</string>
     <string name="productFunction">Functie</string>
     <string name="productDescription">Descriere</string>
-    <string name="productBrand">Brand</string>
+    <string name="productBrand">Marca</string>
     <string name="Category">Categorie</string>
     <string name="OK">ok</string>
     <string name="average">mediu</string>
@@ -78,14 +67,14 @@
     <string name="Descriere">Descriere:</string>
     <string name="Brand">Marca:</string>
     <string name="description">Pentru a accesa toate functionalitatile aplicatiei este necesara autentificarea.</string>
-    <string name="ocr">Realizeaza o analiza asupra produselor de ingrijire personala utilizand tehnologia de recunoastere optica a caracterelor!</string>
-    <string name="Incearca">Incearca OCR</string>
+    <string name="ocr">Realizeaza o analiza asupra produselor de ingrijire personala utilizand tehnologia de recunoastere optica a caracterelor (OCR)!</string>
+    <string name="Incearca">Incearca tehnologia OCR</string>
     <string name="Inregistrare">Creeaza un cont pentu a accesa toate serviciile oferite!</string>
     <string name="welcome">Bine ai venit!</string>
     <string name="myanalyses_text">    Acestea sunt analizele realizate si salvate de tine. Ai posibilitatea sa le vizualizezi, modifici sau stergi.</string>
     <string name="tvIndicatii">Captureaza o fotografie sau incarca una din galerie!</string>
     <string name="cautaPod">Cauta o analiza realizata de alti utilizatori!</string>
-    <string name="cautaIng">Cauta manual ingredientele</string>
+    <string name="cautaIng">Cauta manual ingredientele de pe eticheta</string>
     <string name="incearcaOcr">Analizeaza un produs utilizand tehnologia de recunoastere optica a caracterelor</string>
     <string name="despre">Afla mai multe informatii despre aplicatie!</string>
     <string name="Profil">Profil</string>
@@ -98,15 +87,15 @@
     <string name="Remove_ing">Sterge ingrediente</string>
     <string name="title_activity_scrolling">Informatii utile</string>
     <string name="large_text">
-        Aici vei gasi instructiunile aplicatiei.
-        Daca ai decis sa utilizezi aceasta aplicatie inseamna ca iti pasa de ingredientele produselor cosmetice pe care le folosesti. Este foarte important sa fim informati in legatura cu calitatea ingredientelor utilizate deoarece acestea ne pot afecta sanatatea.\n
+        Aici vei gasi instructiunile aplicatiei.\n
+        Este foarte important sa fim informati in legatura cu calitatea ingredientelor utilizate deoarece acestea ne pot afecta sanatatea.\n
         De aceea am realizat aceasta aplicatie, sa ofer un ghid de orientare in alegerea produselor potrivite nevoilor noastre.\n
         Pentru inceput, daca ati ajuns pana aici inseamna ca v-ati creat cont si autentificat cu succes. Mai departe datele personale se pot modifica dupa dorinta.\n
-        Pentru a realiza o analiza accesati a treia optiune din meniu. Aici va trebui sa introduceti o fotografie - fie una din propria galerie, fie realizati pe loc un prin intermediul camerei foto.\n
+       \n Pentru a realiza o analiza accesati a treia optiune din meniu. Aici va trebui sa introduceti o fotografie - fie una din propria galerie, fie realizati pe loc un prin intermediul camerei foto.\n
         Mai departe apasati pe butonul nou aparut care va va extrage textul din fotografie. Textul poate fi modificat daca observati greseli. La urmatorul pas puteti obtine ingredientele. Ingredientele au fiecare cate un calificativ, ilustrat printr-o imagine sugestiva. In aceasta lista puteti fie sterge, fie adauga un nou inngredient. Cand lista de ingrediente este corecta, salvati analiza introducand mai multe detalii despre produsul analizat.\n
-        Analizele salvate pot fi vizualizate din meniul ce apare glisand ecranul din partea stanga spre dreapta si accesand optiunea "Analizele mele" . La o simpla apasare se pot observa datele analizei pe care le-ati salvat. La o apasare prelungita vor aparea doua optiuni: modificare date curente sau stergere analiza.\n
-        De asemenea, puteti vizualiza analizele altor utilizator accesand prima optiune din meniul principal.\n
-        Daca doriti sa analizati mai bine un ingredient acesta poate fi cautat prin intermediul optiunii numarul 2 din meniu.\n
+        \nAnalizele salvate pot fi vizualizate din meniul ce apare glisand ecranul din partea stanga spre dreapta si accesand optiunea "Analizele mele" . La o simpla apasare se pot observa datele analizei pe care le-ati salvat. La o apasare prelungita vor aparea doua optiuni: modificare date curente sau stergere analiza.\n
+        \nDe asemenea, puteti vizualiza analizele altor utilizator accesand prima optiune din meniul principal.\n
+        \nDaca doriti sa analizati mai bine un ingredient acesta poate fi cautat prin intermediul optiunii numarul 2 din meniu.\n
     </string>
 
 </resources>
