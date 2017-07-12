@@ -97,5 +97,6 @@
         \nDe asemenea, puteti vizualiza analizele altor utilizator accesand prima optiune din meniul principal.\n
         \nDaca doriti sa analizati mai bine un ingredient acesta poate fi cautat prin intermediul optiunii numarul 2 din meniu.\n
     </string>
+    <string name="toate">toate</string>
 
 </resources>
