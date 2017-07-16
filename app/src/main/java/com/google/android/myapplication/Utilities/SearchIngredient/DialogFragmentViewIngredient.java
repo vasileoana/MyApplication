@@ -31,7 +31,6 @@ public class DialogFragmentViewIngredient extends DialogFragment {
     ImageView ivIngredientRatingImg;
     Ingredient ingredient;
     int position;
-    Button btnOk;
     RatingMethods ratingMethods;
     IngredientMethods ingredientMethods;
 
@@ -49,7 +48,6 @@ public class DialogFragmentViewIngredient extends DialogFragment {
         tvIngredientName = (TextView) rootView.findViewById(R.id.tvIngredientName);
         tvIngredientDescription = (TextView) rootView.findViewById(R.id.tvIngredientDescription);
         ivIngredientRatingImg = (ImageView) rootView.findViewById(R.id.ivIngredientRatingImg);
-        btnOk = (Button) rootView.findViewById(R.id.btnIngredientDetails);
         ingredientMethods=new IngredientMethods();
         Bundle bundle = getArguments();
 
@@ -74,13 +72,6 @@ public class DialogFragmentViewIngredient extends DialogFragment {
             tvIngredientDescription.setText(rating);
 
         ivIngredientRatingImg.setImageResource(img);
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
         return rootView;
     }
 

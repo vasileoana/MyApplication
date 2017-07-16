@@ -30,8 +30,8 @@
     <string name="title_activity_login2">Conectate</string>
     <string name="search_via">Cauta dupa: </string>
     <string name="name">nume</string>
-    <string name="number">rating</string>
-    <string name="rating">rating</string>
+    <string name="number">calificativ</string>
+    <string name="rating">calificativ</string>
     <string name="firstLetter">prima litera</string>
     <string name="filter_by">Filtreaza dupa</string>
     <string name="contains">contine</string>
@@ -89,13 +89,12 @@
     <string name="large_text">
         Aici vei gasi instructiunile aplicatiei.\n
         Este foarte important sa fim informati in legatura cu calitatea ingredientelor utilizate deoarece acestea ne pot afecta sanatatea.\n
-        De aceea am realizat aceasta aplicatie, sa ofer un ghid de orientare in alegerea produselor potrivite nevoilor noastre.\n
-        Pentru inceput, daca ati ajuns pana aici inseamna ca v-ati creat cont si autentificat cu succes. Mai departe datele personale se pot modifica dupa dorinta.\n
-       \n Pentru a realiza o analiza accesati a treia optiune din meniu. Aici va trebui sa introduceti o fotografie - fie una din propria galerie, fie realizati pe loc un prin intermediul camerei foto.\n
-        Mai departe apasati pe butonul nou aparut care va va extrage textul din fotografie. Textul poate fi modificat daca observati greseli. La urmatorul pas puteti obtine ingredientele. Ingredientele au fiecare cate un calificativ, ilustrat printr-o imagine sugestiva. In aceasta lista puteti fie sterge, fie adauga un nou inngredient. Cand lista de ingrediente este corecta, salvati analiza introducand mai multe detalii despre produsul analizat.\n
-        \nAnalizele salvate pot fi vizualizate din meniul ce apare glisand ecranul din partea stanga spre dreapta si accesand optiunea "Analizele mele" . La o simpla apasare se pot observa datele analizei pe care le-ati salvat. La o apasare prelungita vor aparea doua optiuni: modificare date curente sau stergere analiza.\n
-        \nDe asemenea, puteti vizualiza analizele altor utilizator accesand prima optiune din meniul principal.\n
-        \nDaca doriti sa analizati mai bine un ingredient acesta poate fi cautat prin intermediul optiunii numarul 2 din meniu.\n
+        De aceea, aceasta aplicatie ofera un ghid de orientare in alegerea produselor potrivite nevoilor dumneavoastra.\n
+        Pentru inceput, daca ati ajuns pana aici inseamna ca v-ati creat cont si autentificat cu succes. Mai departe datele personale se pot modifica dupa dorinta accesand meniul din stanga.\n\nPentru a realiza o analiza accesati a treia optiune din meniu. Aici va trebui sa introduceti o fotografie - fie una din propria galerie, fie realizati pe loc un prin intermediul camerei foto.\n
+        Mai departe apasati pe butonul nou aparut care va extrage textul din fotografie. Textul poate fi modificat daca observati greseli. La urmatorul pas puteti obtine ingredientele. Ingredientele au fiecare cate un calificativ, ilustrat printr-o imagine sugestiva. In aceasta lista puteti fie sterge, fie adauga un nou ingredient. Cand lista de ingrediente este corecta, salvati analiza introducand mai multe detalii despre produsul analizat.\n\n
+        Analizele salvate pot fi vizualizate din meniul ce apare glisand ecranul din partea stanga spre dreapta si accesand optiunea ""Analizele mele"" . La o simpla apasare se pot observa datele analizei pe care le-ati salvat. La o apasare prelungita vor aparea doua optiuni: modificare date curente sau stergere analiza.\n\nDe asemenea, puteti vizualiza analizele altor utilizator accesand prima optiune din meniul principal.\n\n
+        Daca doriti sa analizati mai bine un ingredient acesta poate fi cautat accesand a doua optiune din meniu.\n\n
+
     </string>
     <string name="toate">toate</string>
 

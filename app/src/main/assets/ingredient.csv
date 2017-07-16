@@ -124,7 +124,8 @@ Argania spinosa,2,
 arginine,3,
 Argireline,1,
 arnica extract,4,
-aroma/flavor,1,
+aroma,1,
+flavor,1,
 arrowroot,1,
 artemia extract,3,
 Artemisia absinthium extract,1,
@@ -176,12 +177,12 @@ Bellis perennis,4,
 bentonite,3,
 benzalkonium chloride,1,
 benzephenone-3,3,
-benzoic acid,3,
+benzoic acid,3,substanta ce se formeaza in mod natural si sintetic
 benzoin extract,4,
 benzophenone,3,
 benzothonium chloride,3,
 benzoyl peroxide,2,substanta activa antibacteriana folosita in produsele antiacneice; poate usca si irita pielea;
-benzyl alcohol,3,
+benzyl alcohol,3,poate fi gasit si in uleiul esential al multor plante precum iasomia sau zambila
 benzyl salicylate,4,
 Berberis aristata,2,
 bergamot oil,4,
@@ -230,11 +231,11 @@ borate,4,
 borax,4,
 boric acid,3,acid conservant si antiseptic dar potential iritant;
 boron nitride,3,
-Boswellia carterii,4,
-Boswellia serrata extract,1,
+boswellia carterii,4,
+boswellia serrata extract,1,
 botanicals,1,
 boysenberry,2,
-Brassica campestris,2,
+brassica campestris,2,
 Brazil nut extract,3,
 broad spectrum,3,
 bromelain,3,
@@ -551,6 +552,7 @@ ethylhexylglycerin,3,
 ethylparaben,3,conservanti foarte utilizati in industria cosmetica;
 eucalyptus extract,4,
 eucalyptus oil,4,
+eucalyptol,4, ulei volatil cu efect iritant bland asupra mucoasei cavitatii bucale si a tubului digestiv
 Eugenia aromatica,4,
 Eugenia caryophyllus,4,
 eugenol,4,
@@ -593,6 +595,7 @@ Foeniculum vulgare extract,4,
 folic acid,3,
 formaldehyde-releasing preservative,1,
 fragrance,4,
+parfum,4,rol de mascare/acoperire a mirosului
 frankincense extract,4,
 fructose,3,
 fruit acid,1,
@@ -921,7 +924,7 @@ Mentha arvensis,4,
 Mentha piperita,4,
 Mentha spicata,4,
 Mentha viridis,4,
-menthol,4,
+menthol,4,Substanța volatila cu miros aromatic obtinuta din ulei de menta sau pe cale artificiala intrebuintata in farmacie si in cosmetica
 menthone,4,
 menthoxypropanediol,4,
 menthyl anthranilate,2,
@@ -1111,7 +1114,7 @@ Persicaria hydropiper,2,
 petitgrain mandarin,4,
 petrolatum,3,substanta hidratanta si emolienta neiritanta dar potential oclusiva pentru pori
 PHA,2,substante asemanatoare acizilor de fructe dar mai putin iritante;
-phenoxyethanol,3,
+phenoxyethanol,3,previne sau intarzie cresterea microbiana protejand astfel cosmeticele de la alterare
 phenoxyisopropanol,3,
 phenyl trimethicone,3,
 phenylalanine,3,
@@ -1366,17 +1369,17 @@ sodium acetate,3,
 sodium acrylate/acryloydimethyl taurate copolymer,3,
 sodium ascorbate,2,
 sodium ascorbyl phosphate,2,
-sodium benzoate,3,
+sodium benzoate,3, onservant folosit in produse farmaceutice si cosmetice
 sodium bisulfite,1,
 sodium borate,4,
 sodium C14-16 olefin sulfonate,4,
-sodium carbomer,3,
+sodium carbomer,3,astringent si antiinflamator
 sodium carbonate,4,
 sodium carboxymethyl beta-glucan,3,
 sodium cetearyl sulfate,3,
 sodium chloride,3,
 sodium chondroitin sulfate,2,
-sodium citrate,3,
+sodium citrate,3,rol de acoperire/mascare a mirosului
 sodium cocoamphoacetate,3,
 sodium cocoate,4,
 sodium cocoyl amino acids,3,
@@ -1403,7 +1406,7 @@ sodium methyl taurate,3,
 sodium myreth sulfate,3,
 sodium palm kernelate,4,
 sodium palmate,4,
-sodium PCA,2,
+sodium PCA,2,imbunatateste aspectul parului crescand volumul si supletea sa
 sodium PEG-7 olive oil carboxylate,3,
 sodium phytate,3,
 sodium polyacrylate,3,
@@ -1422,7 +1425,7 @@ sorbic acid,3,
 sorbitan oleate,3,
 sorbitan sesquioleate,3,
 sorbitan stearate,3,
-sorbitol,3,
+sorbitol,3,ajuta la hidratarea pielii
 soy extract,2,
 soy isoflavones,2,
 soy oil,2,
@@ -1500,7 +1503,7 @@ Thymus vulgaris oil,4,
 Tilia cordata,2,
 titanium dioxide,2,ecran solar fizic protejeaza fata de radiatiile UVA si UVB
 tocopherol,2,antioxidant hidratant ajuta pielea sa se apere de radiatiile ultraviolete.
-tocopherol acetate,2,
+tocopherol acetate,2, antioxidant- agent de intretinere a pielii
 tocopheryl acetate,2,
 tocopheryl lineolate,2,
 tocotrienols,2,
@@ -1579,7 +1582,7 @@ walnut extract,1,
 walnut oil,3,
 walnut-shell powder,1,
 water,3,
-aqua,3,
+aqua,3, ingredient ce se regaseste in aproape toate cosmeticele si produsele de ingrijire personala; cosmeticele si produsele de ingrijire personala contin numai apa fara toxine, poluanti si microbi
 watercress extract,1,
 watermelon fruit extract,2,
 wheat amino acids,3,
@@ -1631,3 +1634,7 @@ tapioca starch,3,Este considerat un amidon sanatos datorita cantitatii scazute d
 triceteareth-4 phosphate,3,Reduce tensiunea superficiala a produselor cosmetice ajuta la o distributie uniforma a produsului atunci cand este utilizat
 piroctone olamine,3,Este un compus care se foloseste uneori in tratamentele pentru indepartarea ciupercilor pielii scalpului.Reprezinta un agent folosit in compozitia sampoanelor anti-matreata
 oryza sativa (rice) starch,3,Reprezinta un substitut natural pentru talc este folosit in produsele cosmetice pentru a absorbi excesul de ulei oferind pielii un aspect mat si natural
+sodium saccharin,3,rol de acoperire/mascare a mirosului si agent igiena orala
+CI 42053,4,colorant comsetic cu pigment de culoare verde
+Methylsalicylate,3,ester al acidului salicilic sau ulei produs in mod natural de catre mai multe specii de plante cu un miros de menta puternic folosit ca un aditiv alimentar farmaceutic si cosmetic
+Thymol,2,protejeaza si mareste cantitatea de grasime sanatoasa care se gaseste in membrana celulara

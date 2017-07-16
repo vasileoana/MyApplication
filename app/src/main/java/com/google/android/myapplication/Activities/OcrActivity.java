@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,11 +25,14 @@ import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -101,35 +108,67 @@ public class OcrActivity extends Activity {
         tvIndicatii = (TextView) findViewById(R.id.tvIndicatii);
 
         if (checkSelfPermission(Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+               != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    1);
-        }
+           requestPermissions(new String[]{Manifest.permission.CAMERA},
+                   1);
+      }
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    protected void onStart() {
+        super.onStart();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        switch (requestCode) {
-            case OcrUtility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (userChosenTask.equals("Take Photo"))
-                        cameraIntent();
-                    else if (userChosenTask.equals("Choose from Library"))
-                        galleryIntent();
-                } else {
-                    Toast.makeText(this, "Permisiunea nu a fost acordata", Toast.LENGTH_SHORT).show();
-                }
-                break;
+         int hasWritePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int hasReadPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            int hasCameraPermission = checkSelfPermission(Manifest.permission.CAMERA);
+
+
+
+            List<String> permissions = new ArrayList<String>();
+            if (hasWritePermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            }
+
+            if (hasReadPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            }
+
+            if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.CAMERA);
+
+            }
+            if (!permissions.isEmpty()) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), 111);
+            }
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)  {
+
+
+                } else {
+                    Toast.makeText(this, "Permis denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+    }
+
     private void selectImage() {
+
+        int REQUEST_CODE = 1;
+        //ActivityCompat.requestPermissions(OcrActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
         final CharSequence[] items = {"Realizeaza fotografie", "Alege din galerie",
                 "Iesire"};
-
         AlertDialog.Builder builder = new AlertDialog.Builder(OcrActivity.this);
         builder.setTitle("Adauga fotografie!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -173,6 +212,8 @@ public class OcrActivity extends Activity {
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File myFile = getFile();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(myFile));
         startActivityForResult(intent, REQUEST_CAMERA);
     }
 
@@ -185,11 +226,17 @@ public class OcrActivity extends Activity {
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
             else if(requestCode == PIC_CROP){
-//get the returned data
-                Bundle extras = data.getExtras();
-//get the cropped bitmap
-                Bitmap thePic = extras.getParcelable("data");
-                ivImage.setImageBitmap(thePic);
+                String path = "file:///sdcard/camera_app/imageFileCrop.jpg";
+                Uri uri = Uri.parse(path);
+                Bitmap bit = null;
+                try {
+                    bit = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ivImage.setImageBitmap(bit);
+
+
             }
         }
         btnOcr.setVisibility(View.VISIBLE);
@@ -197,12 +244,14 @@ public class OcrActivity extends Activity {
     }
 
     private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        picUri = data.getData();
+        //Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+
+       //ivImage.setImageBitmap(thumbnail);
+        /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+
         File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".png");
+                System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
         try {
@@ -215,8 +264,23 @@ public class OcrActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //performCrop();
+
         ivImage.setImageBitmap(thumbnail);
+        //performCrop();*/
+        String path = "file:///sdcard/camera_app/imageFile.jpg";
+        /*Drawable dr = Drawable.createFromPath(path);
+        ivImage.setImageDrawable(dr);*/
+        Uri uri = Uri.parse(path);
+        Bitmap bit = null;
+        try {
+            bit = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        //bit.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        //ivImage.setImageBitmap(bit);
+        performCrop(null);
     }
 
 
@@ -231,16 +295,23 @@ public class OcrActivity extends Activity {
             }
         }
         ivImage.setImageBitmap(bm);
-       // performCrop();
+        performCrop(picUri);
 
     }
 
     public void Ocr(View view) {
         Bitmap bitmap;
+        Bitmap bitmap2 = null;
         if (ivImage.getDrawable() != null) {
             bitmap = ((BitmapDrawable) ivImage.getDrawable()).getBitmap();
+            Uri uri = Uri.parse("file:///sdcard/camera_app/imageFile.jpg");
             try {
-                if (detector.isOperational() && bitmap != null) {
+                bitmap2 = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (detector.isOperational() && bitmap2 != null) {
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     SparseArray<TextBlock> textBlocks = detector.detect(frame);
                     String blocks = "";
@@ -301,12 +372,13 @@ public class OcrActivity extends Activity {
 
     }
 
-    private void performCrop(){
+    private void performCrop(Uri uri){
         try {
             //call the standard crop action intent (the user device may not support it)
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            /*Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            Uri uri = Uri.parse("file:///sdcard/camera_app/imageFile.jpg");
             //indicate image type and Uri
-            cropIntent.setDataAndType(picUri, "image/*");
+            cropIntent.setDataAndType(uri, "image/*");
             //set crop properties
             cropIntent.putExtra("crop", "true");
             //indicate aspect of desired crop
@@ -314,7 +386,22 @@ public class OcrActivity extends Activity {
             //retrieve data on return
             cropIntent.putExtra("return-data", true);
             //start the activity - we handle returning in onActivityResult
-            startActivityForResult(cropIntent, PIC_CROP);
+            startActivityForResult(cropIntent, PIC_CROP);*/
+
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            Uri uriInitial = null;
+            if (uri == null) {
+                uriInitial = Uri.parse("file:///sdcard/camera_app/imageFile.jpg");
+            } else {
+                uriInitial = uri;
+            }
+            File myFile = getFileCrop();
+            intent.setDataAndType(uriInitial, "image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(myFile));
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, PIC_CROP);
+
         }
         catch(ActivityNotFoundException anfe){
             //display an error message
@@ -324,4 +411,28 @@ public class OcrActivity extends Activity {
         }
     }
 
+    private File getFile() {
+        File folder = new File("sdcard/camera_app");
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        File imgFile = new File(folder, "imageFile.jpg");
+        return imgFile;
+
+    }
+
+    private File getFileCrop() {
+        File folder = new File("sdcard/camera_app");
+
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        File imgFile = new File(folder, "imageFileCrop.jpg");
+        return imgFile;
+
+    }
 }
+

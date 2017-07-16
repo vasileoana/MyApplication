@@ -27,12 +27,5 @@
         android:id="@+id/tvIngredientDescription"
         android:textSize="16sp"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnIngredientDetails"
-        android:text="@string/OK"
-        android:textColor="#ffff"
-        android:background="@color/colorPrimary"/>
 </LinearLayout>
 </RelativeLayout>
